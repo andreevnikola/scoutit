@@ -1,6 +1,6 @@
 import { Router } from "express";
 let router: Router = Router();
-const Authenticate = require("./../services").Authenticate;
+const { register, login, logout, authenticate } = require("./../services");
 
 // const multer = require("multer");
 // const uploader = multer({
@@ -15,6 +15,9 @@ const Authenticate = require("./../services").Authenticate;
 // });
 // const upload = multer({ storage });
 
-router.get("/users/authenticate/:name/:pass", (req: string, res: any) => { Authenticate(req, res) });
+router.post("/users/register", (req: string, res: any) => { register(req, res) });
+router.post("/users/login", (req: string, res: any) => { login(req, res) });
+router.get("/users/logout/:key", (req: string, res: any) => { logout(req, res) });
+router.get("/users/authenticate/:key", (req: string, res: any) => { authenticate(req, res) });
 
-module.exports = router ;
+module.exports = router;
