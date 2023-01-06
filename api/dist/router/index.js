@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 let router = (0, express_1.Router)();
-const Authenticate = require("./../services").Authenticate;
+const { register, login, logout, authenticate } = require("./../services");
 // const multer = require("multer");
 // const uploader = multer({
 //     storage: multer.diskStorage({}),
@@ -14,6 +14,9 @@ const Authenticate = require("./../services").Authenticate;
 //   },
 // });
 // const upload = multer({ storage });
-router.get("/users/authenticate/:name/:pass", (req, res) => { Authenticate(req, res); });
+router.post("/users/register", (req, res) => { register(req, res); });
+router.post("/users/login", (req, res) => { login(req, res); });
+router.get("/users/logout/:key", (req, res) => { logout(req, res); });
+router.get("/users/authenticate/:key", (req, res) => { authenticate(req, res); });
 module.exports = router;
 //# sourceMappingURL=index.js.map

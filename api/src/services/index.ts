@@ -1,3 +1,11 @@
-const authenticate = require("./user/authenticate.js");
+const register = require("./user/register.js").Register;
+const login = require("./user/login.js").Login;
+const logout = require("./user/logout.js").Logout;
+const authenticate = require("./user/authenticate.js").Authenticate;
 
-module.exports = authenticate;
+module.exports = {
+    register,
+    login,
+    logout,
+    authenticate
+};
