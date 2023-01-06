@@ -3,3 +3,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .color-pedalski {
+    background-color: #f7fff3;
+  }
+}
