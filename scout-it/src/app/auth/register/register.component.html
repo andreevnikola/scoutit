@@ -1,33 +1,57 @@
-<form class="rounded-md inset-1/2 absolute w-fit h-fit -translate-y-1/2 -translate-x-1/2 p-5 border-[1px]
+<form #form="ngForm" (ngSubmit)="registerHandler(phone_starting.value, phone.value, mail.value, username.value, firstname.value, lastname.value, password.value)" class="rounded-md inset-1/2 absolute w-fit h-fit -translate-y-1/2 -translate-x-1/2 p-5 border-[1px]
           border-[#58C900] shadow-custom pt-[20px] pb-[20px] pl-[30px] pr-[30px] from-[#FAFFFA] to-white bg-gradient-to-tl">
     <p class="text-[50px] font-jaldi text-center mb-3">Join <span class="font-bold">ScoutIT</span></p>
     <div class="flex">
-        <select class="absolute bg-transparent h-[35px] ml-1">
+        <select #phone_starting class="absolute bg-transparent h-[35px] ml-1">
             <option value="+359">+359</option>
             <option disabled value="+49"><img src="" alt="Germany">+49</option>
             <option disabled value="+39"><img src="" alt="Italy">+39</option>
         </select>
-        <input type="text" style="padding-left: 60px !important;" placeholder="Phone number: ">
+        <input required minlength="9" maxlength="9" name="phone" #phone="ngModel" ngModel type="text" style="padding-left: 60px !important;" placeholder="Phone number: ">
     </div>
-    <input type="email" placeholder="E-MAIL:">
-    <input type="text" placeholder="Username: ">
+    <div *ngIf="phone.touched">
+        <p class="error" *ngIf="phone.errors?.['required']">Phone number is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="phone.errors?.['minlength']">Please enter <span class="font-bold">valid</span> phone number</p>
+    </div>
+    <input required minlength="6" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #mail="ngModel" ngModel name="mail" type="email" placeholder="E-MAIL:">
+    <div *ngIf="mail.touched">
+        <p class="error" *ngIf="mail.errors?.['required']">E-MAIL number is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="mail.errors?.['minlength'] || mail.errors?.['pattern']">Please enter <span class="font-bold">valid</span> E-MAIL</p>
+    </div>
+    <input required minlength="6" #username="ngModel" ngModel name="username" type="text" placeholder="Username: ">
+    <div *ngIf="username.touched">
+        <p class="error" *ngIf="username.errors?.['required']">Username number is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="username.errors?.['minlength']">Username must be at least <span class="font-bold">6 symbols</span></p>
+    </div>
     <div>
-        <input type="text" id="names" class="mr-2" placeholder="First name: ">
-        <input type="text" id="names" placeholder="Surname: ">
+        <input required minlength="6" #firstname="ngModel" ngModel name="firstname" type="text" id="names" class="mr-2" placeholder="First name: ">
+        <input required minlength="6" #lastname="ngModel" ngModel name="lastname" type="text" id="names" placeholder="Surname: ">
     </div>
-    <input [type]="password_type" placeholder="Password: ">
+    <div *ngIf="lastname.touched">
+        <p class="error" *ngIf="lastname.errors?.['required']">Surname is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="lastname.errors?.['minlength']">Surname must be at least <span class="font-bold">6 symbols</span></p>
+    </div>
+    <div *ngIf="firstname.touched && (!lastname.errors || !lastname.touched)">
+        <p class="error" *ngIf="firstname.errors?.['required']">First name is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="firstname.errors?.['minlength']">First name must be at least <span class="font-bold">6 symbols</span></p>
+    </div>
+    <input required minlength="6" #password="ngModel" ngModel name="password" [type]="password_type" placeholder="Password: ">
     <p (click)="password_type === 'password' ? password_type = 'text' : password_type = 'password'" class="mt-[-11px] ml-[5px] cursor-pointer text-blue-500 w-fit transition-all hover:text-orange-600">{{password_type === 'password' ? 'Show' : 'Hide'}} password</p>
+    <div *ngIf="password.touched" class="ml-1">
+        <p class="error" *ngIf="password.errors?.['required']">Password is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="password.errors?.['minlength']">Password must be at least <span class="font-bold">6 symbols</span></p>
+    </div>
     <div class="flex justify-between">
         <div (click)="worker_label.click()" class="bg-white w-fit border-1 p-3 pt-8 relative hover:border-[#58C900] hover:border-1 rounded-md transition-all cursor-pointer">
             <img class="absolute w-6 h-6 mt-[-28px] ml-[-3px]" src="assets/images/programmer.png" alt="worker">
-            <input type="radio" name="type" id="worker" value="worker">
+            <input (change)="changeAccountType($event)" type="radio" name="type" id="worker" value="worker">
             <label #worker_label for="worker" class="cursor-pointer">I'm looking for <span class="font-bold">work</span></label>
         </div>
         <div (click)="hiring_label.click()" class="bg-white w-fit border-1 p-3 pt-8 relative hover:border-[#58C900] hover:border-1 rounded-md transition-all cursor-pointer">
             <img class="absolute w-6 h-6 mt-[-28px] ml-[-3px]" src="assets/images/employer_hand_giving_job.png" alt="employer">
-            <input type="radio" name="type" id="employer" value="worker">
+            <input (change)="changeAccountType($event)" type="radio" name="type" id="employer" value="employer">
             <label #hiring_label for="employer" class="cursor-pointer">I'm <span class="font-bold">hiring</span> workers</label>
         </div>
     </div>
-    <button class="w-full bg-white mt-3 text-2xl font-bold rounded-md border-1 border-[grey] p-0.5 hover:bg-[#2fa32f] hover:text-white transition-all">Sign up</button>
+    <button [disabled]="form.invalid" class="disabled:brightness-75 disabled:cursor-not-allowed w-full bg-white mt-3 text-2xl font-bold rounded-md border-1 border-[grey] p-0.5 hover:bg-[#2fa32f] hover:text-white transition-all">Sign up</button>
 </form>

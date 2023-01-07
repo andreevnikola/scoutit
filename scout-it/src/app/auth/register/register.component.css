@@ -11,6 +11,10 @@ input[type="radio"]{
     @apply w-half_with_padding
 }
 
+.error{
+    @apply w-full -mt-3 text-red-600
+}
+
 *{
     @apply font-jaldi
 }
