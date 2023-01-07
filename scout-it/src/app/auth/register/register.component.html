@@ -1,4 +1,6 @@
-<form #form="ngForm" (ngSubmit)="registerHandler(phone_starting.value, phone.value, mail.value, username.value, firstname.value, lastname.value, password.value)" class="rounded-md inset-1/2 absolute w-fit h-fit -translate-y-1/2 -translate-x-1/2 p-5 border-[1px]
+<img *ngIf="loading" src="assets/images/loading.gif" alt="loading" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                                                          w-56 h-56">
+<form [hidden]="loading" #form="ngForm" (ngSubmit)="registerHandler(phone_starting.value, phone.value, mail.value, username.value, firstname.value, lastname.value, password.value)" class="rounded-md inset-1/2 absolute w-fit h-fit -translate-y-1/2 -translate-x-1/2 p-5 border-[1px]
           border-[#58C900] shadow-custom pt-[20px] pb-[20px] pl-[30px] pr-[30px] from-[#FAFFFA] to-white bg-gradient-to-tl">
     <p class="text-[50px] font-jaldi text-center mb-3">Join <span class="font-bold">ScoutIT</span></p>
     <div class="flex">
@@ -7,20 +9,23 @@
             <option disabled value="+49"><img src="" alt="Germany">+49</option>
             <option disabled value="+39"><img src="" alt="Italy">+39</option>
         </select>
-        <input required minlength="9" maxlength="9" name="phone" #phone="ngModel" ngModel type="text" style="padding-left: 60px !important;" placeholder="Phone number: ">
+        <input (change)="taken && taken.includes('phone') ? taken = null : null" required minlength="9" maxlength="9" name="phone" #phone="ngModel" ngModel type="text" style="padding-left: 60px !important;" placeholder="Phone number: ">
+        <p class="error" *ngIf="taken && taken.includes('phone')">Phone is <span class="font-bold">taken</span></p>
     </div>
     <div *ngIf="phone.touched">
         <p class="error" *ngIf="phone.errors?.['required']">Phone number is <span class="font-bold">required</span></p>
         <p class="error" *ngIf="phone.errors?.['minlength']">Please enter <span class="font-bold">valid</span> phone number</p>
     </div>
-    <input required minlength="6" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #mail="ngModel" ngModel name="mail" type="email" placeholder="E-MAIL:">
+    <input (change)="taken && taken.includes('mail') ? taken = null : null" required minlength="6" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #mail="ngModel" ngModel name="mail" type="email" placeholder="E-MAIL:">
+    <p class="error" *ngIf="taken && taken.includes('mail')">E-MAIL is <span class="font-bold">taken</span></p>
     <div *ngIf="mail.touched">
         <p class="error" *ngIf="mail.errors?.['required']">E-MAIL number is <span class="font-bold">required</span></p>
         <p class="error" *ngIf="mail.errors?.['minlength'] || mail.errors?.['pattern']">Please enter <span class="font-bold">valid</span> E-MAIL</p>
     </div>
-    <input required minlength="6" #username="ngModel" ngModel name="username" type="text" placeholder="Username: ">
+    <input required minlength="6" #username="ngModel" (change)="taken && taken.includes('username') ? taken = null : null" ngModel name="username" type="text" placeholder="Username: ">
+    <p class="error" *ngIf="taken && taken.includes('username')">Username is <span class="font-bold">taken</span></p>
     <div *ngIf="username.touched">
-        <p class="error" *ngIf="username.errors?.['required']">Username number is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="username.errors?.['required']">Username is <span class="font-bold">required</span></p>
         <p class="error" *ngIf="username.errors?.['minlength']">Username must be at least <span class="font-bold">6 symbols</span></p>
     </div>
     <div>
@@ -53,5 +58,5 @@
             <label #hiring_label for="employer" class="cursor-pointer">I'm <span class="font-bold">hiring</span> workers</label>
         </div>
     </div>
-    <button [disabled]="form.invalid" class="disabled:brightness-75 disabled:cursor-not-allowed w-full bg-white mt-3 text-2xl font-bold rounded-md border-1 border-[grey] p-0.5 hover:bg-[#2fa32f] hover:text-white transition-all">Sign up</button>
+    <button [disabled]="form.invalid || !account_type" class="disabled:brightness-75 disabled:cursor-not-allowed w-full bg-white mt-3 text-2xl font-bold rounded-md border-1 border-[grey] p-0.5 hover:bg-[#2fa32f] hover:text-white transition-all">Sign up</button>
 </form>

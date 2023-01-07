@@ -14,32 +14,27 @@ async function Register(req, res) {
             ],
             type: type
         });
+        let errors = [];
         registered_users?.some((user) => {
             if (user.username === username) {
-                res.status(409).send({
-                    error: "username is taken"
-                });
-                return;
+                errors.push("username is taken");
             }
-            else if (user.mail === mail) {
-                res.status(409).send({
-                    error: "mail is taken"
-                });
-                return;
+            if (user.mail === mail) {
+                errors.push("mail is taken");
             }
-            else if (user.phone === phone) {
-                res.status(409).send({
-                    error: "phone number is taken"
-                });
-                return;
+            if (user.phone === phone) {
+                errors.push("phone number is taken");
             }
         });
         if (registered_users?.length) {
+            res.status(409).send({
+                error: JSON.stringify(errors),
+            });
             return;
         }
         const hashedPass = await bcrypt.hash(pass, salt);
         const key = Math.floor(Math.random() * 999999999999) + 1;
-        await users.Create({
+        const registered = await users.Create({
             username: username,
             fullname: fullname,
             mail: mail,
@@ -50,7 +45,8 @@ async function Register(req, res) {
             keys: [key]
         });
         res.status(200).send({
-            key: key
+            key: key,
+            id: registered.insertedId
         });
     }
     catch (error) {
