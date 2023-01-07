@@ -7,4 +7,6 @@ import { Component } from '@angular/core';
 })
 export class RegisterComponent {
 
+  password_type: string = "password";
+
 }
