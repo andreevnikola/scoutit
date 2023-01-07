@@ -4,21 +4,15 @@ const DB_ = require("./../../db");
 async function Login(req: any, res: any){
     const users = await new DB_("scoutit", "users");
     try {
-        const { name_or_phone, pass, type } = req.body;
+        const { phone, pass, type } = req.body;
         const registered_user: any = await users.Read({
-            $or: [
-                { username: name_or_phone },
-                { phone: name_or_phone }
-            ],
+            phone: phone,
             type: type
         });
         if(registered_user && (await bcrypt_.compare(pass, registered_user.password))){
             const key: number = Math.floor(Math.random() * 999999999999) + 1;
             await users.Update({
-                $or: [
-                    { username: name_or_phone },
-                    { phone: name_or_phone }
-                ],
+                phone: phone,
                 type: type
             }, {
                 $push: {
@@ -27,13 +21,16 @@ async function Login(req: any, res: any){
             });
             res.status(200).send({
                 key: key,
-                name: registered_user.name,
+                name: registered_user.username,
+                firstname: registered_user.fullname.split(" ")[0],
+                lastname: registered_user.fullname.split(" ")[1],
                 phone: registered_user.phone,
-                mail: registered_user.mail
+                mail: registered_user.mail,
+                id: registered_user._id.toString()
             });
             return;
         }
-        res.status(403).send();
+        res.status(409).send();
     } catch (error) {
         console.log(error);
         res.status(500).send();
