@@ -21,4 +21,13 @@ export class AuthenticateService {
     })
   }
 
+  signIn(phone_starting:string, phone:string, password:string, type:string){
+
+    return this.httpClient.post<IRegistered>('http://localhost:8080/api/users/login', {
+      pass: password,
+      phone: phone_starting + phone,
+      type: type
+    })
+  }
+
 }

@@ -10,8 +10,8 @@
             <option disabled value="+39"><img src="" alt="Italy">+39</option>
         </select>
         <input (change)="taken && taken.includes('phone') ? taken = null : null" required minlength="9" maxlength="9" name="phone" #phone="ngModel" ngModel type="text" style="padding-left: 60px !important;" placeholder="Phone number: ">
-        <p class="error" *ngIf="taken && taken.includes('phone')">Phone is <span class="font-bold">taken</span></p>
     </div>
+    <p class="error" *ngIf="taken && taken.includes('phone')">Phone is <span class="font-bold">taken</span></p>
     <div *ngIf="phone.touched">
         <p class="error" *ngIf="phone.errors?.['required']">Phone number is <span class="font-bold">required</span></p>
         <p class="error" *ngIf="phone.errors?.['minlength']">Please enter <span class="font-bold">valid</span> phone number</p>
