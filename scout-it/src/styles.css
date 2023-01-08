@@ -13,4 +13,8 @@
   .inter {
     font-family: 'Inter', sans-serif;
   }
+  .landing-image {
+    background: url('./assets/images/landing-header-image.png');
+    background-size: fill;
+  }
 }

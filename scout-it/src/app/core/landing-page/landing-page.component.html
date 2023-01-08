@@ -1,27 +1,122 @@
 <article id="landing">
-  <section id="landing-header">
-    <section id="leanding-header-text">
-      <p>Let the job find</p>
-      <p>YOU.</p>
-      <div id="items">
-        <div id="item">
-          <fa-icon [icon]="icons.ninja"></fa-icon>
-          <p>
-            Join as a worker and enjoy to the chance of being selected
-            from one of +250K employers working for ScoutIT!
-          </p>
-        </div>
-        <div id="item">
-          <fa-icon [icon]="icons.ninja"></fa-icon>
-          <p>
-            Join as a worker and enjoy to the chance of being selected
-            from one of +250K employers working for ScoutIT!
-          </p>
-        </div>
+  <section
+    id="landing-header"
+    class="flex flex-col content-around justify-around gap-20 landing-image"
+  >
+    <section
+      id="leanding-header-text"
+      class="flex flex-col gap-2 justify-center text-center items-center py-40"
+    >
+      <div id="title" class="flex gap-2">
+        <p class="text-7xl">Let the job find</p>
+        <p class="text-7xl font-bold">YOU.</p>
+      </div>
+      <div id="bottom-text">
+        <p class="text-xl">
+          Register as <b>employer</b> or <b>worker</b>. Get hired
+          based on your <b>skill.</b>
+        </p>
       </div>
     </section>
-    <section id="trusted">
-      <p>Trusted by:</p>
+
+    <div
+      id="items"
+      class="flex flex-col md:flex-row gap-10 justify-around items-center py-10"
+    >
+      <div
+        id="item"
+        class="flex flex-col md:flex-row gap-2 color-pedalski px-5 py-9 border-2 border-black rounded-xl"
+      >
+        <fa-icon
+          [icon]="icons.ninja"
+          class="text-8xl text-red-600"
+        ></fa-icon>
+        <p class="max-w-sm text-xl">
+          Join as a <b>worker</b> and <b>enjoy</b> to the chance of
+          being selected from one of <b>+250K</b> employers working
+          for <b>ScoutIT!</b>
+        </p>
+      </div>
+      <div
+        id="item"
+        class="flex flex-col md:flex-row gap-9 color-pedalski px-5 py-9 border-2 border-black rounded-xl"
+      >
+        <p class="max-w-xs text-xl">
+          Join as an <b>employer</b> and <b>enjoy</b> selecting from
+          over <b>3M</b> workers using <b>ScoutIT!</b>
+        </p>
+        <fa-icon
+          [icon]="icons.employer"
+          class="text-8xl text-blue-600 stroke-black stroke-2"
+        ></fa-icon>
+      </div>
+    </div>
+
+    <section
+      id="trusted"
+      class="bg-gray-200 flex flex-col flex-wrap md:flex-row gap-5 justify-center items-center"
+    >
+      <p class="text-gray-500 font-semibold text-3xl">Trusted by:</p>
+      <img
+        src="../../../assets/images/facebook.png"
+        alt=""
+        class="w-1/12"
+      />
+      <img
+        src="../../../assets/images/google.png"
+        alt=""
+        class="w-1/12"
+      />
+      <img
+        src="../../../assets/images/netflix.png"
+        alt=""
+        class="w-1/12"
+      />
+      <img
+        src="../../../assets/images/paypal.png"
+        alt=""
+        class="w-1/12"
+      />
     </section>
+  </section>
+
+  <section id="browse-by-category" class="py-12">
+    <div class="border-black border-b-2 pb-2 flex md:mx-20 text-5xl">
+      <p>Browse by category:</p>
+    </div>
+
+    <div
+      id="categories"
+      class="md:grid md:grid-cols-2 md:grid-flow-col md:overflow-x-scroll flex flex-col md:mx-20"
+    >
+      <div
+        id="category"
+        class="flex flex-col max-w-md px-6 py-6 color-pedalski border-2 border-black rounded-xl m-5"
+      >
+        <div id="central" class="flex">
+          <div id="left">
+            <p class="text-4xl">MySQL</p>
+            <p class="text-base">
+              NodeJS is one of the most popular languages for writing
+              backend.
+            </p>
+          </div>
+
+          <div id="right">
+            <fa-icon
+              [icon]="icons.database"
+              class="text-7xl"
+            ></fa-icon>
+          </div>
+        </div>
+
+        <div id="bottom" class="flex justify-between">
+          <div id="left">
+            <p>employed - <b>15</b></p>
+          </div>
+          <div id="right"><b>50</b> - active</div>
+        </div>
+      </div>
+    </div>
   </section>
 </article>
