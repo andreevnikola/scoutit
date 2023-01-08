@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import {
+  faDatabase,
+  faServer,
   faUserNinja,
   faUserTie,
 } from '@fortawesome/free-solid-svg-icons';
@@ -13,6 +15,7 @@ export class LandingPageComponent {
   icons = {
     ninja: faUserNinja,
     employer: faUserTie,
+    database: faDatabase,
   };
 
   constructor() {}
