@@ -20,4 +20,7 @@
   .scroller {
     max-height: 1000px;
   }
+  .color-why {
+    background-color: #eeffee;
+  }
 }

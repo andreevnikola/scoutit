@@ -1,8 +1,9 @@
 <article id="landing">
   <section
     id="landing-header"
-    class="flex flex-col content-around justify-around gap-20 landing-image"
+    class="flex flex-col content-around justify-around gap-20"
   >
+    <section class="landing-image"></section>
     <section
       id="leanding-header-text"
       class="flex flex-col gap-2 justify-center text-center items-center py-40"
@@ -39,16 +40,16 @@
       </div>
       <div
         id="item"
-        class="flex flex-col md:flex-row gap-4 color-pedalski px-5 py-9 border-2 border-black rounded-xl md:max-h-max"
+        class="flex flex-col md:flex-row-reverse gap-4 color-pedalski px-5 py-9 border-2 border-black rounded-xl md:max-h-max"
       >
-        <p class="max-w-sm text-xl">
-          Join as an <b>employer</b> and <b>enjoy</b> selecting from
-          over <b>3M</b> workers using <b>ScoutIT!</b>
-        </p>
         <fa-icon
           [icon]="icons.employer"
           class="text-8xl text-blue-600 stroke-black stroke-2"
         ></fa-icon>
+        <p class="max-w-sm text-xl">
+          Join as an <b>employer</b> and <b>enjoy</b> selecting from
+          over <b>3M</b> workers using <b>ScoutIT!</b>
+        </p>
       </div>
     </div>
 
@@ -323,9 +324,9 @@
   </section>
   <section
     id="why"
-    class="flex flex-row justify-center color-pedalski border-2 border-black rounded-xl md:mx-44 p-5 gap-5 my-10"
+    class="flex flex-row justify-around color-why border-2 border-black rounded-xl md:mx-44 p-5 gap-5 my-10"
   >
-    <div id="left" class="flex flex-col gap-6">
+    <div id="left" class="flex flex-col gap-6 font-jaldi">
       <div id="title">
         <p class="text-7xl">Why to choose <b>ScoutIT</b></p>
       </div>
@@ -371,6 +372,22 @@
     </div>
     <div id="img" class="invisible md:visible">
       <img src="../../../assets/images/why.png" alt="" />
+    </div>
+  </section>
+  <section
+    id="worker"
+    class="md:mx-44 color-pedalski border-gray-300 flex flex-row gap-5"
+  >
+    <div id="icon">
+      <fa-icon [icon]="icons.ninja"></fa-icon>
+    </div>
+    <div id="text">
+      <p>Join as a <b>worker</b></p>
+      <ul class="list-disc">
+        <li>More than 250K employers to hire you</li>
+        <li>Multiple spheres to gain experience</li>
+        <li>You don't search. <b>YOU GET SEARCHED.</b></li>
+      </ul>
     </div>
   </section>
 </article>
