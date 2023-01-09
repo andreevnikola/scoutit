@@ -17,4 +17,7 @@
     background: url('./assets/images/landing-header-image.png');
     background-size: fill;
   }
+  .scroller {
+    max-height: 1000px;
+  }
 }
