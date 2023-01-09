@@ -7,6 +7,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @layer components {
+  :root{
+    --landing_distance_pc: 11rem;
+  }
   .color-pedalski {
     background-color: #f7fff3;
   }
@@ -23,5 +26,13 @@
   }
   .color-why {
     background-color: #eeffee;
+  }
+  .plr-landing {
+    padding-left: var(--landing_distance_pc);
+    padding-right: var(--landing_distance_pc);
+  }
+  .mlr-landing {
+    margin-left: var(--landing_distance_pc);
+    margin-right: var(--landing_distance_pc);
   }
 }

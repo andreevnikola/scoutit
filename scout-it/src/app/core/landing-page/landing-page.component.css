@@ -1,0 +1,5 @@
+#landing-header{
+    margin-left: 50%;
+    transform: translate(-50vw, 0);
+    width: calc(100vw + -9px);
+}
