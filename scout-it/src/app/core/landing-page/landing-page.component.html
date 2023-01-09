@@ -81,13 +81,13 @@
   </section>
 
   <section id="browse-by-category" class="py-12">
-    <div class="border-black border-b-2 pb-2 flex md:mx-20 text-5xl">
+    <div class="border-black border-b-2 pb-2 flex md:mx-44 text-5xl">
       <p>Browse by category:</p>
     </div>
 
     <div
       id="categories"
-      class="grid grid-rows-2 md:grid-flow-col md:overflow-x-scroll grid-flow-row xs:overflow-y-scroll mx-20"
+      class="grid grid-rows-2 md:grid-flow-col md:overflow-x-scroll grid-flow-row md:mx-44"
     >
       <div
         id="category"
@@ -319,6 +319,58 @@
           <div id="right"><b>50</b> - active</div>
         </div>
       </div>
+    </div>
+  </section>
+  <section
+    id="why"
+    class="flex flex-row justify-center color-pedalski border-2 border-black rounded-xl md:mx-44 p-5 gap-5 my-10"
+  >
+    <div id="left" class="flex flex-col gap-6">
+      <div id="title">
+        <p class="text-7xl">Why to choose <b>ScoutIT</b></p>
+      </div>
+      <div id="items" class="flex flex-col gap-6">
+        <div id="item" class="flex">
+          <div id="item-left">
+            <fa-icon [icon]="icons.money" class="text-7xl"></fa-icon>
+          </div>
+          <div id="item-right">
+            <p class="text-5xl">Completely <b>FREE</b></p>
+            <p class="text-3xl max-w-lg">
+              Since we are just in <b>demo</b> version there isn’t any
+              cost to use <b>ScoutIT</b>
+            </p>
+          </div>
+        </div>
+
+        <div id="item" class="flex">
+          <div id="item-left">
+            <fa-icon [icon]="icons.money" class="text-7xl"></fa-icon>
+          </div>
+          <div id="item-right">
+            <p class="text-5xl">Completely <b>FREE</b></p>
+            <p class="text-3xl max-w-lg">
+              Since we are just in <b>demo</b> version there isn’t any
+              cost to use <b>ScoutIT</b>
+            </p>
+          </div>
+        </div>
+        <div id="item" class="flex">
+          <div id="item-left">
+            <fa-icon [icon]="icons.money" class="text-7xl"></fa-icon>
+          </div>
+          <div id="item-right">
+            <p class="text-5xl">Completely <b>FREE</b></p>
+            <p class="text-3xl max-w-lg">
+              Since we are just in <b>demo</b> version there isn’t any
+              cost to use <b>ScoutIT</b>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="img" class="invisible md:visible">
+      <img src="../../../assets/images/why.png" alt="" />
     </div>
   </section>
 </article>
