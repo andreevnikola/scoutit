@@ -16,7 +16,8 @@ async function Authenticate(req, res) {
             username: registered_user.username,
             mail: registered_user.mail,
             phone: registered_user.phone,
-            fullname: registered_user.fullname
+            fullname: registered_user.fullname,
+            id: registered_user._id.toString()
         });
     }
     catch (error) {
