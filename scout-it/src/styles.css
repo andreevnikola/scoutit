@@ -15,8 +15,8 @@
   }
   .landing-image {
     background: url('./assets/images/landing-header-image.png');
-    background-size: fill;
-    opacity: 0.6;
+    background-size: cover;
+    backdrop-filter: blur(5px);
   }
   .scroller {
     max-height: 1000px;
