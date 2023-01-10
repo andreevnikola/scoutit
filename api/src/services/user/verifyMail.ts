@@ -16,10 +16,6 @@ async function verifyMail(req: any, res: any){
         if(registered_user.verification_code.toString() !== code){
             res.status(403).send();
         }
-        Mail_(registered_user.mail, 'ScoutIT! Confirm E-MAIL 📩', `
-        <h1><span style="color: green;">ScoutIT</span> Your mail has been confirmed for account <strong>${registered_user.username}</strong> 📩</h1>
-        <p>Your E-MAIL address has been confirmed so now your accout is visible for everyone! 👀</p>
-        `);
         await users.Update({
             keys: key
         }, {
@@ -27,7 +23,14 @@ async function verifyMail(req: any, res: any){
                 verified: true
             }
         });
-        res.status(200).send();
+        Mail_(registered_user.mail, 'ScoutIT! E-MAIL has been CONFIRMED 📧', `
+        <h1><span style="color: green;">ScoutIT</span> Your mail has been confirmed for account <strong>${registered_user.username}</strong> 📩</h1>
+        <p>Your E-MAIL address has been confirmed so now your accout is visible for everyone! 👀</p>
+        `);
+        res.status(200).send({
+            firstname: registered_user.fullname.split(" ")[0],
+            id: registered_user._id.toString()
+        });
     } catch (error) {
         console.log(error);
         res.status(500).send();
