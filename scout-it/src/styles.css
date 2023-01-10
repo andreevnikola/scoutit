@@ -6,6 +6,8 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
+@import '~hamburgers/dist/hamburgers.css';
+
 @layer components {
   :root {
     --landing_distance_pc: 11rem;
@@ -20,6 +22,17 @@
     background: url('./assets/images/landing-header-image.png');
     background-size: cover;
     backdrop-filter: blur(5px);
+  }
+  .landing-image-2 {
+    background: url('./assets/images/landing-image-2.png');
+    background-size: fill;
+    backdrop-filter: blur(5px);
+  }
+  .landing-image-3 {
+    background: url('./assets/images/landing-image-3.png');
+    background-size: fill;
+    backdrop-filter: blur(5px);
+    width: 100vh;
   }
   .scroller {
     max-height: 1000px;
