@@ -18,6 +18,7 @@ module.exports = {
       screens: {
         xs: { max: '768px' },
         laptopish_max: { min: '1080px' },
+        pc_min: { min: '1427px' },
       },
     },
   },
