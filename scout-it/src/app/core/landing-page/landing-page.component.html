@@ -383,20 +383,66 @@
       <img src="../../../assets/images/why.png" alt="" />
     </div>
   </section>
-  <section
-    id="worker"
-    class="md:mx-44 color-pedalski border-gray-300 flex flex-row gap-5"
-  >
-    <div id="icon">
-      <fa-icon [icon]="icons.ninja"></fa-icon>
-    </div>
-    <div id="text">
-      <p>Join as a <b>worker</b></p>
-      <ul class="list-disc">
-        <li>More than 250K employers to hire you</li>
-        <li>Multiple spheres to gain experience</li>
-        <li>You don't search. <b>YOU GET SEARCHED.</b></li>
-      </ul>
-    </div>
+  <section id="join-now" class="flex flex-col gap-10">
+    <section
+      id="worker-wrap"
+      class="flex md:justify-start justify-center"
+    >
+      <section
+        id="worker"
+        class="md:mx-44 color-pedalski border-gray-300 flex flex-col laptopish_max:flex-row max-w-max justify-between items-center gap-14 px-8 py-8 border-2"
+      >
+        <div id="icon">
+          <fa-icon
+            [icon]="icons.ninja"
+            class="text-[192px] text-red-600 flex justify-center stroke-black stroke-2"
+          ></fa-icon>
+        </div>
+        <div id="text">
+          <p class="text-7xl py-4">Join as a <b>worker</b></p>
+          <ul class="list-disc pl-5 text-2xl flex flex-col gap-3">
+            <li>More than 250K employers to hire you</li>
+            <li>Multiple spheres to gain experience</li>
+            <li>You don't search. <b>YOU GET SEARCHED.</b></li>
+          </ul>
+        </div>
+        <div id="button" class="flex flex-col gap-1 text-center">
+          <a href="/" class="btn text-5xl px-4 py-5"
+            ><b>Join now</b></a
+          >
+          <p class="text-[25px]">with <b>3M</b> more</p>
+        </div>
+      </section>
+    </section>
+    <section
+      id="employer-wrap"
+      class="flex md:justify-end justify-center"
+    >
+      <section
+        id="employer"
+        class="md:mx-44 color-pedalski border-gray-300 flex flex-col laptopish_max:flex-row max-w-max items-center gap-14 px-8 py-8 border-2 justify-between"
+      >
+        <div id="icon">
+          <fa-icon
+            [icon]="icons.ninja"
+            class="text-[192px] text-blue-600 flex justify-center stroke-black stroke-2"
+          ></fa-icon>
+        </div>
+        <div id="text">
+          <p class="text-7xl py-4">Join as a <b>worker</b></p>
+          <ul class="list-disc pl-5 text-2xl flex flex-col gap-3">
+            <li>More than 250K employers to hire you</li>
+            <li>Multiple spheres to gain experience</li>
+            <li>You don't search. <b>YOU GET SEARCHED.</b></li>
+          </ul>
+        </div>
+        <div id="button" class="flex flex-col gap-1 text-center">
+          <a href="/" class="btn text-5xl px-4 py-5"
+            ><b>Join now</b></a
+          >
+          <p class="text-[25px]">with <b>3M</b> more</p>
+        </div>
+      </section>
+    </section>
   </section>
 </article>
