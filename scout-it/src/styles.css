@@ -7,7 +7,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @layer components {
-  :root{
+  :root {
     --landing_distance_pc: 11rem;
   }
   .color-pedalski {
@@ -34,5 +34,18 @@
   .mlr-landing {
     margin-left: var(--landing_distance_pc);
     margin-right: var(--landing_distance_pc);
+  }
+  .btn {
+    background: linear-gradient(
+      99.11deg,
+      #d8ffd8 0%,
+      #c6ffc5 0.01%,
+      #58c900 135.99%,
+      #a1ff9f 136%,
+      #e3e3e3 136.02%,
+      #55c000 136.02%
+    );
+    border: 2px solid rgba(0, 0, 0, 0.59);
+    border-radius: 15px;
   }
 }
