@@ -322,21 +322,22 @@
       </div>
     </div>
   </section>
+
   <section
     id="why"
     class="flex flex-row justify-around color-why border-2 border-black rounded-xl md:mx-44 p-5 gap-5 my-10"
   >
-    <div id="left" class="flex flex-col gap-6 font-jaldi">
-      <div id="title">
+    <div id="left" class="flex flex-col gap-9 font-jaldi">
+      <div id="title" class="py-4">
         <p class="text-7xl">Why to choose <b>ScoutIT</b></p>
       </div>
-      <div id="items" class="flex flex-col gap-6">
-        <div id="item" class="flex">
+      <div id="items" class="flex flex-col gap-8">
+        <div id="item" class="flex gap-3">
           <div id="item-left">
             <fa-icon [icon]="icons.money" class="text-7xl"></fa-icon>
           </div>
           <div id="item-right">
-            <p class="text-5xl">Completely <b>FREE</b></p>
+            <p class="text-5xl pb-1">Completely <b>FREE</b></p>
             <p class="text-3xl max-w-lg">
               Since we are just in <b>demo</b> version there isn’t any
               cost to use <b>ScoutIT</b>
@@ -349,7 +350,7 @@
             <fa-icon [icon]="icons.money" class="text-7xl"></fa-icon>
           </div>
           <div id="item-right">
-            <p class="text-5xl">Completely <b>FREE</b></p>
+            <p class="text-5xl pb-1">Completely <b>FREE</b></p>
             <p class="text-3xl max-w-lg">
               Since we are just in <b>demo</b> version there isn’t any
               cost to use <b>ScoutIT</b>
@@ -361,7 +362,7 @@
             <fa-icon [icon]="icons.money" class="text-7xl"></fa-icon>
           </div>
           <div id="item-right">
-            <p class="text-5xl">Completely <b>FREE</b></p>
+            <p class="text-5xl pb-1">Completely <b>FREE</b></p>
             <p class="text-3xl max-w-lg">
               Since we are just in <b>demo</b> version there isn’t any
               cost to use <b>ScoutIT</b>
@@ -370,7 +371,10 @@
         </div>
       </div>
     </div>
-    <div id="img" class="invisible md:visible">
+    <div
+      id="img"
+      class="hidden laptopish_max:flex laptopsish_max:w-[500px]"
+    >
       <img src="../../../assets/images/why.png" alt="" />
     </div>
   </section>
