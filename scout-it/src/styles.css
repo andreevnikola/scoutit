@@ -23,6 +23,17 @@
     background-size: cover;
     backdrop-filter: blur(5px);
   }
+  .landing-image-2 {
+    background: url('./assets/images/landing-image-2.png');
+    background-size: fill;
+    backdrop-filter: blur(5px);
+  }
+  .landing-image-3 {
+    background: url('./assets/images/landing-image-3.png');
+    background-size: fill;
+    backdrop-filter: blur(5px);
+    width: 100vh;
+  }
   .scroller {
     max-height: 1000px;
   }
