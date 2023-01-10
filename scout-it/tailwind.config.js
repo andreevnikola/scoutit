@@ -19,6 +19,7 @@ module.exports = {
         xs: { max: '768px' },
         laptopish_max: { min: '1080px' },
         pc_min: { min: '1427px' },
+        tablet_reversa: { max: '768px' },
       },
     },
   },

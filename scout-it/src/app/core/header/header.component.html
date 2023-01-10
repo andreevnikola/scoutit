@@ -5,7 +5,7 @@
     <p class="font-bold text-5xl">ScoutIT</p>
   </div>
   <nav>
-    <ul class="flex flex-row gap-4">
+    <ul class="hidden md:flex md:flex-row md:gap-4">
       <li class="text-3xl">
         <a href="/">Search <fa-icon [icon]="search"></fa-icon></a>
       </li>
@@ -14,5 +14,10 @@
         <a href="/">Join</a>
       </li>
     </ul>
+    <button class="hamburger md:hidden" type="button">
+      <span class="hamburger-box">
+        <span class="hamburger-inner"></span>
+      </span>
+    </button>
   </nav>
 </header>
