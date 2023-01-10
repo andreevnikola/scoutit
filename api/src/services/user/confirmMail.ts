@@ -25,8 +25,8 @@ async function confirmMail(req: any, res: any){
         <h1><span style="color: green;">ScoutIT</span> Confirm MAIL for <strong>${registered_user.username}</strong>📩</h1>
         <p>Confirm your E-MAIL address to make your accout visible for everyone! 👀</p>
         <p>You have to click the button bellow to confirm your E-MAIL address</p>
-        <p style="font-size: 10px; color: grey;">If the BUTTON do not work open this page in your browser: <strong>http://localhost:4000/auth/confirmmail/${key}/${code}</strong></p>
-        <br><br><a style="text-align:center; margin-top: 50px; background: blue; color: white; padding: 10px; font-size: 20px; text-decoration: none; font-weight: bold; border: 2px solid black; border-radius: 5px;" href="http://localhost:4000/auth/confirmmail/${key}/${code}">Confirm MAIL</a>
+        <p style="font-size: 10px; color: grey;">If the BUTTON do not work open this page in your browser: <strong>http://localhost:4200/auth/verify/${key}/${code}</strong></p>
+        <br><br><a style="text-align:center; margin-top: 50px; background: blue; color: white; padding: 10px; font-size: 20px; text-decoration: none; font-weight: bold; border: 2px solid black; border-radius: 5px;" href="http://localhost:4200/auth/verify/${key}/${code}">Confirm MAIL</a>
         `);
         res.status(200).send();
     } catch (error) {

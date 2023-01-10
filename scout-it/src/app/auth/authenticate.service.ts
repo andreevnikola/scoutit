@@ -30,4 +30,12 @@ export class AuthenticateService {
     })
   }
 
+  verifyMail(key: string, code: string){
+    return this.httpClient.get<any>(`http://localhost:8080/api/users/verify/${key}/${code}`)
+  }
+
+  confirmMail(key: string){
+    return this.httpClient.get<any>(`http://localhost:8080/api/users/confirm/${key}`)
+  }
+
 }

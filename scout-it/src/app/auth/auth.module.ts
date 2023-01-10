@@ -4,13 +4,15 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { FormsModule } from '@angular/forms';
+import { VerifyMailComponent } from './verify-mail/verify-mail.component';
 
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    VerifyMailComponent
   ],
   imports: [
     CommonModule,

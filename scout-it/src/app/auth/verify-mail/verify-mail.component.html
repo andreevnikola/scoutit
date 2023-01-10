@@ -1,0 +1,19 @@
+<div class="rounded-md inset-1/2 absolute h-fit -translate-y-1/2 -translate-x-1/2 p-5 border-[1px]
+          border-[#58C900] w-[360px] shadow-custom pt-[20px] pb-[30px] pl-[30px] pr-[30px] from-[#FAFFFA] to-white bg-gradient-to-tl">
+    <ng-container *ngIf="loading">
+        <img src="assets/images/loading.gif" alt="loading" class="w-56 h-56 relative left-1/2 -translate-x-1/2">
+    </ng-container>
+    <ng-container *ngIf="!loading && !error">
+        <p class="text-[25px] font-jaldi text-center mb-3">Your E-MAIL has been <span class="font-bold">Successfully</span> confirmed!</p>
+        <p>Congratulations, {{firstname}}, your e-mail has been <span class="font-bold">Successfully</span> confirmed.</p>
+        <a [routerLink]="'/profile/' + user_id" class="bg-[#2fa32f] text-white font-bold rounded-lg border w-full
+        top-3 relative p-2 pl-4 pr-4 left-1/2 ml-[-87px]">Go to your account</a>
+    </ng-container>
+    <ng-container *ngIf="!loading && error">
+        <p class="text-[25px] font-jaldi text-center mb-3">Something went <span class="font-bold">Wrong</span>!</p>
+        <p>Something went <span class="font-bold">wrong</span> with confirmation of the mail.</p>
+        <a class="bg-[#2fa32f] text-white font-bold rounded-lg border w-full
+        top-3 relative p-2 pl-4 pr-4 left-1/2 ml-[-87px] cursor-pointer" 
+        (click)="resendVerificationHandler()">Resend verification</a>
+    </ng-container>
+</div>
