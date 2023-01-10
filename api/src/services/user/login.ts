@@ -19,6 +19,16 @@ async function Login(req: any, res: any){
                     keys: key
                 }
             });
+            if(registered_user.keys.length > 4){
+                await users.Update({
+                    phone: phone,
+                    type: type
+                }, {
+                    $pull: {
+                        keys: registered_user.keys[0]
+                    }
+                });
+            }
             res.status(200).send({
                 key: key,
                 name: registered_user.username,
