@@ -19,6 +19,7 @@ module.exports = {
         laptopish_max: { min: '1080px' },
         pc_min: { min: '1427px' },
         tablet_reversa: { max: '768px' },
+        img_set: { min: '670px' },
       },
     },
   },
