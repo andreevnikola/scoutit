@@ -16,7 +16,6 @@ module.exports = {
         half_with_padding: 'calc(50% - 4px)',
       },
       screens: {
-        xs: { max: '768px' },
         laptopish_max: { min: '1080px' },
         pc_min: { min: '1427px' },
         tablet_reversa: { max: '768px' },
