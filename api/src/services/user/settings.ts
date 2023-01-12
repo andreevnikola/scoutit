@@ -1,0 +1,70 @@
+const __DB__ = require("./../../db");
+const _bcrypt = require("bcryptjs");
+const cloudinary_ = require("./../../cloudinary.js");
+
+async function Settings(req: any, res: any){
+    const users = await new __DB__("scoutit", "users");
+    const salt = await _bcrypt.genSalt(4);
+    try {
+        let { key } = req.params;
+        const { phone, pass, mail, fullname, username } = req.body;
+        key = parseInt(key);
+        const registered_user: any = await users.Read({
+            keys: key,
+        });
+        const thereIsRegistered = await users.Read({
+            $or: [
+                { username: username },
+                { mail: mail },
+                { phone: phone }
+            ]
+        });
+        if(thereIsRegistered){
+            if(!thereIsRegistered._id.equals(registered_user._id)){
+                let taken: string[] = [];
+                if(thereIsRegistered.username === username){ taken.push("username") }
+                if(thereIsRegistered.mail === mail){ taken.push("mail") }
+                if(thereIsRegistered.phone === phone){ taken.push("phone") }
+                res.status(409).send({
+                    taken: taken
+                });
+                return;
+            }
+        }
+        if(!registered_user){
+            res.status(401).send();
+            return;
+        }
+        let upload;
+        if(req.file?.path){
+            upload = await cloudinary_.v2.uploader.upload(req.file.path);
+            if(registered_user.profile_picture){
+                cloudinary_.uploader.destroy(registered_user.profile_picture.split("/")[7].replace(".jpg", "").replace(".png", ""));
+            }
+        }else{
+            upload = registered_user.profile_picture ? registered_user.profile_picture : null;
+        }
+        const hashedPass: string = pass !== "unknown" ? await _bcrypt.hash(pass, salt) : registered_user.password;
+        await users.Update({
+            keys: key
+        }, {    
+            $set: {
+                username: username,
+                phone: phone,
+                password: hashedPass,
+                mail: mail,
+                fullname: fullname,
+                verified: users.verified && users.mail === mail ? true : false,
+                profile_picture: upload ? upload.secure_url : null
+            }
+        });
+        res.status(200).send({ 
+            url: upload ? upload.secure_url : null
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send();
+    }
+}
+
+module.exports = { Settings };

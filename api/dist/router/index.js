@@ -2,20 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 let router = (0, express_1.Router)();
-const { register, login, logout, authenticate, confirmmail, verifymail } = require("./../services");
-// const multer = require("multer");
-// const uploader = multer({
-//     storage: multer.diskStorage({}),
-//     limits: { fileSize: 500000 }
-//   });
-// const storage = multer.diskStorage({
-//   filename: function (req, file, cb) {
-//     cb(null, file.fieldname + "-" + Date.now() + "-" + (Math.floor(Math.random() * 100000)).toString());
-//   },
-// });
-// const upload = multer({ storage });
+const { register, login, logout, authenticate, confirmmail, verifymail, settings } = require("./../services");
+const multer = require("multer");
+const uploader = multer({
+    storage: multer.diskStorage({}),
+    limits: { fileSize: 500000 }
+});
+const storage = multer.diskStorage({
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + "-" + Date.now() + "-" + (Math.floor(Math.random() * 100000)).toString());
+    },
+});
+const upload = multer({ storage });
 router.post("/users/register", (req, res) => { register(req, res); });
 router.post("/users/login", (req, res) => { login(req, res); });
+router.post("/users/settings/:key", uploader.single("file"), (req, res) => { settings(req, res); });
 router.get("/users/logout/:key", (req, res) => { logout(req, res); });
 router.get("/users/authenticate/:key", (req, res) => { authenticate(req, res); });
 router.get("/users/confirm/:key", (req, res) => { confirmmail(req, res); });
