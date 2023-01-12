@@ -46,7 +46,7 @@ async function Register(req, res) {
         });
         res.status(200).send({
             key: key,
-            id: registered.insertedId
+            id: registered.insertedId,
         });
     }
     catch (error) {

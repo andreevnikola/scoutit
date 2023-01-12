@@ -1,0 +1,67 @@
+<img *ngIf="loading" src="assets/images/loading.gif" alt="loading" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                                                          w-56 h-56">
+<form [hidden]="loading" #form="ngForm" (ngSubmit)="updateAccount(phone_starting.value, phone.value, mail.value, username.value, firstname.value, lastname.value, password ? password.value : null)" 
+class="rounded-md left-1/2 relative h-fit -translate-x-1/2 p-5 border-[1px]
+     border-[#58C900] shadow-custom pt-[20px] pb-[20px] pl-[30px] pr-[30px] from-[#FAFFFA] to-white 
+     bg-gradient-to-tl w-[362px] mb-6 mt-6">
+    <p class="text-[60px] font-jaldi text-center mb-3"><span class="font-bold">Settings</span></p>
+    <div class="w-[300px] h-[300px] rounded-full bg-gray-500 m-0 -mt-4 bg-cover"
+    [style.background-image]="'url(' + url + ')'"></div>
+    <label for="file" class="font-bold text-lg text-center cursor-pointer relative left-1/2 ml-[-88px]">
+        Change profile picture 
+        <fa-icon [icon]="editPhoto" class=""></fa-icon>
+    </label>
+    <input style="display: none;" id="file" type="file" accept="image/*" name="image" id="file" #image="ngModel" ngModel (change)="fileChoosen($event)">
+    <div class="flex mt-2">
+        <select #phone_starting class="absolute bg-transparent h-[35px] ml-1" [ngModel]="phone_country_code" name="phone_starting">
+            <option value="+359">+359</option>
+            <option disabled value="+49"><img src="" alt="Germany">+49</option>
+            <option disabled value="+39"><img src="" alt="Italy">+39</option>
+        </select>
+        <input (change)="taken && taken.includes('phone') ? taken = null : null" [ngModel]="phone_widthout_country_code" required minlength="9" maxlength="9" name="phone" #phone="ngModel" type="text" style="padding-left: 60px !important;" placeholder="Phone number: ">
+    </div>
+    <p class="error" *ngIf="taken && taken.includes('phone')">Phone is <span class="font-bold">taken</span></p>
+    <div *ngIf="phone.touched">
+        <p class="error" *ngIf="phone.errors?.['required']">Phone number is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="phone.errors?.['minlength']">Please enter <span class="font-bold">valid</span> phone number</p>
+    </div>
+    <input (change)="taken && taken.includes('mail') ? taken = null : null" required minlength="6" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #mail="ngModel" [ngModel]="mail_storage" name="mail" type="email" placeholder="E-MAIL:">
+    <p class="error" *ngIf="taken && taken.includes('mail')">E-MAIL is <span class="font-bold">taken</span></p>
+    <div *ngIf="mail.touched">
+        <p class="error" *ngIf="mail.errors?.['required']">E-MAIL number is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="mail.errors?.['minlength'] || mail.errors?.['pattern']">Please enter <span class="font-bold">valid</span> E-MAIL</p>
+    </div>
+    <input required minlength="6" #username="ngModel" (change)="taken && taken.includes('username') ? taken = null : null" [ngModel]="username_storage" name="username" type="text" placeholder="Username: ">
+    <p class="error" *ngIf="taken && taken.includes('username')">Username is <span class="font-bold">taken</span></p>
+    <div *ngIf="username.touched">
+        <p class="error" *ngIf="username.errors?.['required']">Username is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="username.errors?.['minlength']">Username must be at least <span class="font-bold">6 symbols</span></p>
+    </div>
+    <div>
+        <input required minlength="6" #firstname="ngModel" [ngModel]="firstname_storage" name="firstname" type="text" id="names" class="mr-2" placeholder="First name: ">
+        <input required minlength="6" #lastname="ngModel" [ngModel]="lastname_storage" name="lastname" type="text" id="names" placeholder="Surname: ">
+    </div>
+    <div *ngIf="lastname.touched">
+        <p class="error" *ngIf="lastname.errors?.['required']">Surname is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="lastname.errors?.['minlength']">Surname must be at least <span class="font-bold">6 symbols</span></p>
+    </div>
+    <div *ngIf="firstname.touched && (!lastname.errors || !lastname.touched)">
+        <p class="error" *ngIf="firstname.errors?.['required']">First name is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="firstname.errors?.['minlength']">First name must be at least <span class="font-bold">6 symbols</span></p>
+    </div>
+    <p (click)="changePassword = !changePassword" class="cursor-pointer text-xl text-blue-500 w-fit transition-all hover:text-orange-600 relative bg-white
+              pl-2 pr-2 left-1/2 -translate-x-1/2 pb-0 pt-0">
+        {{changePassword ? "Cancel changing" : "Change"}} password <fa-icon [icon]="edit" class="text-base"></fa-icon>
+    </p>
+    <div class="border-t-2 border-dashed border-[#9b9b9b] -mt-3.5 mb-2.5"></div>
+    <div *ngIf="changePassword">
+        <input required minlength="6" class="z-10 translate-x-0" #password="ngModel" ngModel name="password" [type]="password_type" placeholder="New password: ">
+        <p (click)="password_type === 'password' ? password_type = 'text' : password_type = 'password'" class="mt-[-11px] ml-[5px] cursor-pointer text-blue-500 w-fit transition-all hover:text-orange-600">{{password_type === 'password' ? 'Show' : 'Hide'}} password</p>
+        <div *ngIf="password.touched" class="ml-1">
+            <p class="error" *ngIf="password.errors?.['required']">Password is <span class="font-bold">required</span></p>
+            <p class="error" *ngIf="password.errors?.['minlength']">Password must be at least <span class="font-bold">6 symbols</span></p>
+        </div>
+    </div>
+    <button [disabled]="form.invalid" class="disabled:brightness-75 disabled:cursor-not-allowed w-[300px] bg-white mt-3 text-2xl font-bold rounded-md border-1 border-[grey] p-0.5 hover:bg-[#2fa32f] hover:text-white transition-all mb-0">Update profile</button>
+    <button type="button" (click)="resetChangesHandler()" class="text-[#da502d] w-[300px] bg-white mt-1 mb-2 text-2xl font-bold rounded-md border-1 border-[grey] p-0.5 hover:bg-[#a3462f] hover:text-white transition-all">Reset changes</button>
+</form>

@@ -36,7 +36,8 @@ async function Login(req: any, res: any){
                 lastname: registered_user.fullname.split(" ")[1],
                 phone: registered_user.phone,
                 mail: registered_user.mail,
-                id: registered_user._id.toString()
+                id: registered_user._id.toString(),
+                profile_picture: registered_user.profile_picture ? registered_user.profile_picture : null
             });
             return;
         }

@@ -1,0 +1,20 @@
+input[type="text"], input[type="password"], input[type="email"]{
+    @apply w-[300px] border-1 border-[#636363] mb-2 rounded-[8px] p-[3px]
+    pl-[10px] pr-[10px] text-[20px]
+}
+
+input[type="radio"]{
+    @apply absolute mt-[-28px] right-1
+}
+
+#names{
+    @apply w-[146px]
+}
+
+.error{
+    @apply w-full -mt-3 text-red-600
+}
+
+*{
+    @apply font-jaldi
+}
