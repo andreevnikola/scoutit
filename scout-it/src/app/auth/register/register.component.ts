@@ -27,6 +27,7 @@ export class RegisterComponent {
     this.authService.registerAccount(phone_starting, phone, mail, username, firstname, lastname, password, this.account_type!).subscribe({
       next: (data: IRegistered) => {
         this.loading = false;
+        sessionStorage.clear();
         localStorage.setItem("key", data.key.toString());
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("firstname", firstname);

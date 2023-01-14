@@ -15,8 +15,8 @@ class="rounded-md left-1/2 relative h-fit -translate-x-1/2 p-5 border-[1px]
     <div class="flex mt-2">
         <select #phone_starting class="absolute bg-transparent h-[35px] ml-1" [ngModel]="phone_country_code" name="phone_starting">
             <option value="+359">+359</option>
-            <option value="+49"><img src="" alt="Germany">+49</option>
-            <option value="+39"><img src="" alt="Italy">+39</option>
+            <option disabled value="+49"><img src="" alt="Germany">+49</option>
+            <option disabled value="+39"><img src="" alt="Italy">+39</option>
         </select>
         <input (change)="taken && taken.includes('phone') ? taken = null : null" [ngModel]="phone_widthout_country_code" required minlength="9" maxlength="9" name="phone" #phone="ngModel" type="text" style="padding-left: 60px !important;" placeholder="Phone number: ">
     </div>
@@ -45,16 +45,16 @@ class="rounded-md left-1/2 relative h-fit -translate-x-1/2 p-5 border-[1px]
         <p class="error" *ngIf="username.errors?.['minlength']">Username must be at least <span class="font-bold">6 symbols</span></p>
     </div>
     <div>
-        <input required minlength="6" #firstname="ngModel" [ngModel]="firstname_storage" name="firstname" type="text" id="names" class="mr-2" placeholder="First name: ">
-        <input required minlength="6" #lastname="ngModel" [ngModel]="lastname_storage" name="lastname" type="text" id="names" placeholder="Surname: ">
+        <input required minlength="3" #firstname="ngModel" [ngModel]="firstname_storage" name="firstname" type="text" id="names" class="mr-2" placeholder="First name: ">
+        <input required minlength="3" #lastname="ngModel" [ngModel]="lastname_storage" name="lastname" type="text" id="names" placeholder="Surname: ">
     </div>
     <div *ngIf="lastname.touched">
         <p class="error" *ngIf="lastname.errors?.['required']">Surname is <span class="font-bold">required</span></p>
-        <p class="error" *ngIf="lastname.errors?.['minlength']">Surname must be at least <span class="font-bold">6 symbols</span></p>
+        <p class="error" *ngIf="lastname.errors?.['minlength']">Surname must be at least <span class="font-bold">3 symbols</span></p>
     </div>
     <div *ngIf="firstname.touched && (!lastname.errors || !lastname.touched)">
         <p class="error" *ngIf="firstname.errors?.['required']">First name is <span class="font-bold">required</span></p>
-        <p class="error" *ngIf="firstname.errors?.['minlength']">First name must be at least <span class="font-bold">6 symbols</span></p>
+        <p class="error" *ngIf="firstname.errors?.['minlength']">First name must be at least <span class="font-bold">3 symbols</span></p>
     </div>
     <p (click)="changePassword = !changePassword" class="cursor-pointer text-xl text-blue-500 w-fit transition-all hover:text-orange-600 relative bg-white
               pl-2 pr-2 left-1/2 -translate-x-1/2 pb-0 pt-0">
