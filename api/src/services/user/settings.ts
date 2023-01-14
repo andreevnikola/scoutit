@@ -41,8 +41,6 @@ async function Settings(req: any, res: any){
             if(registered_user.profile_picture){
                 cloudinary_.uploader.destroy(registered_user.profile_picture.split("/")[7].replace(".jpg", "").replace(".png", ""));
             }
-        }else{
-            upload = registered_user.profile_picture ? registered_user.profile_picture : null;
         }
         const hashedPass: string = pass !== "unknown" ? await _bcrypt.hash(pass, salt) : registered_user.password;
         await users.Update({
@@ -54,8 +52,8 @@ async function Settings(req: any, res: any){
                 password: hashedPass,
                 mail: mail,
                 fullname: fullname,
-                verified: users.verified && users.mail === mail ? true : false,
-                profile_picture: upload ? upload.secure_url : null
+                verified: registered_user.verified && registered_user.mail === mail ? true : false,
+                profile_picture: upload ? upload.secure_url : registered_user.profile_picture ? registered_user.profile_picture : null
             }
         });
         res.status(200).send({ 
