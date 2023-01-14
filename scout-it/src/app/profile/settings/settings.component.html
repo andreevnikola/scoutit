@@ -25,6 +25,13 @@ class="rounded-md left-1/2 relative h-fit -translate-x-1/2 p-5 border-[1px]
         <p class="error" *ngIf="phone.errors?.['required']">Phone number is <span class="font-bold">required</span></p>
         <p class="error" *ngIf="phone.errors?.['minlength']">Please enter <span class="font-bold">valid</span> phone number</p>
     </div>
+    <div *ngIf="!verified" class="absolute flex right-[37px] mt-1">
+        <div (click)="confirmMail()" [hidden]="!showNotVerifiedAlert" class="rounded-br-none absolute w-[192px] -ml-[184px] bg-gray-100 py-2 px-3 mt- border-red-600 border rounded-xl text-sm -mt-[115px] z-0">
+            <p><span class="font-bold text-lg">E-MAIL is not verified!</span> Verify your email to make your account visible for orhers.</p>
+            <button type="button" class="bg-[#cee6bd] rounded px-2 py-1 mt-2 w-full border-red-600 border hover:text-white hover:bg-[#88aa6f] hover:border-[#cee6bd] hover:text-bold transition-all">Send verification</button>
+        </div>
+        <fa-icon (click)="showNotVerifiedAlert = !showNotVerifiedAlert" [icon]="information" class="rounded-ful text-2xl text-red-600 cursor-pointer z-10"></fa-icon>
+    </div>
     <input (change)="taken && taken.includes('mail') ? taken = null : null" required minlength="6" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #mail="ngModel" [ngModel]="mail_storage" name="mail" type="email" placeholder="E-MAIL:">
     <p class="error" *ngIf="taken && taken.includes('mail')">E-MAIL is <span class="font-bold">taken</span></p>
     <div *ngIf="mail.touched">
