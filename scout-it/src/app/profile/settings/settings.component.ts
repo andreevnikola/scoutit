@@ -25,11 +25,11 @@ export class SettingsComponent {
   phone_storage = sessionStorage.getItem("phone");
   phone_country_code: any = "";
   phone_widthout_country_code: string = "";
+  choosen_file: File | undefined;
   file: File | undefined;
   url: string | ArrayBuffer | null | undefined = sessionStorage.getItem("profile_picture") || "./assets/images/avatar.png";
 
   @ViewChild('form') form!: NgForm;
-password: any;
 
   constructor( private profileService: ProfileService, private router: Router ){
     this.phone_country_code = this.phone_storage!.split("").length === 13 ? this.phone_storage!.split("").map((letter, i) => { return i <= 3 ? letter : null }) : this.phone_storage!.split("").length === 12 ? this.phone_storage!.split("").map((letter, i) => { return i <= 2 ? letter : null }) : null;
@@ -37,12 +37,12 @@ password: any;
     this.phone_widthout_country_code = this.phone_storage?.replace(this.phone_country_code, "")!;
   }
 
-  updateAccount(phone_starting:string, phone_ending:string, mail:string, username:string, firstname:string, lastname:string, password:string | null){
+  updateAccount(phone_starting:string, phone_ending:string, mail:string, username:string, firstname:string, lastname:string){
     let phone = phone_starting + phone_ending;
     let fullname = firstname + " " + lastname;
     this.loading = true;
     this.taken = [];
-    this.profileService.editAccount(phone, mail, username, fullname, password, this.file).subscribe({
+    this.profileService.editAccount(phone, mail, username, fullname, this.form.controls['password']?.getRawValue(), this.file).subscribe({
       next: (data) => {
         this.loading = false;
         sessionStorage.setItem("mail", mail);
@@ -55,7 +55,7 @@ password: any;
         this.firstname_storage = firstname;
         this.lastname_storage = lastname;
         this.phone_storage = phone;
-        if( this.file ){ sessionStorage.setItem("profile_picture", data.url); this.url = data.url }
+        if( this.file ){ sessionStorage.setItem("profile_picture", data.url); this.url = data.url; this.file = undefined; }
       },
       error: (err) => {
         this.loading = false;
@@ -74,6 +74,9 @@ password: any;
     this.form.controls['mail'].setValue(this.mail_storage);
     this.form.controls['phone'].setValue(this.phone_widthout_country_code);
     this.form.controls['phone_starting'].setValue(this.phone_country_code);
+    this.url = sessionStorage.getItem("profile_picture") || "./assets/images/avatar.png";
+    this.file = undefined;
+    this.choosen_file = undefined;
   }
 
   fileChoosen(event: any){

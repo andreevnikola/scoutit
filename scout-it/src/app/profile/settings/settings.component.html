@@ -1,6 +1,6 @@
 <img *ngIf="loading" src="assets/images/loading.gif" alt="loading" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                                                           w-56 h-56">
-<form [hidden]="loading" #form="ngForm" (ngSubmit)="updateAccount(phone_starting.value, phone.value, mail.value, username.value, firstname.value, lastname.value, password ? password.value : null)" 
+<form [hidden]="loading" #form="ngForm" (ngSubmit)="updateAccount(phone_starting.value, phone.value, mail.value, username.value, firstname.value, lastname.value)" 
 class="rounded-md left-1/2 relative h-fit -translate-x-1/2 p-5 border-[1px]
      border-[#58C900] shadow-custom pt-[20px] pb-[20px] pl-[30px] pr-[30px] from-[#FAFFFA] to-white 
      bg-gradient-to-tl w-[362px] mb-6 mt-6">
@@ -11,12 +11,12 @@ class="rounded-md left-1/2 relative h-fit -translate-x-1/2 p-5 border-[1px]
         Change profile picture 
         <fa-icon [icon]="editPhoto" class=""></fa-icon>
     </label>
-    <input style="display: none;" id="file" type="file" accept="image/*" name="image" id="file" #image="ngModel" ngModel (change)="fileChoosen($event)">
+    <input style="display: none;" id="file" type="file" accept="image/*" name="image" id="file" #image="ngModel" [(ngModel)]="choosen_file" (change)="fileChoosen($event)">
     <div class="flex mt-2">
         <select #phone_starting class="absolute bg-transparent h-[35px] ml-1" [ngModel]="phone_country_code" name="phone_starting">
             <option value="+359">+359</option>
-            <option disabled value="+49"><img src="" alt="Germany">+49</option>
-            <option disabled value="+39"><img src="" alt="Italy">+39</option>
+            <option value="+49"><img src="" alt="Germany">+49</option>
+            <option value="+39"><img src="" alt="Italy">+39</option>
         </select>
         <input (change)="taken && taken.includes('phone') ? taken = null : null" [ngModel]="phone_widthout_country_code" required minlength="9" maxlength="9" name="phone" #phone="ngModel" type="text" style="padding-left: 60px !important;" placeholder="Phone number: ">
     </div>
