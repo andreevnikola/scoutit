@@ -21,4 +21,8 @@ export class ProfileService {
     return this.httpClient.post<any>('http://localhost:8080/api/users/settings/key', formData)
   }
 
+  confirmMail(){
+    return this.httpClient.get<any>('http://localhost:8080/api/users/confirm/key')
+  }
+
 }

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faCamera, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -15,7 +15,9 @@ export class SettingsComponent {
   account_type: string | undefined;
   loading: boolean = false;
   taken: string[] | undefined | null;
+  showNotVerifiedAlert: boolean = false;
   editPhoto = faCamera;
+  information = faInfoCircle;
   edit = faEdit;
   changePassword: boolean = false;
   username_storage = sessionStorage.getItem("username");
@@ -23,6 +25,7 @@ export class SettingsComponent {
   firstname_storage = sessionStorage.getItem("firstname");
   lastname_storage = sessionStorage.getItem("lastname");
   phone_storage = sessionStorage.getItem("phone");
+  verified = sessionStorage.getItem("verified");
   phone_country_code: any = "";
   phone_widthout_country_code: string = "";
   choosen_file: File | undefined;
@@ -50,6 +53,10 @@ export class SettingsComponent {
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("firstname", firstname);
         sessionStorage.setItem("lastname", lastname);
+        if(this.mail_storage !== mail){
+          sessionStorage.removeItem("verified");
+          this.verified = null;
+        }
         this.username_storage = username;
         this.mail_storage = mail;
         this.firstname_storage = firstname;
@@ -87,6 +94,18 @@ export class SettingsComponent {
 		reader.onload = (_event) => {
 			this.url = reader.result; 
 		}
+  }
+
+  confirmMail(){
+    this.profileService.confirmMail().subscribe({
+      next: () => {
+        this.showNotVerifiedAlert = false;
+        sessionStorage.clear();
+      },
+      error: (err) => {
+        alert("Something went wrong! Try again later!");
+      }
+    });
   }
 
 }
