@@ -30,7 +30,7 @@ export class SettingsComponent {
   phone_widthout_country_code: string = "";
   choosen_file: File | undefined;
   file: File | undefined;
-  url: string | ArrayBuffer | null | undefined = sessionStorage.getItem("profile_picture") || "./assets/images/avatar.png";
+  url: string | ArrayBuffer | null | undefined = sessionStorage.getItem("profile_picture") && sessionStorage.getItem("profile_picture") !== "undefined" ? sessionStorage.getItem("profile_picture") : "./assets/images/avatar.png";
 
   @ViewChild('form') form!: NgForm;
 
@@ -62,12 +62,17 @@ export class SettingsComponent {
         this.firstname_storage = firstname;
         this.lastname_storage = lastname;
         this.phone_storage = phone;
+        this.phone_country_code = this.phone_storage!.split("").length === 13 ? this.phone_storage!.split("").map((letter, i) => { return i <= 3 ? letter : null }) : this.phone_storage!.split("").length === 12 ? this.phone_storage!.split("").map((letter, i) => { return i <= 2 ? letter : null }) : null;
+        this.phone_country_code = this.phone_country_code.join("");
+        this.phone_widthout_country_code = this.phone_storage?.replace(this.phone_country_code, "")!;
         if( this.file ){ sessionStorage.setItem("profile_picture", data.url); this.url = data.url; this.file = undefined; }
       },
       error: (err) => {
         this.loading = false;
         if(err.status === 409){
-          this.taken = err.status.taken;
+          this.taken = err.error.taken;
+          console.log(this.taken)
+          return;
         }
         alert("Something went wrong!")
       }

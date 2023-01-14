@@ -26,6 +26,7 @@ export class LoginComponent {
     this.authService.signIn(phone_starting, phone, password, this.account_type!).subscribe({
       next: (data: any) => {
         this.loading = false;
+        sessionStorage.clear();
         localStorage.setItem("key", data.key.toString());
         sessionStorage.setItem("username", data.name);
         sessionStorage.setItem("firstname", data.firstname);

@@ -12,16 +12,16 @@ async function Settings(req: any, res: any){
         const registered_user: any = await users.Read({
             keys: key,
         });
-        const thereIsRegistered = await users.Read({
+        const thereIsRegistered = await users.ReadMany({
             $or: [
                 { username: username },
                 { mail: mail },
                 { phone: phone }
             ]
         });
-        if(thereIsRegistered){
+        let taken: string[] = [];
+        thereIsRegistered?.some((thereIsRegistered: any) => {
             if(!thereIsRegistered._id.equals(registered_user._id)){
-                let taken: string[] = [];
                 if(thereIsRegistered.username === username){ taken.push("username") }
                 if(thereIsRegistered.mail === mail){ taken.push("mail") }
                 if(thereIsRegistered.phone === phone){ taken.push("phone") }
@@ -30,7 +30,8 @@ async function Settings(req: any, res: any){
                 });
                 return;
             }
-        }
+        });
+        if(taken.length > 0){ return; }
         if(!registered_user){
             res.status(401).send();
             return;
