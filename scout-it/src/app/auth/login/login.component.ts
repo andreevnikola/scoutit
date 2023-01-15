@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticateService } from '../authenticate.service';
 
 @Component({
@@ -7,13 +7,14 @@ import { AuthenticateService } from '../authenticate.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   password_type: string = "password";
   account_type: string | undefined;
   loading: boolean = false;
   not_found: boolean = false;
+  returnUrl: string | undefined;
 
-  constructor( private authService: AuthenticateService, private router: Router ){ }
+  constructor( private authService: AuthenticateService, private router: Router, private route: ActivatedRoute ){ }
 
   changeAccountType(event: any){
     this.account_type = event.target.value;
@@ -36,6 +37,7 @@ export class LoginComponent {
         sessionStorage.setItem("id", data.id);
         if(data.verified){ sessionStorage.setItem("verified", data.verified); }
         if(data.profile_picture){ sessionStorage.setItem("profile_picture", data.profile_picture) };
+        if(this.returnUrl){ this.router.navigate([this.returnUrl]); return; }
         this.router.navigate([`/profile/${data.id}`]);
       },
       error: (err) => {
@@ -47,5 +49,13 @@ export class LoginComponent {
         alert("Something went wrong. Please try again later.")
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams
+      .subscribe((params: any) => {
+        this.returnUrl = params.returnUrl;
+      }
+    );
   }
 }
