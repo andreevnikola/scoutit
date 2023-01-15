@@ -39,7 +39,7 @@ async function Settings(req: any, res: any){
         let upload;
         if(req.file?.path){
             upload = await cloudinary_.v2.uploader.upload(req.file.path);
-            if(registered_user.profile_picture){
+            if(registered_user.profile_picture && !registered_user.profile_picture.startsWith("https://avatars.dicebear")){
                 cloudinary_.uploader.destroy(registered_user.profile_picture.split("/")[7].replace(".jpg", "").replace(".png", ""));
             }
         }

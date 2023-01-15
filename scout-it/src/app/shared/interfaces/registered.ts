@@ -1,4 +1,5 @@
 export interface IRegistered {
     key: number,
-    id: string
+    id: string,
+    profile_picture: string
 } 
