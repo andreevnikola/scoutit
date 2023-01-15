@@ -39,4 +39,14 @@ export class ProfileService {
     })
   }
 
+  updateLinks( facebook: string, instagram: string, twitter: string, linkedin: string, github: string ){
+    return this.httpClient.post<any>(`http://localhost:8080/api/profile/updatelinks/key`, {
+      facebook: facebook,
+      instagram: instagram,
+      twitter: twitter,
+      linkedin: linkedin,
+      github: github
+    })
+  }
+
 }
