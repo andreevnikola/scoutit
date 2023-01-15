@@ -4,12 +4,14 @@ import { SettingsComponent } from './settings/settings.component';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PublicProfileComponent } from './public-profile/public-profile.component';
 
 
 
 @NgModule({
   declarations: [
-    SettingsComponent
+    SettingsComponent,
+    PublicProfileComponent
   ],
   imports: [
     CommonModule,

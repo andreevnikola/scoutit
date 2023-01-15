@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { IUser } from '../shared/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,21 @@ export class ProfileService {
     return this.httpClient.post<any>('http://localhost:8080/api/users/settings/key', formData)
   }
 
+  getProfile(id: string){
+    return this.httpClient.get<IUser>(`http://localhost:8080/api/profile/load/${id}`)
+  }
+
   confirmMail(){
     return this.httpClient.get<any>('http://localhost:8080/api/users/confirm/key')
+  }
+
+  updateProfile( description: string, address: string, city: string, country: string ){
+    return this.httpClient.post<any>(`http://localhost:8080/api/profile/update/key`, {
+      description: description,
+      address: address,
+      city: city,
+      country: country
+    })
   }
 
 }
