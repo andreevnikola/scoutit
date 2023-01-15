@@ -15,6 +15,7 @@ async function verifyMail(req: any, res: any){
         }
         if(registered_user.verification_code.toString() !== code){
             res.status(403).send();
+            return;
         }
         await users.Update({
             keys: key

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { IsLoggedGuard } from './is-logged.guard';
+import { PublicProfileComponent } from './public-profile/public-profile.component';
 import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
@@ -9,6 +10,10 @@ const routes: Routes = [
     component: SettingsComponent,
     canActivate: [ IsLoggedGuard ]
   },
+  {
+    path: ':id',
+    component: PublicProfileComponent,
+  }
 ];
 
 @NgModule({
