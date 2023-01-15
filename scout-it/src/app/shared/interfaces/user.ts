@@ -15,4 +15,9 @@ export interface IUser{
     country?: string;
     city?: string;
     description?: string;
+    facebook?: string;
+    instagram?: string;
+    twitter?: string;
+    linkedin?: string;
+    github?: string;
 }

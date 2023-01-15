@@ -6,7 +6,8 @@ const confirmmail = require("./user/confirmMail.js").confirmMail;
 const verifymail = require("./user/verifyMail.js").verifyMail;
 const settings = require("./user/settings.js").Settings;
 const loadprofile = require("./profile/load.js").LoadProfile;
-const updateaccdata = require("./profile/UpdateAccData.js").UpdateAccData;
+const updateaccdata = require("./profile/updateAccData.js").UpdateAccData;
+const updatelinks = require("./profile/updateLinks.js").updateLinks;
 
 module.exports = {
     register,
@@ -17,5 +18,6 @@ module.exports = {
     verifymail,
     settings,
     loadprofile,
-    updateaccdata
+    updateaccdata,
+    updatelinks
 };

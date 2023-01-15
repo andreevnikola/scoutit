@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ProfileService } from '../profile.service';
 import * as L from 'leaflet';
 import { NgForm } from '@angular/forms';
+import { faFacebook, faGithub, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-public-profile',
@@ -18,7 +19,13 @@ export class PublicProfileComponent implements AfterViewInit{
   countryPin = faLocationDot;
   addressPin = faMapPin;
   cityIcon = faCity;
+  facebookIcon = faFacebook;
+  twitterIcon = faTwitter;
+  instagramIcon = faInstagram;
+  linkedInIcon = faLinkedin;
+  gitHubIcon = faGithub;
   editing: boolean = false;
+  editing_links: boolean = false;
   geocoords: BehaviorSubject<number[]> = new BehaviorSubject([0]);
   id: Observable<string> | undefined;
 
@@ -30,6 +37,11 @@ export class PublicProfileComponent implements AfterViewInit{
   country: string = "";
   address: string = "";
   city: string = "";
+  facebook: string = "";
+  instagram: string = "";
+  twitter: string = "";
+  linkedIn: string = "";
+  gitHub: string = "";
   description: string = "";
   loading: boolean = true;
   yourAcc: boolean = false;
@@ -87,6 +99,11 @@ export class PublicProfileComponent implements AfterViewInit{
           this.country = data.country || "";
           this.city = data.city || "";
           this.description = data.description || "";
+          this.facebook = data.facebook || "";
+          this.instagram = data.instagram || "";
+          this.twitter = data.twitter || "";
+          this.linkedIn = data.linkedin || "";
+          this.gitHub = data.github || "";
           if(data.username! === sessionStorage.getItem("username")){ this.yourAcc = true; }
           this.getGeocoordsByAddress();
         },
@@ -116,6 +133,25 @@ export class PublicProfileComponent implements AfterViewInit{
         this.description = description;
         this.city = city;
         this.editing = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        if(err.status === 401){ return; }
+        alert("Something went wrong!");
+      }
+    });
+  }
+
+  updateLinksHandler(facebook: string, instagram: string, twitter: string, linkedin: string, github: string){
+    this.profileService.updateLinks(facebook, instagram, twitter, linkedin, github).subscribe({
+      next: (data) => {
+        this.loading = false;
+        this.facebook = facebook;
+        this.instagram = instagram;
+        this.twitter = twitter;
+        this.linkedIn = linkedin;
+        this.gitHub = github;
+        this.editing_links = false;
       },
       error: (err) => {
         this.loading = false;
