@@ -35,6 +35,7 @@ export class RegisterComponent {
         sessionStorage.setItem("phone", phone_starting + phone);
         sessionStorage.setItem("mail", mail);
         sessionStorage.setItem("id", data.id);
+        sessionStorage.setItem("profile_picture", data.profile_picture)
         this.router.navigate([`/profile/${data.id}`]);
       },
       error: (err) => {
