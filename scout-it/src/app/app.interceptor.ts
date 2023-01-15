@@ -26,7 +26,8 @@ export class AppInterceptor implements HttpInterceptor{
                 if(err.status === 401){
                     localStorage.clear();
                     sessionStorage.clear();
-                    this.router.navigate(['/auth/login']);
+                    const returnUrl = this.router.routerState.snapshot.url;
+                    this.router.navigate(['/auth/signin'], { queryParams: { returnUrl } });
                 }
                 return throwError(err);
             })

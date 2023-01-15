@@ -38,4 +38,10 @@ export class AuthenticateService {
     return this.httpClient.get<any>(`http://localhost:8080/api/users/confirm/${key}`)
   }
 
+  username: string | null = sessionStorage.getItem("username");
+
+  get isLogged(){
+    return this.username !== null
+  }
+
 }

@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'scout-it';
   constructor( private httpClient: HttpClient ){
-    if(sessionStorage.getItem("phone")){ return; }
+    if(sessionStorage.getItem("phone") || !localStorage.getItem("key")){ return; }
     this.httpClient.get<any>('http://localhost:8080/api/users/authenticate/key').subscribe({
       next: (data) => {
         sessionStorage.setItem("id", data.id);
@@ -22,6 +22,7 @@ export class AppComponent {
         if(data.verified){ sessionStorage.setItem("verified", data.verified); }
       },
       error: (err) => {
+        if(err.status === 401){ return }
         alert('Something went wrong. Please try again later.');
       }
     });

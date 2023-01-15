@@ -9,7 +9,7 @@ async function Authenticate(req, res) {
             keys: key,
         });
         if (!registered_user) {
-            res.status(403).send();
+            res.status(401).send();
             return;
         }
         res.status(200).send({
