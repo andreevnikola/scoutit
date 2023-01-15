@@ -29,16 +29,16 @@
         <p class="error" *ngIf="username.errors?.['minlength']">Username must be at least <span class="font-bold">6 symbols</span></p>
     </div>
     <div>
-        <input required minlength="6" #firstname="ngModel" ngModel name="firstname" type="text" id="names" class="mr-2" placeholder="First name: ">
-        <input required minlength="6" #lastname="ngModel" ngModel name="lastname" type="text" id="names" placeholder="Surname: ">
+        <input required minlength="3" #firstname="ngModel" ngModel name="firstname" type="text" id="names" class="mr-2" placeholder="First name: ">
+        <input required minlength="3" #lastname="ngModel" ngModel name="lastname" type="text" id="names" placeholder="Surname: ">
     </div>
     <div *ngIf="lastname.touched">
         <p class="error" *ngIf="lastname.errors?.['required']">Surname is <span class="font-bold">required</span></p>
-        <p class="error" *ngIf="lastname.errors?.['minlength']">Surname must be at least <span class="font-bold">6 symbols</span></p>
+        <p class="error" *ngIf="lastname.errors?.['minlength']">Surname must be at least <span class="font-bold">3 symbols</span></p>
     </div>
     <div *ngIf="firstname.touched && (!lastname.errors || !lastname.touched)">
         <p class="error" *ngIf="firstname.errors?.['required']">First name is <span class="font-bold">required</span></p>
-        <p class="error" *ngIf="firstname.errors?.['minlength']">First name must be at least <span class="font-bold">6 symbols</span></p>
+        <p class="error" *ngIf="firstname.errors?.['minlength']">First name must be at least <span class="font-bold">3 symbols</span></p>
     </div>
     <input required minlength="6" #password="ngModel" ngModel name="password" [type]="password_type" placeholder="Password: ">
     <p (click)="password_type === 'password' ? password_type = 'text' : password_type = 'password'" class="mt-[-11px] ml-[5px] cursor-pointer text-blue-500 w-fit transition-all hover:text-orange-600">{{password_type === 'password' ? 'Show' : 'Hide'}} password</p>

@@ -33,7 +33,8 @@ async function Register(req: any, res: any){
             return;
         }
         const hashedPass: string = await bcrypt.hash(pass, salt);
-        const key: number = Math.floor(Math.random() * 999999999999) + 1
+        const key: number = Math.floor(Math.random() * 999999999999) + 1;
+        const icon: string = `https://avatars.dicebear.com/v2/bottts/${username}.png`;
         const registered = await users.Create({
             username: username,
             fullname: fullname,
@@ -42,11 +43,13 @@ async function Register(req: any, res: any){
             type: type,
             password: hashedPass,
             verified: false,
-            keys: [ key ]
+            keys: [ key ],
+            profile_picture: icon
         });
         res.status(200).send({
             key: key,
             id: registered.insertedId,
+            profile_picture: icon
         });
     } catch (error) {
         console.log(error);

@@ -18,6 +18,8 @@ export class AppComponent {
         sessionStorage.setItem("username", data.username);
         sessionStorage.setItem("firstname", data.fullname.split(" ")[0]);
         sessionStorage.setItem("lastname", data.fullname.split(" ")[1]);
+        sessionStorage.setItem("profile_picture", data.url);
+        if(data.verified){ sessionStorage.setItem("verified", data.verified); }
       },
       error: (err) => {
         alert('Something went wrong. Please try again later.');

@@ -1,17 +1,17 @@
 <img *ngIf="loading" src="assets/images/loading.gif" alt="loading" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                                                           w-56 h-56">
-<form [hidden]="loading" #form="ngForm" (ngSubmit)="updateAccount(phone_starting.value, phone.value, mail.value, username.value, firstname.value, lastname.value, password ? password.value : null)" 
+<form [hidden]="loading" #form="ngForm" (ngSubmit)="updateAccount(phone_starting.value, phone.value, mail.value, username.value, firstname.value, lastname.value)" 
 class="rounded-md left-1/2 relative h-fit -translate-x-1/2 p-5 border-[1px]
      border-[#58C900] shadow-custom pt-[20px] pb-[20px] pl-[30px] pr-[30px] from-[#FAFFFA] to-white 
      bg-gradient-to-tl w-[362px] mb-6 mt-6">
     <p class="text-[60px] font-jaldi text-center mb-3"><span class="font-bold">Settings</span></p>
-    <div class="w-[300px] h-[300px] rounded-full bg-gray-500 m-0 -mt-4 bg-cover"
+    <div class="w-[300px] h-[300px] rounded-full bg-gray-100 m-0 -mt-4 bg-cover"
     [style.background-image]="'url(' + url + ')'"></div>
     <label for="file" class="font-bold text-lg text-center cursor-pointer relative left-1/2 ml-[-88px]">
         Change profile picture 
         <fa-icon [icon]="editPhoto" class=""></fa-icon>
     </label>
-    <input style="display: none;" id="file" type="file" accept="image/*" name="image" id="file" #image="ngModel" ngModel (change)="fileChoosen($event)">
+    <input style="display: none;" id="file" type="file" accept="image/*" name="image" id="file" #image="ngModel" [(ngModel)]="choosen_file" (change)="fileChoosen($event)">
     <div class="flex mt-2">
         <select #phone_starting class="absolute bg-transparent h-[35px] ml-1" [ngModel]="phone_country_code" name="phone_starting">
             <option value="+359">+359</option>
@@ -24,6 +24,13 @@ class="rounded-md left-1/2 relative h-fit -translate-x-1/2 p-5 border-[1px]
     <div *ngIf="phone.touched">
         <p class="error" *ngIf="phone.errors?.['required']">Phone number is <span class="font-bold">required</span></p>
         <p class="error" *ngIf="phone.errors?.['minlength']">Please enter <span class="font-bold">valid</span> phone number</p>
+    </div>
+    <div *ngIf="!verified" class="absolute flex right-[37px] mt-1">
+        <div (click)="confirmMail()" [hidden]="!showNotVerifiedAlert" class="rounded-br-none absolute w-[192px] -ml-[184px] bg-gray-100 py-2 px-3 mt- border-red-600 border rounded-xl text-sm -mt-[115px] z-0">
+            <p><span class="font-bold text-lg">E-MAIL is not verified!</span> Verify your email to make your account visible for orhers.</p>
+            <button type="button" class="bg-[#cee6bd] rounded px-2 py-1 mt-2 w-full border-red-600 border hover:text-white hover:bg-[#88aa6f] hover:border-[#cee6bd] hover:text-bold transition-all">Send verification</button>
+        </div>
+        <fa-icon (click)="showNotVerifiedAlert = !showNotVerifiedAlert" [icon]="information" class="rounded-ful text-2xl text-red-600 cursor-pointer z-10"></fa-icon>
     </div>
     <input (change)="taken && taken.includes('mail') ? taken = null : null" required minlength="6" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #mail="ngModel" [ngModel]="mail_storage" name="mail" type="email" placeholder="E-MAIL:">
     <p class="error" *ngIf="taken && taken.includes('mail')">E-MAIL is <span class="font-bold">taken</span></p>
@@ -38,16 +45,16 @@ class="rounded-md left-1/2 relative h-fit -translate-x-1/2 p-5 border-[1px]
         <p class="error" *ngIf="username.errors?.['minlength']">Username must be at least <span class="font-bold">6 symbols</span></p>
     </div>
     <div>
-        <input required minlength="6" #firstname="ngModel" [ngModel]="firstname_storage" name="firstname" type="text" id="names" class="mr-2" placeholder="First name: ">
-        <input required minlength="6" #lastname="ngModel" [ngModel]="lastname_storage" name="lastname" type="text" id="names" placeholder="Surname: ">
+        <input required minlength="3" #firstname="ngModel" [ngModel]="firstname_storage" name="firstname" type="text" id="names" class="mr-2" placeholder="First name: ">
+        <input required minlength="3" #lastname="ngModel" [ngModel]="lastname_storage" name="lastname" type="text" id="names" placeholder="Surname: ">
     </div>
     <div *ngIf="lastname.touched">
         <p class="error" *ngIf="lastname.errors?.['required']">Surname is <span class="font-bold">required</span></p>
-        <p class="error" *ngIf="lastname.errors?.['minlength']">Surname must be at least <span class="font-bold">6 symbols</span></p>
+        <p class="error" *ngIf="lastname.errors?.['minlength']">Surname must be at least <span class="font-bold">3 symbols</span></p>
     </div>
     <div *ngIf="firstname.touched && (!lastname.errors || !lastname.touched)">
         <p class="error" *ngIf="firstname.errors?.['required']">First name is <span class="font-bold">required</span></p>
-        <p class="error" *ngIf="firstname.errors?.['minlength']">First name must be at least <span class="font-bold">6 symbols</span></p>
+        <p class="error" *ngIf="firstname.errors?.['minlength']">First name must be at least <span class="font-bold">3 symbols</span></p>
     </div>
     <p (click)="changePassword = !changePassword" class="cursor-pointer text-xl text-blue-500 w-fit transition-all hover:text-orange-600 relative bg-white
               pl-2 pr-2 left-1/2 -translate-x-1/2 pb-0 pt-0">

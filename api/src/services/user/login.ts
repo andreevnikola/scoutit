@@ -37,7 +37,8 @@ async function Login(req: any, res: any){
                 phone: registered_user.phone,
                 mail: registered_user.mail,
                 id: registered_user._id.toString(),
-                profile_picture: registered_user.profile_picture ? registered_user.profile_picture : null
+                profile_picture: registered_user.profile_picture ? registered_user.profile_picture : null,
+                verified: registered_user.verified
             });
             return;
         }

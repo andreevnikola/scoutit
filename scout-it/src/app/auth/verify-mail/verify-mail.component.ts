@@ -18,6 +18,7 @@ export class VerifyMailComponent {
         this.loading = false;
         this.user_id = data.id;
         this.firstname = data.firstname;
+        sessionStorage.setItem("verified", "true");
       },
       error: (err) => {
         this.loading = false;
