@@ -8,6 +8,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { appInterceptorProvider } from './app.interceptor';
+import { ErrorsModule } from './errors/errors.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,9 +18,10 @@ import { appInterceptorProvider } from './app.interceptor';
     CoreModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    ErrorsModule,
   ],
-  providers: [ appInterceptorProvider ],
+  providers: [appInterceptorProvider],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
