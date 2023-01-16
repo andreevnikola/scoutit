@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IRegistered } from 'src/app/shared/interfaces';
+import { IRegistered, IUser } from 'src/app/shared/interfaces';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -31,20 +31,14 @@ export class AuthenticateService {
     );
   }
 
-  signIn(
-    phone_starting: string,
-    phone: string,
-    password: string,
-    type: string
-  ) {
-    return this.httpClient.post<IRegistered>(
-      'http://localhost:8080/api/users/login',
-      {
-        pass: password,
-        phone: phone_starting + phone,
-        type: type,
-      }
-    );
+
+  signIn(phone_starting:string, phone:string, password:string, type:string){
+
+    return this.httpClient.post<IUser>('http://localhost:8080/api/users/login', {
+      pass: password,
+      phone: phone_starting + phone,
+      type: type
+    })
   }
 
   verifyMail(key: string, code: string) {
@@ -59,9 +53,11 @@ export class AuthenticateService {
     );
   }
 
-  user: string | null = sessionStorage.getItem('user');
 
-  get isLoggedIn(): boolean {
-    return this.user !== null;
+  username: string | null = sessionStorage.getItem("username");
+
+  get isLogged(){
+    return this.username !== null
   }
+
 }

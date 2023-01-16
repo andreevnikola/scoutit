@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IUser } from 'src/app/shared/interfaces';
 import { AuthenticateService } from '../authenticate.service';
 
 @Component({
@@ -7,13 +8,14 @@ import { AuthenticateService } from '../authenticate.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   password_type: string = "password";
   account_type: string | undefined;
   loading: boolean = false;
   not_found: boolean = false;
+  returnUrl: string | undefined;
 
-  constructor( private authService: AuthenticateService, private router: Router ){ }
+  constructor( private authService: AuthenticateService, private router: Router, private route: ActivatedRoute ){ }
 
   changeAccountType(event: any){
     this.account_type = event.target.value;
@@ -24,19 +26,20 @@ export class LoginComponent {
     this.not_found = false;
 
     this.authService.signIn(phone_starting, phone, password, this.account_type!).subscribe({
-      next: (data: any) => {
+      next: (data: IUser) => {
         this.loading = false;
         sessionStorage.clear();
-        localStorage.setItem("key", data.key.toString());
-        sessionStorage.setItem("username", data.name);
-        sessionStorage.setItem("firstname", data.firstname);
-        sessionStorage.setItem("lastname", data.lastname);
+        localStorage.setItem("key", data.key!.toString());
+        sessionStorage.setItem("username", data.name!);
+        sessionStorage.setItem("firstname", data.firstname!);
+        sessionStorage.setItem("lastname", data.lastname!);
         sessionStorage.setItem("phone", phone_starting + phone);
-        sessionStorage.setItem("mail", data.mail);
-        sessionStorage.setItem("id", data.id);
-        if(data.verified){ sessionStorage.setItem("verified", data.verified); }
+        sessionStorage.setItem("mail", data.mail!);
+        sessionStorage.setItem("id", data.id!);
+        if(data.verified){ sessionStorage.setItem("verified", "true"); }
         if(data.profile_picture){ sessionStorage.setItem("profile_picture", data.profile_picture) };
-        this.router.navigate([`/profile/${data.id}`]);
+        if(this.returnUrl){ this.router.navigate([this.returnUrl]); return; }
+        this.router.navigate([`/profile/${data.id!}`]);
       },
       error: (err) => {
         this.loading = false;
@@ -47,5 +50,13 @@ export class LoginComponent {
         alert("Something went wrong. Please try again later.")
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.route.queryParams
+      .subscribe((params: any) => {
+        this.returnUrl = params.returnUrl;
+      }
+    );
   }
 }

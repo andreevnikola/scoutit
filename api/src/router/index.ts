@@ -1,6 +1,6 @@
 import { Router } from "express";
 let router: Router = Router();
-const { register, login, logout, authenticate, confirmmail, verifymail, settings } = require("./../services");
+const { register, login, logout, authenticate, confirmmail, verifymail, settings, loadprofile, updateaccdata, updatelinks } = require("./../services");
 
 const multer = require("multer");
 const uploader = multer({
@@ -22,5 +22,8 @@ router.get("/users/logout/:key", (req: string, res: any) => { logout(req, res) }
 router.get("/users/authenticate/:key", (req: string, res: any) => { authenticate(req, res) });
 router.get("/users/confirm/:key", (req: string, res: any) => { confirmmail(req, res) });
 router.get("/users/verify/:key/:code", (req: string, res: any) => { verifymail(req, res) });
+router.get("/profile/load/:id", (req: string, res: any) => { loadprofile(req, res) });
+router.post("/profile/update/:key", (req: string, res: any) => { updateaccdata(req, res) });
+router.post("/profile/updatelinks/:key", (req: string, res: any) => { updatelinks(req, res) });
 
 module.exports = router;
