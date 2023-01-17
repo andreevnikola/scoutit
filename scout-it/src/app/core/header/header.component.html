@@ -1,11 +1,12 @@
 <header
   class="color-pedalski flex flex-row justify-between content-center items-center py-3 px-5"
+  id="header"
 >
   <div id="left">
     <p class="font-bold text-5xl">ScoutIT</p>
   </div>
   <nav>
-    <ul class="hidden md:flex md:flex-row md:gap-4">
+    <ul class="hidden md:flex md:flex-row md:gap-4" id="navbar">
       <li class="text-3xl">
         <a href="/">Search <fa-icon [icon]="search"></fa-icon></a>
       </li>
@@ -14,7 +15,11 @@
         <a href="/">Join</a>
       </li>
     </ul>
-    <button class="hamburger md:hidden" type="button">
+    <button
+      class="hamburger md:hidden"
+      type="button"
+      (click)="toggleHamburger()"
+    >
       <span class="hamburger-box">
         <span class="hamburger-inner"></span>
       </span>
