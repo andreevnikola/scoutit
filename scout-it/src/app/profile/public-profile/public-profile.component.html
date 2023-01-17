@@ -1,9 +1,19 @@
 <div class="-z-10 bg-[#fafafa] w-full h-full fixed top-0 left-0"></div>
-<img *ngIf="loading" src="assets/images/loading.gif" alt="loading" class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56">
-<div [hidden]="loading" class="max-w-[1520px] w-full px-2 py-4 sm:px-10 lg:px-24 left-1/2 relative -translate-x-1/2 flex justify-around">
+<img *ngIf="loading" src="assets/images/loading.gif" alt="loading" class="z-10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56">
+<div *ngIf="profileNotFound">
+    404 THAT ACCOUNT IS NOT FOUND OR EMAIL IS NOT VERIFIED
+</div>
+<div *ngIf="!loading && !profileNotFound" class="max-w-[1520px] w-full px-2 py-4 sm:px-10 lg:px-24 left-1/2 relative -translate-x-1/2 flex justify-around">
     <div class="w-fit max-w-full">
         <div class="w-fit bg-white p-7 rounded-md border shadow-sm text-center mb-3 min-w-full max-w-full">
             <div [hidden]="editing">
+                <button [disabled]="yourAcc || !your_username" (click)="likeAccountHandler()"
+                class="disabled:contrast-50 flex gap-1 font-bold text-lg absolute -mt-5 
+                       -ml-5 bg-green-200 hover:bg-green-300 transition-all border
+                       px-3 py-0.5 rounded-lg cursor-pointer">
+                    <fa-icon [icon]="liked ? likedIcon : likeIcon"></fa-icon>
+                    <p>{{likersCount}}</p>
+                </button>
                 <img [src]="profile_picture" [alt]="username + '\'s profile picture'" class="rounded-full bg-gray-100 border w-60 h-60 relative left-1/2 -translate-x-1/2">
                 <p class="text-2xl font-bold text-center mt-3">{{username}}</p>
                 <p class="mb-1 max-w-[300px]" *ngIf="description">{{description}}</p>
@@ -92,7 +102,7 @@
                 <button type="button" (click)="editing = false;" class="font-bold mt-1 w-full border border-gray-500 rounded text-white bg-red-500 hover:bg-red-600 transition-all p-1">Cancel changes</button>
             </form>
         </div>
-        <div class="w-fit bg-white p-7 rounded-md border shadow-sm text-center mb-3 min-w-full">
+        <div class="w-fit bg-white p-7 rounded-md border shadow-sm text-center mb-3 min-w-full" *ngIf="yourAcc || facebook || instagram || twitter || linkedIn || gitHub">
             <div [hidden]="editing_links || (!facebook && !instagram && !twitter && !linkedIn && !gitHub)">
                 <div class="flex justify-between text-gray-700 gap-2" *ngIf="facebook">
                     <a [href]="facebook" class="flex gap-0.5 w-fit">

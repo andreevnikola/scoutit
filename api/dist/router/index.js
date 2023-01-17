@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 let router = (0, express_1.Router)();
-const { register, login, logout, authenticate, confirmmail, verifymail, settings, loadprofile, updateaccdata, updatelinks } = require("./../services");
+const { register, login, logout, authenticate, confirmmail, verifymail, settings, loadprofile, updateaccdata, updatelinks, likeProfile } = require("./../services");
 const multer = require("multer");
 const uploader = multer({
     storage: multer.diskStorage({}),
@@ -24,5 +24,6 @@ router.get("/users/verify/:key/:code", (req, res) => { verifymail(req, res); });
 router.get("/profile/load/:id", (req, res) => { loadprofile(req, res); });
 router.post("/profile/update/:key", (req, res) => { updateaccdata(req, res); });
 router.post("/profile/updatelinks/:key", (req, res) => { updatelinks(req, res); });
+router.get("/profile/likeProfile/:id/:key", (req, res) => { likeProfile(req, res); });
 module.exports = router;
 //# sourceMappingURL=index.js.map
