@@ -21,4 +21,5 @@ export interface IUser{
     linkedin?: string;
     github?: string;
     followers?: string[];
+    ghProfileData?: any;
 }

@@ -134,6 +134,17 @@
                         <p>Visit my <span class="font-bold">GitHub</span></p>
                     </a>
                 </div>
+                <div hidden>
+                    <div>
+                        <img [src]="ghProfileData.avatar_url" alt="Github profile photo">
+                    <div>
+                        <p>{{ghProfileData.avatar_url}}</p>
+                    </div>
+                    <div>
+                        <p>{{ghProfileData.public_repos}}</p>
+                    </div>
+                    </div>
+                </div>
                 <button *ngIf="yourAcc" (click)="editing_links = true;" class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1">Edit / Add data</button>
             </div>
             <form #form="ngForm" *ngIf="editing_links || (!facebook && !instagram && !twitter && !linkedIn && !gitHub)" (ngSubmit)="updateLinksHandler(facebookInp.value, instagramInp.value, twitterInp.value, linkedInInp.value, githubInp.value)">
