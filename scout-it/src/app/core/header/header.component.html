@@ -7,7 +7,7 @@
   </div>
   <nav class="flex justify-center items-center" id="menu">
     <ul
-      class="hidden md:flex md:flex-row md:gap-4 text-center tablet_reversa:py-4"
+      class="hidden md:flex md:flex-row md:gap-4 text-center tablet_reversa:py-4 tablet_reversa:pr-10"
       id="navbar"
     >
       <li class="text-3xl py-2">
@@ -19,11 +19,15 @@
       <li class="text-3xl py-2">
         <a href="/">Contact us</a>
       </li>
-      <li class="text-3xl font-bold py-2">
+      <li
+        class="text-3xl font-bold py-2"
+        *ngIf="!authService.isLogged"
+      >
         <a href="/">Sign in</a>
       </li>
       <li
         class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
+        *ngIf="!authService.isLogged"
       >
         <a href="/">Join</a>
       </li>

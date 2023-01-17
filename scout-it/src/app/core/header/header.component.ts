@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { AuthenticateService } from 'src/app/auth/authenticate.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +10,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 export class HeaderComponent {
   search = faMagnifyingGlass;
 
-  constructor() {}
+  constructor(public authService: AuthenticateService) {}
 
   toggleHamburger() {
     let navbar = document.querySelector<HTMLElement>('#navbar');
