@@ -20,4 +20,5 @@ export interface IUser{
     twitter?: string;
     linkedin?: string;
     github?: string;
+    followers?: string[];
 }

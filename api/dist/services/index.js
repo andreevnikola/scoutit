@@ -9,6 +9,7 @@ const settings = require("./user/settings.js").Settings;
 const loadprofile = require("./profile/load.js").LoadProfile;
 const updateaccdata = require("./profile/updateAccData.js").UpdateAccData;
 const updatelinks = require("./profile/updateLinks.js").updateLinks;
+const likeProfile = require("./profile/likeProfile.js").LikeProfile;
 module.exports = {
     register,
     login,
@@ -19,6 +20,7 @@ module.exports = {
     settings,
     loadprofile,
     updateaccdata,
-    updatelinks
+    updatelinks,
+    likeProfile
 };
 //# sourceMappingURL=index.js.map
