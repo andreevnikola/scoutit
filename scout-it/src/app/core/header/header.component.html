@@ -31,6 +31,12 @@
       >
         <a href="/">Join</a>
       </li>
+      <li
+        class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
+        *ngIf="authService.isLogged"
+      >
+        <a href="/">Negar</a>
+      </li>
     </ul>
     <button
       class="hamburger md:hidden"
