@@ -17,8 +17,10 @@ export class HeaderComponent {
 
     if (navbar!.style.display === 'block') {
       navbar!.style.display = 'none';
+      header!.style.flexDirection = 'row';
     } else {
       navbar!.style.display = 'block';
+      // navbar!.style.flexDirection = 'column';
       header!.style.flexDirection = 'column';
     }
   }

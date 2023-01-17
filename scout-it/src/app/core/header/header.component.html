@@ -5,13 +5,26 @@
   <div id="left">
     <p class="font-bold text-5xl">ScoutIT</p>
   </div>
-  <nav>
-    <ul class="hidden md:flex md:flex-row md:gap-4" id="navbar">
-      <li class="text-3xl">
+  <nav class="flex justify-center items-center" id="menu">
+    <ul
+      class="hidden md:flex md:flex-row md:gap-4 text-center tablet_reversa:py-4"
+      id="navbar"
+    >
+      <li class="text-3xl py-2">
+        <a href="/">Explore</a>
+      </li>
+      <li class="text-3xl py-2">
         <a href="/">Search <fa-icon [icon]="search"></fa-icon></a>
       </li>
-      <li class="text-3xl font-bold"><a href="/">Sign in</a></li>
-      <li class="text-3xl border-4 border-black rounded-xl font-bold">
+      <li class="text-3xl py-2">
+        <a href="/">Contact us</a>
+      </li>
+      <li class="text-3xl font-bold py-2">
+        <a href="/">Sign in</a>
+      </li>
+      <li
+        class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
+      >
         <a href="/">Join</a>
       </li>
     </ul>
