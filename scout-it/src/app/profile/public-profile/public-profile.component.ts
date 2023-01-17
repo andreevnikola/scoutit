@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faCity, faEnvelope, faLocationDot, faMapPin } from '@fortawesome/free-solid-svg-icons';
+import { faCity, faEnvelope, faHeart, faLocationDot, faMapPin } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProfileService } from '../profile.service';
 import * as L from 'leaflet';
 import { NgForm } from '@angular/forms';
 import { faFacebook, faGithub, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-public-profile',
@@ -19,6 +20,8 @@ export class PublicProfileComponent implements AfterViewInit{
   countryPin = faLocationDot;
   addressPin = faMapPin;
   cityIcon = faCity;
+  likeIcon = faHeartRegular;
+  likedIcon = faHeart;
   facebookIcon = faFacebook;
   twitterIcon = faTwitter;
   instagramIcon = faInstagram;
@@ -28,6 +31,7 @@ export class PublicProfileComponent implements AfterViewInit{
   editing_links: boolean = false;
   geocoords: BehaviorSubject<number[]> = new BehaviorSubject([0]);
   id: Observable<string> | undefined;
+  _id: string = "";
 
   username: string = "";
   profile_picture: string = "";
@@ -45,6 +49,11 @@ export class PublicProfileComponent implements AfterViewInit{
   description: string = "";
   loading: boolean = true;
   yourAcc: boolean = false;
+  verified: boolean = false;
+  liked: boolean = false;
+  likersCount: number = 0;
+
+  your_username: string | null = sessionStorage.getItem("username");
 
   @ViewChild('form') form!: NgForm;
 
@@ -83,9 +92,17 @@ export class PublicProfileComponent implements AfterViewInit{
       })
     });
     this.id.subscribe((id: string) => {
+      this._id = id;
       this.profileService.getProfile(id).subscribe({
         next: (data) => {
+          this.loading = false;
           if(!data){
+            this.profileNotFound = true;
+            return;
+          }
+          if(data.username! === sessionStorage.getItem("username")){ this.yourAcc = true; }
+          this.verified = data.verified! || false;
+          if(!this.verified && !this.yourAcc){
             this.profileNotFound = true;
             return;
           }
@@ -94,7 +111,6 @@ export class PublicProfileComponent implements AfterViewInit{
           this.mail = data.mail!;
           this.phone = data.phone!;
           this.profile_picture = data.profile_picture!;
-          this.loading = false;
           this.address = data.address || "";
           this.country = data.country || "";
           this.city = data.city || "";
@@ -104,10 +120,12 @@ export class PublicProfileComponent implements AfterViewInit{
           this.twitter = data.twitter || "";
           this.linkedIn = data.linkedin || "";
           this.gitHub = data.github || "";
-          if(data.username! === sessionStorage.getItem("username")){ this.yourAcc = true; }
+          this.liked = data.followers?.includes(sessionStorage.getItem("id") || "idk tuka triabva da napisha neshto") || false;
+          this.likersCount = data.followers?.length || 0;
           this.getGeocoordsByAddress();
         },
         error: (err) => {
+          this.loading = false;
           alert("Something went wrong!")
         }
       });
@@ -157,6 +175,22 @@ export class PublicProfileComponent implements AfterViewInit{
         this.loading = false;
         if(err.status === 401){ return; }
         alert("Something went wrong!");
+      }
+    });
+  }
+
+  likeAccountHandler(){
+    this.profileService.likeProfile(this._id).subscribe({
+      next: (data) => {
+        this.liked = !this.liked;
+        this.likersCount += this.liked ? 1 : -1;
+      },
+      error: (err) => {
+        if(err.status === 403){
+          alert("You cannot do that!");
+          return;
+        }
+        alert("Something went wrong!")
       }
     });
   }

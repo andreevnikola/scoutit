@@ -30,6 +30,10 @@ export class ProfileService {
     return this.httpClient.get<any>('http://localhost:8080/api/users/confirm/key')
   }
 
+  likeProfile(id: string){
+    return this.httpClient.get<any>(`http://localhost:8080/api/profile/likeProfile/${id}/key`)
+  }
+
   updateProfile( description: string, address: string, city: string, country: string ){
     return this.httpClient.post<any>(`http://localhost:8080/api/profile/update/key`, {
       description: description,
