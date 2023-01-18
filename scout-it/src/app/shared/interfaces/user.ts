@@ -21,5 +21,6 @@ export interface IUser{
     linkedin?: string;
     github?: string;
     followers?: string[];
-    ghProfileData?: any;
+    workTypes: { freelance: boolean, halfDay: boolean, fullDay: boolean };
+    workPlace: { home: boolean, office: boolean };
 }

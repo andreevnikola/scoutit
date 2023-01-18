@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { faCity, faEnvelope, faHeart, faLocationDot, faMapPin } from '@fortawesome/free-solid-svg-icons';
+import { faBatteryFull, faBatteryHalf, faBuilding, faCity, faEnvelope, faHeart, faHourglassHalf, faHouse, faHouseLaptop, faLocationDot, faMapPin } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProfileService } from '../profile.service';
 import * as L from 'leaflet';
@@ -27,6 +27,11 @@ export class PublicProfileComponent implements AfterViewInit{
   instagramIcon = faInstagram;
   linkedInIcon = faLinkedin;
   gitHubIcon = faGithub;
+  houseIcon = faHouse;
+  atOfficeIcon = faBuilding;
+  houseLaptopIcon = faHouseLaptop;
+  halfClockIcon = faBatteryHalf;
+  fullClockIcon = faBatteryFull;
   editing: boolean = false;
   editing_links: boolean = false;
   geocoords: BehaviorSubject<number[]> = new BehaviorSubject([0]);
@@ -51,7 +56,16 @@ export class PublicProfileComponent implements AfterViewInit{
   yourAcc: boolean = false;
   verified: boolean = false;
   liked: boolean = false;
-  ghProfileData: any;
+  workTypes: { freelance: boolean, halfDay: boolean, fullDay: boolean } = {
+    freelance: false,
+    halfDay: false,
+    fullDay: false
+  };
+  workPlace: { home: boolean, office: boolean } = {
+    home: false,
+    office: false
+  };
+  // ghProfileData: any;
   likersCount: number = 0;
 
   your_username: string | null = sessionStorage.getItem("username");
@@ -123,8 +137,9 @@ export class PublicProfileComponent implements AfterViewInit{
           this.gitHub = data.github || "";
           this.liked = data.followers?.includes(sessionStorage.getItem("id") || "idk tuka triabva da napisha neshto") || false;
           this.likersCount = data.followers?.length || 0;
-          this.ghProfileData = data.ghProfileData || false;
-          console.log(this.ghProfileData)
+          this.workTypes = data.workTypes || this.workTypes;
+          this.workPlace = data.workPlace || this.workPlace;
+          // this.ghProfileData = data.ghProfileData || false;
           this.getGeocoordsByAddress();
         },
         error: (err) => {
@@ -146,7 +161,7 @@ export class PublicProfileComponent implements AfterViewInit{
 
   updatePublicProfileDataHandler(description: string, address: string, city: string, country: string){
     this.loading = true;
-    this.profileService.updateProfile(description, address, city, country).subscribe({
+    this.profileService.updateProfile(description, address, city, country, this.workTypes, this.workPlace).subscribe({
       next: (data) => {
         this.loading = false;
         this.country = country;
@@ -154,6 +169,7 @@ export class PublicProfileComponent implements AfterViewInit{
         this.description = description;
         this.city = city;
         this.editing = false;
+        this.getGeocoordsByAddress();
       },
       error: (err) => {
         this.loading = false;

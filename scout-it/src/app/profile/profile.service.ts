@@ -34,12 +34,16 @@ export class ProfileService {
     return this.httpClient.get<any>(`http://localhost:8080/api/profile/likeProfile/${id}/key`)
   }
 
-  updateProfile( description: string, address: string, city: string, country: string ){
+  updateProfile( description: string, address: string, city: string, country: string, 
+                 workTypes: { freelance: boolean, halfDay: boolean, fullDay: boolean }, 
+                 workPlace: { home: boolean, office: boolean } ){
     return this.httpClient.post<any>(`http://localhost:8080/api/profile/update/key`, {
       description: description,
       address: address,
       city: city,
-      country: country
+      country: country,
+      workTypes: workTypes,
+      workPlace: workPlace
     })
   }
 
