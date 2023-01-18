@@ -51,6 +51,7 @@ export class PublicProfileComponent implements AfterViewInit{
   yourAcc: boolean = false;
   verified: boolean = false;
   liked: boolean = false;
+  ghProfileData: any;
   likersCount: number = 0;
 
   your_username: string | null = sessionStorage.getItem("username");
@@ -122,6 +123,8 @@ export class PublicProfileComponent implements AfterViewInit{
           this.gitHub = data.github || "";
           this.liked = data.followers?.includes(sessionStorage.getItem("id") || "idk tuka triabva da napisha neshto") || false;
           this.likersCount = data.followers?.length || 0;
+          this.ghProfileData = data.ghProfileData || false;
+          console.log(this.ghProfileData)
           this.getGeocoordsByAddress();
         },
         error: (err) => {
