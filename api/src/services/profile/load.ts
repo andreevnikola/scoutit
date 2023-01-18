@@ -10,12 +10,12 @@ async function LoadProfile(req: any, res: any){
         let user: any = await usersDb.Read({
             _id: convertedId,
         });
-        if(user.github){ 
-            await axios.get(`https://api.github.com/users/${user.github.split("/")[user.github.split("/").length - 1]}`)
-                .then((profile: any) => { 
-                    user.ghProfileData = profile.data;
-                 });
-        }
+        // if(user.github){ 
+        //     await axios.get(`https://api.github.com/users/${user.github.split("/")[user.github.split("/").length - 1]}`)
+        //         .then((profile: any) => { 
+        //             user.ghProfileData = profile.data;
+        //          });
+        // }
         res.status(200).send(user);
     } catch (error) {
         console.log(error);

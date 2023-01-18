@@ -10,299 +10,216 @@
 <div *ngIf="profileNotFound">
   404 THAT ACCOUNT IS NOT FOUND OR EMAIL IS NOT VERIFIED
 </div>
-<div
-  *ngIf="!loading && !profileNotFound"
-  class="max-w-[1520px] w-full px-2 py-4 sm:px-10 lg:px-24 left-1/2 relative -translate-x-1/2 flex justify-around"
->
-  <div class="w-fit max-w-full">
-    <div
-      class="w-fit bg-white p-7 rounded-md border shadow-sm text-center mb-3 min-w-full max-w-full"
-    >
-      <div [hidden]="editing">
-        <button
-          [disabled]="yourAcc || !your_username"
-          (click)="likeAccountHandler()"
-          class="disabled:contrast-50 flex gap-1 font-bold text-lg absolute -mt-5 -ml-5 bg-green-200 hover:bg-green-300 transition-all border px-3 py-0.5 rounded-lg cursor-pointer"
-        >
-          <fa-icon [icon]="liked ? likedIcon : likeIcon"></fa-icon>
-          <p>{{ likersCount }}</p>
-        </button>
-        <img
-          [src]="profile_picture"
-          [alt]="username + '\'s profile picture'"
-          class="rounded-full bg-gray-100 border w-60 h-60 relative left-1/2 -translate-x-1/2"
-        />
-        <p class="text-2xl font-bold text-center mt-3">
-          {{ username }}
-        </p>
-        <p class="mb-1 max-w-[300px]" *ngIf="description">
-          {{ description }}
-        </p>
-        <button
-          class="w-full rounded border bg-green-600 text-white text-lg p-1 hover:bg-green-700 transition-all"
-        >
-          Contact Me
-        </button>
-        <hr class="my-4" />
-        <div
-          class="flex justify-between text-gray-700 gap-2 max-w-[100%] overflow-auto"
-        >
-          <div class="flex gap-0.5">
-            <fa-icon [icon]="mailIcon"></fa-icon>
-            Mail:
-          </div>
-          <p class="font-bold">{{ mail }}</p>
-        </div>
-        <ng-container *ngIf="address || city || country">
-          <div
-            class="flex justify-between text-gray-700 gap-2"
-            *ngIf="address"
-          >
-            <div class="flex gap-0.5">
-              <fa-icon [icon]="addressPin"></fa-icon>
-              Address:
+<div *ngIf="!loading && !profileNotFound" class="max-w-[1520px] w-full px-2 py-4 sm:px-10 lg:px-24 left-1/2 relative -translate-x-1/2 flex justify-around">
+    <div class="w-fit max-w-full">
+        <div class="w-fit bg-white p-7 rounded-md border shadow-sm text-center mb-3 min-w-full max-w-full">
+            <div [hidden]="editing">
+                <button [disabled]="yourAcc || !your_username" (click)="likeAccountHandler()"
+                class="disabled:contrast-50 flex gap-1 font-bold text-lg absolute -mt-5 
+                       -ml-5 bg-green-200 hover:bg-green-300 transition-all border
+                       px-3 py-0.5 rounded-lg cursor-pointer">
+                    <fa-icon [icon]="liked ? likedIcon : likeIcon"></fa-icon>
+                    <p>{{likersCount}}</p>
+                </button>
+                <img [src]="profile_picture" [alt]="username + '\'s profile picture'" class="rounded-full bg-gray-100 border w-60 h-60 relative left-1/2 -translate-x-1/2">
+                <p class="text-2xl font-bold text-center mt-3">{{username}}</p>
+                <p class="mb-1 max-w-[300px]" *ngIf="description">{{description}}</p>
+                <div class="flex justify-between text-left">
+                    <div class="font-bold text-base" *ngIf="workPlace.home || workPlace.office">
+                        <p *ngIf="workPlace.home"><fa-icon [icon]="houseIcon" class="text-sm"></fa-icon> Home office</p>
+                        <p *ngIf="workPlace.office"><fa-icon [icon]="atOfficeIcon" class="text-sm"></fa-icon> At office</p>
+                    </div>
+                    <div class="font-bold text-base text-right" *ngIf="workTypes.freelance || workTypes.fullDay || workTypes.halfDay">
+                        <p *ngIf="workTypes.freelance">Freelance <fa-icon [icon]="houseLaptopIcon" class="text-sm"></fa-icon></p>
+                        <p *ngIf="workTypes.halfDay">Half day <fa-icon [icon]="halfClockIcon" class="text-sm"></fa-icon></p>
+                        <p *ngIf="workTypes.fullDay">Full day <fa-icon [icon]="fullClockIcon" class="text-sm"></fa-icon></p>
+                    </div>
+                </div>
+                <button class="w-full rounded border bg-green-600 text-white text-lg p-1 hover:bg-green-700 transition-all">Contact Me</button>
+                <hr class="my-4">
+                <div class="flex justify-between text-gray-700 gap-2 max-w-[100%] overflow-auto">
+                    <div class="flex gap-0.5">
+                        <fa-icon [icon]="mailIcon"></fa-icon>
+                        Mail:
+                    </div>
+                    <p class="font-bold">{{mail}}</p>
+                </div>
+                <ng-container *ngIf="address || city || country">
+                    <div class="flex justify-between text-gray-700 gap-2" *ngIf="address">
+                        <div class="flex gap-0.5">
+                            <fa-icon [icon]="addressPin"></fa-icon>
+                            Address:
+                        </div>
+                        <p class="font-bold">{{address}}</p>
+                    </div>
+                    <div class="flex justify-between text-gray-700 gap-2" *ngIf="city">
+                        <div class="flex gap-0.5">
+                            <fa-icon [icon]="cityIcon"></fa-icon>
+                            City:
+                        </div>
+                        <p class="font-bold">{{city}}</p>
+                    </div>
+                    <div class="flex justify-between text-gray-700 gap-2" *ngIf="country">
+                        <div class="flex gap-0.5">
+                            <fa-icon [icon]="countryPin"></fa-icon>
+                            From:
+                        </div>
+                        <p class="font-bold">{{country}}</p>
+                    </div>
+                    <div *ngIf="address && city && country" id="map" class="w-full h-32 bg-gray-100 mt-4"></div>
+                </ng-container>
+                <button *ngIf="yourAcc" (click)="editing = true;" class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1">Edit / Add data</button>
             </div>
-            <p class="font-bold">{{ address }}</p>
-          </div>
-          <div
-            class="flex justify-between text-gray-700 gap-2"
-            *ngIf="city"
-          >
-            <div class="flex gap-0.5">
-              <fa-icon [icon]="cityIcon"></fa-icon>
-              City:
+            <form #form="ngForm" *ngIf="editing" (ngSubmit)="updatePublicProfileDataHandler(descrInp.value, addressInp.value, cityInp.value, countryInp.value)">
+                <img [src]="profile_picture" [alt]="username + '\'s profile picture'" class="rounded-full bg-gray-100 border w-60 h-60 relative left-1/2 -translate-x-1/2">
+                <p class="text-2xl font-bold text-center mt-3">{{username}}</p>
+                <textarea rows="2" class="w-full leading-4 p-2" #descrInp="ngModel" [ngModel]="description" name="description" placeholder="Enter description:" minlength="5" maxlength="58">{{description}}</textarea>
+                <div *ngIf="descrInp.touched">
+                    <p class="error" *ngIf="descrInp.errors?.['minlength']">Description must be at least 5 symbols</p>
+                </div>
+                <div class="flex justify-between text-left">
+                    <div class="font-bold text-base">
+                        <p class="flex justify-between w-full gap-3"><span><fa-icon [icon]="houseIcon" class="text-sm"></fa-icon> Home office</span> <input type="checkbox" (change)="workPlace.home = !workPlace.home" [checked]="workPlace.home"></p>
+                        <p class="flex justify-between w-full gap-3"><span><fa-icon [icon]="atOfficeIcon" class="text-sm"></fa-icon> At office</span> <input type="checkbox" (change)="workPlace.office = !workPlace.office" [checked]="workPlace.office"></p>
+                    </div>
+                    <div class="font-bold text-base text-right">
+                        <p class="flex justify-between w-full gap-3"><input type="checkbox" (change)="workTypes.freelance = !workTypes.freelance" [checked]="workTypes.freelance"> <span>Freelance <fa-icon [icon]="houseLaptopIcon" class="text-sm"></fa-icon></span></p>
+                        <p class="flex justify-between w-full gap-3"><input type="checkbox" (change)="workTypes.halfDay = !workTypes.halfDay" [checked]="workTypes.halfDay"> <span>Half day <fa-icon [icon]="halfClockIcon" class="text-sm"></fa-icon></span></p>
+                        <p class="flex justify-between w-full gap-3"><input type="checkbox" (change)="workTypes.fullDay = !workTypes.fullDay" [checked]="workTypes.fullDay"> <span>Full day <fa-icon [icon]="fullClockIcon" class="text-sm"></fa-icon></span></p>
+                    </div>
+                </div>
+                <button class="w-full rounded border bg-green-600 text-white text-lg p-1 hover:bg-green-700 transition-all">Contact Me</button>
+                <hr class="my-4">
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <fa-icon [icon]="mailIcon"></fa-icon>
+                        Mail:
+                    </div>
+                    <p class="font-bold">{{mail}}</p>
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <fa-icon [icon]="addressPin"></fa-icon>
+                        Address:
+                    </div>
+                    <input placeholder="Enter your address" #addressInp="ngModel" [ngModel]="address" name="address" class="text-right font-bold" minlength="5" maxlength="20">
+                </div>
+                <div *ngIf="addressInp.touched">
+                    <p class="error" *ngIf="addressInp.errors?.['minlength']">Address must be at least 5 symbols</p>
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <fa-icon [icon]="cityIcon"></fa-icon>
+                        City:
+                    </div>
+                    <input placeholder="Enter your city" class="font-bold text-right" #cityInp="ngModel" [ngModel]="city" name="city" minlength="5" maxlength="20">
+                </div>
+                <div *ngIf="cityInp.touched">
+                    <p class="error" *ngIf="cityInp.errors?.['minlength']">The city must be at least 5 symbols</p>
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <fa-icon [icon]="countryPin"></fa-icon>
+                        From:
+                    </div>
+                    <input placeholder="Enter your country" [value]="country" class="font-bold text-right" #countryInp="ngModel" [ngModel]="country" name="country" minlength="5" maxlength="20">
+                </div>
+                <div *ngIf="countryInp.touched">
+                    <p class="error" *ngIf="countryInp.errors?.['minlength']">The country must be at least 5 symbols</p>
+                </div>
+                <button [disabled]="form.invalid" type="submit" class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1">Update profile</button>
+                <button type="button" (click)="editing = false;" class="font-bold mt-1 w-full border border-gray-500 rounded text-white bg-red-500 hover:bg-red-600 transition-all p-1">Cancel changes</button>
+            </form>
+        </div>
+        <div class="w-fit bg-white p-7 rounded-md border shadow-sm text-center mb-3 min-w-full" *ngIf="yourAcc || facebook || instagram || twitter || linkedIn || gitHub">
+            <div [hidden]="editing_links || (!facebook && !instagram && !twitter && !linkedIn && !gitHub)">
+                <div class="flex justify-between text-gray-700 gap-2" *ngIf="facebook">
+                    <a [href]="facebook" class="flex gap-1 w-fit">
+                        <fa-icon [icon]="facebookIcon"></fa-icon>
+                        <p>Visit my <span class="font-bold">Facebook</span></p>
+                    </a>
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2" *ngIf="instagram">
+                    <a [href]="instagram" class="flex gap-1 w-fit">
+                        <fa-icon [icon]="instagramIcon"></fa-icon>
+                        <p>Visit my <span class="font-bold">Instagram</span></p>
+                    </a>
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2" *ngIf="twitter">
+                    <a [href]="twitter" class="flex gap-1 w-fit">
+                        <fa-icon [icon]="twitterIcon"></fa-icon>
+                        <p>Visit my <span class="font-bold">Twitter</span></p>
+                    </a>
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2" *ngIf="linkedIn">
+                    <a [href]="linkedIn" class="flex gap-1 w-fit">
+                        <fa-icon [icon]="linkedInIcon"></fa-icon>
+                        <p>Visit my <span class="font-bold">LinkedIn</span></p>
+                    </a>
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2" *ngIf="gitHub">
+                    <a [href]="gitHub" class="flex gap-1 w-fit">
+                        <fa-icon [icon]="gitHubIcon"></fa-icon>
+                        <p>Visit my <span class="font-bold">GitHub</span></p>
+                    </a>
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2" *ngIf="leetCode">
+                    <a [href]="leetCode" class="flex gap-1 w-fit">
+                        <img src="assets/images/leetCode.png" class="h-[18px]" alt="leetcode icon">
+                        <p>Visit my <span class="font-bold">LeetCode</span></p>
+                    </a>
+                </div>
+                <hr class="mt-1 mb-2">
+                <img *ngIf="gitHub" class="max-w-full w-[280px]" [src]="'https://github-readme-stats.vercel.app/api?username=' + githubProfileName + '&count_private=true&show_icons=true&theme=vue'" [alt]="username + '\'s GithubStats'" />
+                <img *ngIf="leetCode" class="max-w-full w-[280px] mt-1" [src]="'https://leetcode.card.workers.dev/' + leetCodeProfileName + '?theme=light&extension=activity'" [alt]="username + '\'s GithubStats'" />
+                <button *ngIf="yourAcc" (click)="editing_links = true;" class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1">Edit / Add data</button>
             </div>
-            <p class="font-bold">{{ city }}</p>
-          </div>
-          <div
-            class="flex justify-between text-gray-700 gap-2"
-            *ngIf="country"
-          >
-            <div class="flex gap-0.5">
-              <fa-icon [icon]="countryPin"></fa-icon>
-              From:
-            </div>
-            <p class="font-bold">{{ country }}</p>
-          </div>
-          <div
-            *ngIf="address && city && country"
-            id="map"
-            class="w-full h-32 bg-gray-100 mt-4"
-          ></div>
-        </ng-container>
-        <button
-          *ngIf="yourAcc"
-          (click)="editing = true"
-          class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1"
-        >
-          Edit / Add data
-        </button>
-      </div>
-      <form
-        #form="ngForm"
-        *ngIf="editing"
-        (ngSubmit)="
-          updatePublicProfileDataHandler(
-            descrInp.value,
-            addressInp.value,
-            cityInp.value,
-            countryInp.value
-          )
-        "
-      >
-        <img
-          [src]="profile_picture"
-          [alt]="username + '\'s profile picture'"
-          class="rounded-full bg-gray-100 border w-60 h-60 relative left-1/2 -translate-x-1/2"
-        />
-        <p class="text-2xl font-bold text-center mt-3">
-          {{ username }}
-        </p>
-        <textarea
-          rows="2"
-          class="w-full leading-4 p-2"
-          #descrInp="ngModel"
-          [ngModel]="description"
-          name="description"
-          placeholder="Enter description:"
-          minlength="5"
-          maxlength="58"
-          >{{ description }}</textarea
-        >
-        <div *ngIf="descrInp.touched">
-          <p class="error" *ngIf="descrInp.errors?.['minlength']">
-            Description must be at least 5 symbols
-          </p>
-        </div>
-        <button
-          class="w-full rounded border bg-green-600 text-white text-lg p-1 hover:bg-green-700 transition-all"
-        >
-          Contact Me
-        </button>
-        <hr class="my-4" />
-        <div class="flex justify-between text-gray-700 gap-2">
-          <div class="flex gap-0.5">
-            <fa-icon [icon]="mailIcon"></fa-icon>
-            Mail:
-          </div>
-          <p class="font-bold">{{ mail }}</p>
-        </div>
-        <div class="flex justify-between text-gray-700 gap-2">
-          <div class="flex gap-0.5">
-            <fa-icon [icon]="addressPin"></fa-icon>
-            Address:
-          </div>
-          <input
-            placeholder="Enter your address"
-            #addressInp="ngModel"
-            [ngModel]="address"
-            name="address"
-            class="text-right font-bold"
-            minlength="5"
-            maxlength="20"
-          />
-        </div>
-        <div *ngIf="addressInp.touched">
-          <p class="error" *ngIf="addressInp.errors?.['minlength']">
-            Address must be at least 5 symbols
-          </p>
-        </div>
-        <div class="flex justify-between text-gray-700 gap-2">
-          <div class="flex gap-0.5">
-            <fa-icon [icon]="cityIcon"></fa-icon>
-            City:
-          </div>
-          <input
-            placeholder="Enter your city"
-            class="font-bold text-right"
-            #cityInp="ngModel"
-            [ngModel]="city"
-            name="city"
-            minlength="5"
-            maxlength="20"
-          />
-        </div>
-        <div *ngIf="cityInp.touched">
-          <p class="error" *ngIf="cityInp.errors?.['minlength']">
-            The city must be at least 5 symbols
-          </p>
-        </div>
-        <div class="flex justify-between text-gray-700 gap-2">
-          <div class="flex gap-0.5">
-            <fa-icon [icon]="countryPin"></fa-icon>
-            From:
-          </div>
-          <input
-            placeholder="Enter your country"
-            [value]="country"
-            class="font-bold text-right"
-            #countryInp="ngModel"
-            [ngModel]="country"
-            name="country"
-            minlength="5"
-            maxlength="20"
-          />
-        </div>
-        <div *ngIf="countryInp.touched">
-          <p class="error" *ngIf="countryInp.errors?.['minlength']">
-            The country must be at least 5 symbols
-          </p>
-        </div>
-        <button
-          [disabled]="form.invalid"
-          type="submit"
-          class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1"
-        >
-          Update profile
-        </button>
-        <button
-          type="button"
-          (click)="editing = false"
-          class="font-bold mt-1 w-full border border-gray-500 rounded text-white bg-red-500 hover:bg-red-600 transition-all p-1"
-        >
-          Cancel changes
-        </button>
-      </form>
-    </div>
-    <div
-      class="w-fit bg-white p-7 rounded-md border shadow-sm text-center mb-3 min-w-full"
-      *ngIf="
-        yourAcc ||
-        facebook ||
-        instagram ||
-        twitter ||
-        linkedIn ||
-        gitHub
-      "
-    >
-      <div
-        [hidden]="
-          editing_links ||
-          (!facebook &&
-            !instagram &&
-            !twitter &&
-            !linkedIn &&
-            !gitHub)
-        "
-      >
-        <div
-          class="flex justify-between text-gray-700 gap-2"
-          *ngIf="facebook"
-        >
-          <a [href]="facebook" class="flex gap-0.5 w-fit">
-            <fa-icon [icon]="facebookIcon"></fa-icon>
-            <p>Visit my <span class="font-bold">Facebook</span></p>
-          </a>
-        </div>
-        <div
-          class="flex justify-between text-gray-700 gap-2"
-          *ngIf="instagram"
-        >
-          <a [href]="instagram" class="flex gap-0.5 w-fit">
-            <fa-icon [icon]="instagramIcon"></fa-icon>
-            <p>Visit my <span class="font-bold">Instagram</span></p>
-          </a>
-        </div>
-        <div
-          class="flex justify-between text-gray-700 gap-2"
-          *ngIf="twitter"
-        >
-          <a [href]="twitter" class="flex gap-0.5 w-fit">
-            <fa-icon [icon]="twitterIcon"></fa-icon>
-            <p>Visit my <span class="font-bold">Twitter</span></p>
-          </a>
-        </div>
-        <div
-          class="flex justify-between text-gray-700 gap-2"
-          *ngIf="linkedIn"
-        >
-          <a [href]="linkedIn" class="flex gap-0.5 w-fit">
-            <fa-icon [icon]="linkedInIcon"></fa-icon>
-            <p>Visit my <span class="font-bold">LinkedIn</span></p>
-          </a>
-        </div>
-        <div
-          class="flex justify-between text-gray-700 gap-2"
-          *ngIf="gitHub"
-        >
-          <a [href]="gitHub" class="flex gap-0.5 w-fit">
-            <fa-icon [icon]="gitHubIcon"></fa-icon>
-            <p>Visit my <span class="font-bold">GitHub</span></p>
-          </a>
-        </div>
-        <div hidden>
-          <div>
-            <img
-              [src]="ghProfileData.avatar_url"
-              alt="Github profile photo"
-            />
-            <div>
-              <p>{{ ghProfileData.avatar_url }}</p>
-            </div>
-            <div>
-              <p>{{ ghProfileData.public_repos }}</p>
-            </div>
-          </div>
+            <form #form="ngForm" *ngIf="editing_links || (!facebook && !instagram && !twitter && !linkedIn && !gitHub)" (ngSubmit)="updateLinksHandler(facebookInp.value, instagramInp.value, twitterInp.value, linkedInInp.value, githubInp.value, leetCodeInp.value)">
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <fa-icon [icon]="facebookIcon"></fa-icon>
+                        Facebook:
+                    </div>
+                    <input placeholder="Link to your Facebook" #facebookInp="ngModel" [ngModel]="facebook" name="facebook" class="font-bold">
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <fa-icon [icon]="instagramIcon"></fa-icon>
+                        Instagram:
+                    </div>
+                    <input placeholder="Link to your Instagram" #instagramInp="ngModel" [ngModel]="instagram" name="instagram" class="font-bold">
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <fa-icon [icon]="twitterIcon"></fa-icon>
+                        Twitter:
+                    </div>
+                    <input placeholder="Link to your Twitter" #twitterInp="ngModel" [ngModel]="twitter" name="twitter" class="font-bold">
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <fa-icon [icon]="linkedInIcon"></fa-icon>
+                        LinkedIn:
+                    </div>
+                    <input placeholder="Link to your LinkedIn" #linkedInInp="ngModel" [ngModel]="linkedIn" name="linkedIn" class="font-bold">
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <fa-icon [icon]="gitHubIcon"></fa-icon>
+                        GitHub:
+                    </div>
+                    <input placeholder="Link to your GitHub" #githubInp="ngModel" [ngModel]="gitHub" name="github" class="font-bold">
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <img src="assets/images/leetCode.png" class="h-[18px]" alt="leetcode icon">
+                        LeetCode:
+                    </div>
+                    <input placeholder="Link to your LeetCode" #leetCodeInp="ngModel" [ngModel]="leetCode" name="leetcode" class="font-bold">
+                </div>
+                <button [disabled]="form.invalid" type="submit" class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1">Update profile</button>
+                <button *ngIf="!(!facebook && !instagram && !twitter && !linkedIn && !gitHub)" type="button" (click)="editing_links = false;" class="font-bold mt-1 w-full border border-gray-500 rounded text-white bg-red-500 hover:bg-red-600 transition-all p-1">Cancel changes</button>
+            </form>
         </div>
         <button
           *ngIf="yourAcc"

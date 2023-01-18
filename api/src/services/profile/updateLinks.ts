@@ -4,7 +4,7 @@ async function updateLinks(req: any, res: any){
     const usersDb = await new DB_L("scoutit", "users");
     try {
         const { key } = req.params;
-        const { facebook, instagram, twitter, linkedin, github } = req.body;
+        const { facebook, instagram, twitter, linkedin, github, leetcode } = req.body;
         const user: any = await usersDb.Update({
             keys: parseFloat(key)
         }, {
@@ -13,7 +13,8 @@ async function updateLinks(req: any, res: any){
                 instagram: instagram,
                 twitter: twitter,
                 linkedin: linkedin,
-                github: github
+                github: github,
+                leetcode: leetcode
             }
         });
         if(user.matchedCount < 1){
