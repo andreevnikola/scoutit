@@ -208,195 +208,194 @@
             The country must be at least 5 symbols
           </p>
         </div>
-        <div
-          class="w-fit bg-white p-7 rounded-md border shadow-sm text-center mb-3 min-w-full"
-          *ngIf="
-            yourAcc ||
-            facebook ||
-            instagram ||
-            twitter ||
-            linkedIn ||
-            gitHub
-          "
+        <button
+          [disabled]="form.invalid"
+          type="submit"
+          class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1"
         >
-          <div
-            [hidden]="
-              editing_links ||
-              (!facebook &&
-                !instagram &&
-                !twitter &&
-                !linkedIn &&
-                !gitHub)
-            "
-          >
-            <div
-              class="flex justify-between text-gray-700 gap-2"
-              *ngIf="facebook"
-            >
-              <a [href]="facebook" class="flex gap-0.5 w-fit">
-                <fa-icon [icon]="facebookIcon"></fa-icon>
-                <p>
-                  Visit my <span class="font-bold">Facebook</span>
-                </p>
-              </a>
+          Update profile
+        </button>
+        <button
+          type="button"
+          (click)="editing = false"
+          class="font-bold mt-1 w-full border border-gray-500 rounded text-white bg-red-500 hover:bg-red-600 transition-all p-1"
+        >
+          Cancel changes
+        </button>
+      </form>
+    </div>
+    <div
+      class="w-fit bg-white p-7 rounded-md border shadow-sm text-center mb-3 min-w-full"
+      *ngIf="
+        yourAcc ||
+        facebook ||
+        instagram ||
+        twitter ||
+        linkedIn ||
+        gitHub
+      "
+    >
+      <div
+        [hidden]="
+          editing_links ||
+          (!facebook &&
+            !instagram &&
+            !twitter &&
+            !linkedIn &&
+            !gitHub)
+        "
+      >
+        <div
+          class="flex justify-between text-gray-700 gap-2"
+          *ngIf="facebook"
+        >
+          <a [href]="facebook" class="flex gap-0.5 w-fit">
+            <fa-icon [icon]="facebookIcon"></fa-icon>
+            <p>Visit my <span class="font-bold">Facebook</span></p>
+          </a>
+        </div>
+        <div
+          class="flex justify-between text-gray-700 gap-2"
+          *ngIf="instagram"
+        >
+          <a [href]="instagram" class="flex gap-0.5 w-fit">
+            <fa-icon [icon]="instagramIcon"></fa-icon>
+            <p>Visit my <span class="font-bold">Instagram</span></p>
+          </a>
+        </div>
+        <div
+          class="flex justify-between text-gray-700 gap-2"
+          *ngIf="twitter"
+        >
+          <a [href]="twitter" class="flex gap-0.5 w-fit">
+            <fa-icon [icon]="twitterIcon"></fa-icon>
+            <p>Visit my <span class="font-bold">Twitter</span></p>
+          </a>
+        </div>
+        <div
+          class="flex justify-between text-gray-700 gap-2"
+          *ngIf="linkedIn"
+        >
+          <a [href]="linkedIn" class="flex gap-0.5 w-fit">
+            <fa-icon [icon]="linkedInIcon"></fa-icon>
+            <p>Visit my <span class="font-bold">LinkedIn</span></p>
+          </a>
+        </div>
+        <div
+          class="flex justify-between text-gray-700 gap-2"
+          *ngIf="gitHub"
+        >
+          <a [href]="gitHub" class="flex gap-0.5 w-fit">
+            <fa-icon [icon]="gitHubIcon"></fa-icon>
+            <p>Visit my <span class="font-bold">GitHub</span></p>
+          </a>
+        </div>
+        <div hidden>
+          <div>
+            <img
+              [src]="ghProfileData.avatar_url"
+              alt="Github profile photo"
+            />
+            <div>
+              <p>{{ ghProfileData.avatar_url }}</p>
             </div>
-            <div
-              class="flex justify-between text-gray-700 gap-2"
-              *ngIf="instagram"
-            >
-              <a [href]="instagram" class="flex gap-0.5 w-fit">
-                <fa-icon [icon]="instagramIcon"></fa-icon>
-                <p>
-                  Visit my <span class="font-bold">Instagram</span>
-                </p>
-              </a>
+            <div>
+              <p>{{ ghProfileData.public_repos }}</p>
             </div>
-            <div
-              class="flex justify-between text-gray-700 gap-2"
-              *ngIf="twitter"
-            >
-              <a [href]="twitter" class="flex gap-0.5 w-fit">
-                <fa-icon [icon]="twitterIcon"></fa-icon>
-                <p>Visit my <span class="font-bold">Twitter</span></p>
-              </a>
-            </div>
-            <div
-              class="flex justify-between text-gray-700 gap-2"
-              *ngIf="linkedIn"
-            >
-              <a [href]="linkedIn" class="flex gap-0.5 w-fit">
-                <fa-icon [icon]="linkedInIcon"></fa-icon>
-                <p>
-                  Visit my <span class="font-bold">LinkedIn</span>
-                </p>
-              </a>
-            </div>
-            <div
-              class="flex justify-between text-gray-700 gap-2"
-              *ngIf="gitHub"
-            >
-              <a [href]="gitHub" class="flex gap-0.5 w-fit">
-                <fa-icon [icon]="gitHubIcon"></fa-icon>
-                <p>Visit my <span class="font-bold">GitHub</span></p>
-              </a>
-            </div>
-            <button
-              *ngIf="yourAcc"
-              (click)="editing_links = true"
-              class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1"
-            >
-              Edit / Add data
-            </button>
           </div>
-          <form
-            #form="ngForm"
-            *ngIf="
-              editing_links ||
-              (!facebook &&
-                !instagram &&
-                !twitter &&
-                !linkedIn &&
-                !gitHub)
-            "
-            (ngSubmit)="
-              updateLinksHandler(
-                facebookInp.value,
-                instagramInp.value,
-                twitterInp.value,
-                linkedInInp.value,
-                githubInp.value
-              )
-            "
-          >
-            <div class="flex justify-between text-gray-700 gap-2">
-              <div class="flex gap-0.5">
-                <fa-icon [icon]="facebookIcon"></fa-icon>
-                Facebook:
-              </div>
-              <input
-                placeholder="Link to your Facebook"
-                #facebookInp="ngModel"
-                [ngModel]="facebook"
-                name="facebook"
-                class="font-bold"
-              />
-            </div>
-            <div class="flex justify-between text-gray-700 gap-2">
-              <div class="flex gap-0.5">
-                <fa-icon [icon]="instagramIcon"></fa-icon>
-                Instagram:
-              </div>
-              <input
-                placeholder="Link to your Instagram"
-                #instagramInp="ngModel"
-                [ngModel]="instagram"
-                name="instagram"
-                class="font-bold"
-              />
-            </div>
-            <div class="flex justify-between text-gray-700 gap-2">
-              <div class="flex gap-0.5">
-                <fa-icon [icon]="twitterIcon"></fa-icon>
-                Twitter:
-              </div>
-              <input
-                placeholder="Link to your Twitter"
-                #twitterInp="ngModel"
-                [ngModel]="twitter"
-                name="twitter"
-                class="font-bold"
-              />
-            </div>
-            <div class="flex justify-between text-gray-700 gap-2">
-              <div class="flex gap-0.5">
-                <fa-icon [icon]="linkedInIcon"></fa-icon>
-                LinkedIn:
-              </div>
-              <input
-                placeholder="Link to your LinkedIn"
-                #linkedInInp="ngModel"
-                [ngModel]="linkedIn"
-                name="linkedIn"
-                class="font-bold"
-              />
-            </div>
-            <div class="flex justify-between text-gray-700 gap-2">
-              <div class="flex gap-0.5">
-                <fa-icon [icon]="gitHubIcon"></fa-icon>
-                GitHub:
-              </div>
-              <input
-                placeholder="Link to your GitHub"
-                #githubInp="ngModel"
-                [ngModel]="gitHub"
-                name="github"
-                class="font-bold"
-              />
-            </div>
-            <button
-              [disabled]="form.invalid"
-              type="submit"
-              class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1"
-            >
-              Update profile
-            </button>
-            <button
-              *ngIf="
-                !(
-                  !facebook &&
-                  !instagram &&
-                  !twitter &&
-                  !linkedIn &&
-                  !gitHub
-                )
-              "
-              type="button"
-              (click)="editing_links = false"
-              class="font-bold mt-1 w-full border border-gray-500 rounded text-white bg-red-500 hover:bg-red-600 transition-all p-1"
-            >
-              Cancel changes
-            </button>
-          </form>
+        </div>
+        <button
+          *ngIf="yourAcc"
+          (click)="editing_links = true"
+          class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1"
+        >
+          Edit / Add data
+        </button>
+      </div>
+      <form
+        #form="ngForm"
+        *ngIf="
+          editing_links ||
+          (!facebook &&
+            !instagram &&
+            !twitter &&
+            !linkedIn &&
+            !gitHub)
+        "
+        (ngSubmit)="
+          updateLinksHandler(
+            facebookInp.value,
+            instagramInp.value,
+            twitterInp.value,
+            linkedInInp.value,
+            githubInp.value
+          )
+        "
+      >
+        <div class="flex justify-between text-gray-700 gap-2">
+          <div class="flex gap-0.5">
+            <fa-icon [icon]="facebookIcon"></fa-icon>
+            Facebook:
+          </div>
+          <input
+            placeholder="Link to your Facebook"
+            #facebookInp="ngModel"
+            [ngModel]="facebook"
+            name="facebook"
+            class="font-bold"
+          />
+        </div>
+        <div class="flex justify-between text-gray-700 gap-2">
+          <div class="flex gap-0.5">
+            <fa-icon [icon]="instagramIcon"></fa-icon>
+            Instagram:
+          </div>
+          <input
+            placeholder="Link to your Instagram"
+            #instagramInp="ngModel"
+            [ngModel]="instagram"
+            name="instagram"
+            class="font-bold"
+          />
+        </div>
+        <div class="flex justify-between text-gray-700 gap-2">
+          <div class="flex gap-0.5">
+            <fa-icon [icon]="twitterIcon"></fa-icon>
+            Twitter:
+          </div>
+          <input
+            placeholder="Link to your Twitter"
+            #twitterInp="ngModel"
+            [ngModel]="twitter"
+            name="twitter"
+            class="font-bold"
+          />
+        </div>
+        <div class="flex justify-between text-gray-700 gap-2">
+          <div class="flex gap-0.5">
+            <fa-icon [icon]="linkedInIcon"></fa-icon>
+            LinkedIn:
+          </div>
+          <input
+            placeholder="Link to your LinkedIn"
+            #linkedInInp="ngModel"
+            [ngModel]="linkedIn"
+            name="linkedIn"
+            class="font-bold"
+          />
+        </div>
+        <div class="flex justify-between text-gray-700 gap-2">
+          <div class="flex gap-0.5">
+            <fa-icon [icon]="gitHubIcon"></fa-icon>
+            GitHub:
+          </div>
+          <input
+            placeholder="Link to your GitHub"
+            #githubInp="ngModel"
+            [ngModel]="gitHub"
+            name="github"
+            class="font-bold"
+          />
         </div>
         <button
           [disabled]="form.invalid"
