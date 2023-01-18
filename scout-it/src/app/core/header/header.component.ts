@@ -16,12 +16,12 @@ export class HeaderComponent {
     let navbar = document.querySelector<HTMLElement>('#navbar');
     let header = document.querySelector<HTMLElement>('#header');
 
-    if (navbar!.style.display === 'block') {
+    if (navbar!.style.display === 'flex') {
       navbar!.style.display = 'none';
       header!.style.flexDirection = 'row';
     } else {
-      navbar!.style.display = 'block';
-      // navbar!.style.flexDirection = 'column';
+      navbar!.style.display = 'flex';
+      navbar!.style.flexDirection = 'column';
       header!.style.flexDirection = 'column';
     }
   }
