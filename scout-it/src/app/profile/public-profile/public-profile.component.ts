@@ -6,15 +6,21 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ProfileService } from '../profile.service';
 import * as L from 'leaflet';
 import { NgForm } from '@angular/forms';
-import { faFacebook, faGithub, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import {
+  faFacebook,
+  faGithub,
+  faInstagram,
+  faLinkedin,
+  faTwitter,
+} from '@fortawesome/free-brands-svg-icons';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
   selector: 'app-public-profile',
   templateUrl: './public-profile.component.html',
-  styleUrls: ['./public-profile.component.css']
+  styleUrls: ['./public-profile.component.css'],
 })
-export class PublicProfileComponent implements AfterViewInit{
+export class PublicProfileComponent implements AfterViewInit {
   profileNotFound: boolean = false;
   mailIcon = faEnvelope;
   countryPin = faLocationDot;
@@ -36,7 +42,7 @@ export class PublicProfileComponent implements AfterViewInit{
   editing_links: boolean = false;
   geocoords: BehaviorSubject<number[]> = new BehaviorSubject([0]);
   id: Observable<string> | undefined;
-  _id: string = "";
+  _id: string = '';
 
   username: string = "";
   profile_picture: string = "";
@@ -71,7 +77,7 @@ export class PublicProfileComponent implements AfterViewInit{
   // ghProfileData: any;
   likersCount: number = 0;
 
-  your_username: string | null = sessionStorage.getItem("username");
+  your_username: string | null = sessionStorage.getItem('username');
 
   @ViewChild('form') form!: NgForm;
 
@@ -79,48 +85,67 @@ export class PublicProfileComponent implements AfterViewInit{
   private initMap(): void {
     this.geocoords.subscribe({
       next: (data) => {
-        if(data.length < 2 || !this.address || !this.country || !this.city){ return; }
+        if (
+          data.length < 2 ||
+          !this.address ||
+          !this.country ||
+          !this.city
+        ) {
+          return;
+        }
         this.map = L.map('map', {
           center: data as any,
-          zoom: 13
+          zoom: 13,
         });
-        const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 18,
-          minZoom: 4,
-          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        });
+        const tiles = L.tileLayer(
+          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          {
+            maxZoom: 18,
+            minZoom: 4,
+            attribution:
+              '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+          }
+        );
         tiles.addTo(this.map);
 
         const userProfilePictureIcon = L.icon({
           iconUrl: '/assets/images/pin.png',
-      
+
           iconSize: [30, 40], // size of the icon
-          iconAnchor: [15, 35]
+          iconAnchor: [15, 35],
         });
-        const marker = new L.Marker(data as any, {icon: userProfilePictureIcon});
+        const marker = new L.Marker(data as any, {
+          icon: userProfilePictureIcon,
+        });
         marker.addTo(this.map);
-      }
+      },
     });
   }
 
-  constructor( private route: ActivatedRoute, private profileService: ProfileService, private httpClient: HttpClient ){
-    this.id = new Observable(observer => {
-      this.route.paramMap.subscribe( paramMap => {
+  constructor(
+    private route: ActivatedRoute,
+    private profileService: ProfileService,
+    private httpClient: HttpClient
+  ) {
+    this.id = new Observable((observer) => {
+      this.route.paramMap.subscribe((paramMap) => {
         observer.next(paramMap.get('id')!);
-      })
+      });
     });
     this.id.subscribe((id: string) => {
       this._id = id;
       this.profileService.getProfile(id).subscribe({
         next: (data) => {
           this.loading = false;
-          if(!data){
+          if (!data) {
             this.profileNotFound = true;
             return;
           }
-          if(data.username! === sessionStorage.getItem("username")){ this.yourAcc = true; }
+          if (data.username! === sessionStorage.getItem('username')) {
+            this.yourAcc = true;
+          }
           this.verified = data.verified! || false;
-          if(!this.verified && !this.yourAcc){
+          if (!this.verified && !this.yourAcc) {
             this.profileNotFound = true;
             return;
           }
@@ -154,22 +179,32 @@ export class PublicProfileComponent implements AfterViewInit{
         },
         error: (err) => {
           this.loading = false;
-          alert("Something went wrong!")
-        }
+          alert('Something went wrong!');
+        },
       });
     });
   }
 
-  getGeocoordsByAddress(){
-    this.httpClient.get<any>(`http://dev.virtualearth.net/REST/v1/Locations?countryRegion=${this.country}&locality=${this.city}&addressLine=${this.address}&includeNeighborhood=1&maxResults=1&key=AhdwRrr6Vw7sNf-VhQTdtQ3J9_O4qxCOjW1PK5lEFpsW48FMozs07L58sw2q3VLG`).subscribe({
-      next: async (data) => {
-        let coords: number[] = data.resourceSets[0].resources[0].point.coordinates;
-        this.geocoords.next(coords);
-      }
-    });
+  getGeocoordsByAddress() {
+    this.httpClient
+      .get<any>(
+        `http://dev.virtualearth.net/REST/v1/Locations?countryRegion=${this.country}&locality=${this.city}&addressLine=${this.address}&includeNeighborhood=1&maxResults=1&key=AhdwRrr6Vw7sNf-VhQTdtQ3J9_O4qxCOjW1PK5lEFpsW48FMozs07L58sw2q3VLG`
+      )
+      .subscribe({
+        next: async (data) => {
+          let coords: number[] =
+            data.resourceSets[0].resources[0].point.coordinates;
+          this.geocoords.next(coords);
+        },
+      });
   }
 
-  updatePublicProfileDataHandler(description: string, address: string, city: string, country: string){
+  updatePublicProfileDataHandler(
+    description: string,
+    address: string,
+    city: string,
+    country: string
+  ) {
     this.loading = true;
     this.profileService.updateProfile(description, address, city, country, this.workTypes, this.workPlace).subscribe({
       next: (data) => {
@@ -208,19 +243,19 @@ export class PublicProfileComponent implements AfterViewInit{
     });
   }
 
-  likeAccountHandler(){
+  likeAccountHandler() {
     this.profileService.likeProfile(this._id).subscribe({
       next: (data) => {
         this.liked = !this.liked;
         this.likersCount += this.liked ? 1 : -1;
       },
       error: (err) => {
-        if(err.status === 403){
-          alert("You cannot do that!");
+        if (err.status === 403) {
+          alert('You cannot do that!');
           return;
         }
-        alert("Something went wrong!")
-      }
+        alert('Something went wrong!');
+      },
     });
   }
 

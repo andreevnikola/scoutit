@@ -1,7 +1,14 @@
-<div class="-z-10 bg-[#fafafa] w-full h-full fixed top-0 left-0"></div>
-<img *ngIf="loading" src="assets/images/loading.gif" alt="loading" class="z-10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56">
+<div
+  class="-z-10 bg-[#fafafa] w-full h-full fixed top-0 left-0"
+></div>
+<img
+  *ngIf="loading"
+  src="assets/images/loading.gif"
+  alt="loading"
+  class="z-10 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-56 h-56"
+/>
 <div *ngIf="profileNotFound">
-    404 THAT ACCOUNT IS NOT FOUND OR EMAIL IS NOT VERIFIED
+  404 THAT ACCOUNT IS NOT FOUND OR EMAIL IS NOT VERIFIED
 </div>
 <div *ngIf="!loading && !profileNotFound" class="max-w-[1520px] w-full px-2 py-4 sm:px-10 lg:px-24 left-1/2 relative -translate-x-1/2 flex justify-around">
     <div class="w-fit max-w-full">
@@ -214,5 +221,123 @@
                 <button *ngIf="!(!facebook && !instagram && !twitter && !linkedIn && !gitHub)" type="button" (click)="editing_links = false;" class="font-bold mt-1 w-full border border-gray-500 rounded text-white bg-red-500 hover:bg-red-600 transition-all p-1">Cancel changes</button>
             </form>
         </div>
+        <button
+          *ngIf="yourAcc"
+          (click)="editing_links = true"
+          class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1"
+        >
+          Edit / Add data
+        </button>
+      </div>
+      <form
+        #form="ngForm"
+        *ngIf="
+          editing_links ||
+          (!facebook &&
+            !instagram &&
+            !twitter &&
+            !linkedIn &&
+            !gitHub)
+        "
+        (ngSubmit)="
+          updateLinksHandler(
+            facebookInp.value,
+            instagramInp.value,
+            twitterInp.value,
+            linkedInInp.value,
+            githubInp.value
+          )
+        "
+      >
+        <div class="flex justify-between text-gray-700 gap-2">
+          <div class="flex gap-0.5">
+            <fa-icon [icon]="facebookIcon"></fa-icon>
+            Facebook:
+          </div>
+          <input
+            placeholder="Link to your Facebook"
+            #facebookInp="ngModel"
+            [ngModel]="facebook"
+            name="facebook"
+            class="font-bold"
+          />
+        </div>
+        <div class="flex justify-between text-gray-700 gap-2">
+          <div class="flex gap-0.5">
+            <fa-icon [icon]="instagramIcon"></fa-icon>
+            Instagram:
+          </div>
+          <input
+            placeholder="Link to your Instagram"
+            #instagramInp="ngModel"
+            [ngModel]="instagram"
+            name="instagram"
+            class="font-bold"
+          />
+        </div>
+        <div class="flex justify-between text-gray-700 gap-2">
+          <div class="flex gap-0.5">
+            <fa-icon [icon]="twitterIcon"></fa-icon>
+            Twitter:
+          </div>
+          <input
+            placeholder="Link to your Twitter"
+            #twitterInp="ngModel"
+            [ngModel]="twitter"
+            name="twitter"
+            class="font-bold"
+          />
+        </div>
+        <div class="flex justify-between text-gray-700 gap-2">
+          <div class="flex gap-0.5">
+            <fa-icon [icon]="linkedInIcon"></fa-icon>
+            LinkedIn:
+          </div>
+          <input
+            placeholder="Link to your LinkedIn"
+            #linkedInInp="ngModel"
+            [ngModel]="linkedIn"
+            name="linkedIn"
+            class="font-bold"
+          />
+        </div>
+        <div class="flex justify-between text-gray-700 gap-2">
+          <div class="flex gap-0.5">
+            <fa-icon [icon]="gitHubIcon"></fa-icon>
+            GitHub:
+          </div>
+          <input
+            placeholder="Link to your GitHub"
+            #githubInp="ngModel"
+            [ngModel]="gitHub"
+            name="github"
+            class="font-bold"
+          />
+        </div>
+        <button
+          [disabled]="form.invalid"
+          type="submit"
+          class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1"
+        >
+          Update profile
+        </button>
+        <button
+          *ngIf="
+            !(
+              !facebook &&
+              !instagram &&
+              !twitter &&
+              !linkedIn &&
+              !gitHub
+            )
+          "
+          type="button"
+          (click)="editing_links = false"
+          class="font-bold mt-1 w-full border border-gray-500 rounded text-white bg-red-500 hover:bg-red-600 transition-all p-1"
+        >
+          Cancel changes
+        </button>
+      </form>
     </div>
+  </div>
 </div>

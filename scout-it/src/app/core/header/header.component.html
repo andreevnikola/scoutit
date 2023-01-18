@@ -1,11 +1,15 @@
 <header
-  class="color-pedalski flex flex-row justify-between content-center items-center py-3 px-5"
+  class="color-pedalski flex flex-row justify-between content-center items-center py-3 px-5 fixed z-10 w-full"
   id="header"
 >
-  <div id="left" class="w-full justify-between flex">
-    <p class="font-bold text-5xl">ScoutIT</p>
+
+  <div
+    id="left"
+    class="flex items-center laptopish_min:w-full laptopish_min:justify-center"
+  >
+    <p class="font-bold text-5xl float-left">ScoutIT</p>
     <button
-      class="hamburger md:hidden"
+      class="hamburger laptopish_max:hidden float-right mr-0 ml-[15px]"
       type="button"
       (click)="toggleHamburger()"
     >
@@ -16,7 +20,7 @@
   </div>
   <nav class="flex justify-center items-center" id="menu">
     <ul
-      class="hidden md:flex md:flex-row md:gap-4 text-center tablet_reversa:py-4 tablet_reversa:pr-10"
+      class="hidden laptopish_max:flex laptopish_max:flex-row laptopish_max:gap-4 text-center tablet_reversa:py-4 tablet_reversa:pr-10"
       id="navbar"
     >
       <li class="text-3xl py-2">
