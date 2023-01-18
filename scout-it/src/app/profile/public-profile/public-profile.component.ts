@@ -51,11 +51,14 @@ export class PublicProfileComponent implements AfterViewInit{
   twitter: string = "";
   linkedIn: string = "";
   gitHub: string = "";
+  leetCode: string = "";
   description: string = "";
   loading: boolean = true;
   yourAcc: boolean = false;
   verified: boolean = false;
   liked: boolean = false;
+  githubProfileName: string | undefined = "";
+  leetCodeProfileName: string | undefined = "";
   workTypes: { freelance: boolean, halfDay: boolean, fullDay: boolean } = {
     freelance: false,
     halfDay: false,
@@ -135,6 +138,13 @@ export class PublicProfileComponent implements AfterViewInit{
           this.twitter = data.twitter || "";
           this.linkedIn = data.linkedin || "";
           this.gitHub = data.github || "";
+          this.leetCode = data.leetcode || "";
+          this.leetCodeProfileName = this.leetCode.endsWith("/") ?
+          this.leetCode.split("/")[this.leetCode.split("/").length - 2] || undefined : 
+          this.leetCode.split("/")[this.leetCode.split("/").length - 1] || undefined
+          this.githubProfileName = this.gitHub.endsWith("/") ?
+          this.gitHub.split("/")[this.gitHub.split("/").length - 2] || undefined : 
+          this.gitHub.split("/")[this.gitHub.split("/").length - 1] || undefined;
           this.liked = data.followers?.includes(sessionStorage.getItem("id") || "idk tuka triabva da napisha neshto") || false;
           this.likersCount = data.followers?.length || 0;
           this.workTypes = data.workTypes || this.workTypes;
@@ -179,8 +189,8 @@ export class PublicProfileComponent implements AfterViewInit{
     });
   }
 
-  updateLinksHandler(facebook: string, instagram: string, twitter: string, linkedin: string, github: string){
-    this.profileService.updateLinks(facebook, instagram, twitter, linkedin, github).subscribe({
+  updateLinksHandler(facebook: string, instagram: string, twitter: string, linkedin: string, github: string, leetcode: string){
+    this.profileService.updateLinks(facebook, instagram, twitter, linkedin, github, leetcode).subscribe({
       next: (data) => {
         this.loading = false;
         this.facebook = facebook;

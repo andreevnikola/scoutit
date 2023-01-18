@@ -20,6 +20,7 @@ export interface IUser{
     twitter?: string;
     linkedin?: string;
     github?: string;
+    leetcode?: string;
     followers?: string[];
     workTypes: { freelance: boolean, halfDay: boolean, fullDay: boolean };
     workPlace: { home: boolean, office: boolean };

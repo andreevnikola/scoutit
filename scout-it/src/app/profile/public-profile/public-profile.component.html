@@ -156,9 +156,18 @@
                         <p>Visit my <span class="font-bold">GitHub</span></p>
                     </a>
                 </div>
+                <div class="flex justify-between text-gray-700 gap-2" *ngIf="leetCode">
+                    <a [href]="leetCode" class="flex gap-1 w-fit">
+                        <img src="assets/images/leetCode.png" class="h-[18px]" alt="leetcode icon">
+                        <p>Visit my <span class="font-bold">LeetCode</span></p>
+                    </a>
+                </div>
+                <hr class="mt-1 mb-2">
+                <img *ngIf="gitHub" class="max-w-full w-[280px]" [src]="'https://github-readme-stats.vercel.app/api?username=' + githubProfileName + '&count_private=true&show_icons=true&theme=vue'" [alt]="username + '\'s GithubStats'" />
+                <img *ngIf="leetCode" class="max-w-full w-[280px] mt-1" [src]="'https://leetcode.card.workers.dev/' + leetCodeProfileName + '?theme=light&extension=activity'" [alt]="username + '\'s GithubStats'" />
                 <button *ngIf="yourAcc" (click)="editing_links = true;" class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1">Edit / Add data</button>
             </div>
-            <form #form="ngForm" *ngIf="editing_links || (!facebook && !instagram && !twitter && !linkedIn && !gitHub)" (ngSubmit)="updateLinksHandler(facebookInp.value, instagramInp.value, twitterInp.value, linkedInInp.value, githubInp.value)">
+            <form #form="ngForm" *ngIf="editing_links || (!facebook && !instagram && !twitter && !linkedIn && !gitHub)" (ngSubmit)="updateLinksHandler(facebookInp.value, instagramInp.value, twitterInp.value, linkedInInp.value, githubInp.value, leetCodeInp.value)">
                 <div class="flex justify-between text-gray-700 gap-2">
                     <div class="flex gap-0.5">
                         <fa-icon [icon]="facebookIcon"></fa-icon>
@@ -193,6 +202,13 @@
                         GitHub:
                     </div>
                     <input placeholder="Link to your GitHub" #githubInp="ngModel" [ngModel]="gitHub" name="github" class="font-bold">
+                </div>
+                <div class="flex justify-between text-gray-700 gap-2">
+                    <div class="flex gap-0.5">
+                        <img src="assets/images/leetCode.png" class="h-[18px]" alt="leetcode icon">
+                        LeetCode:
+                    </div>
+                    <input placeholder="Link to your LeetCode" #leetCodeInp="ngModel" [ngModel]="leetCode" name="leetcode" class="font-bold">
                 </div>
                 <button [disabled]="form.invalid" type="submit" class="font-bold mt-4 w-full border border-gray-500 rounded text-white bg-green-500 hover:bg-green-600 transition-all p-1">Update profile</button>
                 <button *ngIf="!(!facebook && !instagram && !twitter && !linkedIn && !gitHub)" type="button" (click)="editing_links = false;" class="font-bold mt-1 w-full border border-gray-500 rounded text-white bg-red-500 hover:bg-red-600 transition-all p-1">Cancel changes</button>

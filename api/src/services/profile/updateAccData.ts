@@ -4,7 +4,7 @@ async function UpdateAccData(req: any, res: any){
     const usersDb = await new __DB___("scoutit", "users");
     try {
         const { key } = req.params;
-        const { description, address, city, country, workTypes, workPlace } = req.body;
+        const { description, address, city, country, workTypes, workPlace, ллет } = req.body;
         const user: any = await usersDb.Update({
             keys: parseFloat(key)
         }, {
