@@ -34,22 +34,27 @@ export class ProfileService {
     return this.httpClient.get<any>(`http://localhost:8080/api/profile/likeProfile/${id}/key`)
   }
 
-  updateProfile( description: string, address: string, city: string, country: string ){
+  updateProfile( description: string, address: string, city: string, country: string, 
+                 workTypes: { freelance: boolean, halfDay: boolean, fullDay: boolean }, 
+                 workPlace: { home: boolean, office: boolean } ){
     return this.httpClient.post<any>(`http://localhost:8080/api/profile/update/key`, {
       description: description,
       address: address,
       city: city,
-      country: country
+      country: country,
+      workTypes: workTypes,
+      workPlace: workPlace
     })
   }
 
-  updateLinks( facebook: string, instagram: string, twitter: string, linkedin: string, github: string ){
+  updateLinks( facebook: string, instagram: string, twitter: string, linkedin: string, github: string, leetcode: string ){
     return this.httpClient.post<any>(`http://localhost:8080/api/profile/updatelinks/key`, {
       facebook: facebook,
       instagram: instagram,
       twitter: twitter,
       linkedin: linkedin,
-      github: github
+      github: github,
+      leetcode: leetcode
     })
   }
 

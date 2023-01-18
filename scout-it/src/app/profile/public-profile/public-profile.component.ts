@@ -1,13 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  faCity,
-  faEnvelope,
-  faHeart,
-  faLocationDot,
-  faMapPin,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBatteryFull, faBatteryHalf, faBuilding, faCity, faEnvelope, faHeart, faHourglassHalf, faHouse, faHouseLaptop, faLocationDot, faMapPin } from '@fortawesome/free-solid-svg-icons';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ProfileService } from '../profile.service';
 import * as L from 'leaflet';
@@ -39,31 +33,48 @@ export class PublicProfileComponent implements AfterViewInit {
   instagramIcon = faInstagram;
   linkedInIcon = faLinkedin;
   gitHubIcon = faGithub;
+  houseIcon = faHouse;
+  atOfficeIcon = faBuilding;
+  houseLaptopIcon = faHouseLaptop;
+  halfClockIcon = faBatteryHalf;
+  fullClockIcon = faBatteryFull;
   editing: boolean = false;
   editing_links: boolean = false;
   geocoords: BehaviorSubject<number[]> = new BehaviorSubject([0]);
   id: Observable<string> | undefined;
   _id: string = '';
 
-  username: string = '';
-  profile_picture: string = '';
-  fullname: string = '';
-  mail: string = '';
-  phone: string = '';
-  country: string = '';
-  address: string = '';
-  city: string = '';
-  facebook: string = '';
-  instagram: string = '';
-  twitter: string = '';
-  linkedIn: string = '';
-  gitHub: string = '';
-  description: string = '';
+  username: string = "";
+  profile_picture: string = "";
+  fullname: string = "";
+  mail: string = "";
+  phone: string = "";
+  country: string = "";
+  address: string = "";
+  city: string = "";
+  facebook: string = "";
+  instagram: string = "";
+  twitter: string = "";
+  linkedIn: string = "";
+  gitHub: string = "";
+  leetCode: string = "";
+  description: string = "";
   loading: boolean = true;
   yourAcc: boolean = false;
   verified: boolean = false;
   liked: boolean = false;
-  ghProfileData: any;
+  githubProfileName: string | undefined = "";
+  leetCodeProfileName: string | undefined = "";
+  workTypes: { freelance: boolean, halfDay: boolean, fullDay: boolean } = {
+    freelance: false,
+    halfDay: false,
+    fullDay: false
+  };
+  workPlace: { home: boolean, office: boolean } = {
+    home: false,
+    office: false
+  };
+  // ghProfileData: any;
   likersCount: number = 0;
 
   your_username: string | null = sessionStorage.getItem('username');
@@ -143,23 +154,27 @@ export class PublicProfileComponent implements AfterViewInit {
           this.mail = data.mail!;
           this.phone = data.phone!;
           this.profile_picture = data.profile_picture!;
-          this.address = data.address || '';
-          this.country = data.country || '';
-          this.city = data.city || '';
-          this.description = data.description || '';
-          this.facebook = data.facebook || '';
-          this.instagram = data.instagram || '';
-          this.twitter = data.twitter || '';
-          this.linkedIn = data.linkedin || '';
-          this.gitHub = data.github || '';
-          this.liked =
-            data.followers?.includes(
-              sessionStorage.getItem('id') ||
-                'idk tuka triabva da napisha neshto'
-            ) || false;
+          this.address = data.address || "";
+          this.country = data.country || "";
+          this.city = data.city || "";
+          this.description = data.description || "";
+          this.facebook = data.facebook || "";
+          this.instagram = data.instagram || "";
+          this.twitter = data.twitter || "";
+          this.linkedIn = data.linkedin || "";
+          this.gitHub = data.github || "";
+          this.leetCode = data.leetcode || "";
+          this.leetCodeProfileName = this.leetCode.endsWith("/") ?
+          this.leetCode.split("/")[this.leetCode.split("/").length - 2] || undefined : 
+          this.leetCode.split("/")[this.leetCode.split("/").length - 1] || undefined
+          this.githubProfileName = this.gitHub.endsWith("/") ?
+          this.gitHub.split("/")[this.gitHub.split("/").length - 2] || undefined : 
+          this.gitHub.split("/")[this.gitHub.split("/").length - 1] || undefined;
+          this.liked = data.followers?.includes(sessionStorage.getItem("id") || "idk tuka triabva da napisha neshto") || false;
           this.likersCount = data.followers?.length || 0;
-          this.ghProfileData = data.ghProfileData || false;
-          console.log(this.ghProfileData);
+          this.workTypes = data.workTypes || this.workTypes;
+          this.workPlace = data.workPlace || this.workPlace;
+          // this.ghProfileData = data.ghProfileData || false;
           this.getGeocoordsByAddress();
         },
         error: (err) => {
@@ -191,54 +206,41 @@ export class PublicProfileComponent implements AfterViewInit {
     country: string
   ) {
     this.loading = true;
-    this.profileService
-      .updateProfile(description, address, city, country)
-      .subscribe({
-        next: (data) => {
-          this.loading = false;
-          this.country = country;
-          this.address = address;
-          this.description = description;
-          this.city = city;
-          this.editing = false;
-        },
-        error: (err) => {
-          this.loading = false;
-          if (err.status === 401) {
-            return;
-          }
-          alert('Something went wrong!');
-        },
-      });
+    this.profileService.updateProfile(description, address, city, country, this.workTypes, this.workPlace).subscribe({
+      next: (data) => {
+        this.loading = false;
+        this.country = country;
+        this.address = address;
+        this.description = description;
+        this.city = city;
+        this.editing = false;
+        this.getGeocoordsByAddress();
+      },
+      error: (err) => {
+        this.loading = false;
+        if(err.status === 401){ return; }
+        alert("Something went wrong!");
+      }
+    });
   }
 
-  updateLinksHandler(
-    facebook: string,
-    instagram: string,
-    twitter: string,
-    linkedin: string,
-    github: string
-  ) {
-    this.profileService
-      .updateLinks(facebook, instagram, twitter, linkedin, github)
-      .subscribe({
-        next: (data) => {
-          this.loading = false;
-          this.facebook = facebook;
-          this.instagram = instagram;
-          this.twitter = twitter;
-          this.linkedIn = linkedin;
-          this.gitHub = github;
-          this.editing_links = false;
-        },
-        error: (err) => {
-          this.loading = false;
-          if (err.status === 401) {
-            return;
-          }
-          alert('Something went wrong!');
-        },
-      });
+  updateLinksHandler(facebook: string, instagram: string, twitter: string, linkedin: string, github: string, leetcode: string){
+    this.profileService.updateLinks(facebook, instagram, twitter, linkedin, github, leetcode).subscribe({
+      next: (data) => {
+        this.loading = false;
+        this.facebook = facebook;
+        this.instagram = instagram;
+        this.twitter = twitter;
+        this.linkedIn = linkedin;
+        this.gitHub = github;
+        this.editing_links = false;
+      },
+      error: (err) => {
+        this.loading = false;
+        if(err.status === 401){ return; }
+        alert("Something went wrong!");
+      }
+    });
   }
 
   likeAccountHandler() {
