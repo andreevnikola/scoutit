@@ -5,6 +5,7 @@ import { HeaderComponent } from './header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './footer/footer.component';
 import { LandingCategoryComponent } from './landing-page/landing-category/landing-category.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,7 @@ import { LandingCategoryComponent } from './landing-page/landing-category/landin
     FooterComponent,
     LandingCategoryComponent,
   ],
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, BrowserAnimationsModule],
   exports: [HeaderComponent, LandingPageComponent, FooterComponent],
 })
 export class CoreModule {}
