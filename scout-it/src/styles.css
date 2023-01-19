@@ -9,11 +9,20 @@
 @import '~hamburgers/dist/hamburgers.css';
 
 @layer components {
+  a {
+    transition: font-weight 0.5s ease;
+  }
+  a:hover {
+    font-weight: bold;
+  }
   :root {
     --landing_distance_pc: 11rem;
   }
   .color-pedalski {
     background-color: #f7fff3;
+  }
+  .color-pedalski-1 {
+    background-color: #d6efc9;
   }
   .text-pedalski {
     color: #97e070;
