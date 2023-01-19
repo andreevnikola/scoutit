@@ -4,12 +4,14 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { HeaderComponent } from './header/header.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FooterComponent } from './footer/footer.component';
+import { LandingCategoryComponent } from './landing-page/landing-category/landing-category.component';
 
 @NgModule({
   declarations: [
     LandingPageComponent,
     HeaderComponent,
     FooterComponent,
+    LandingCategoryComponent,
   ],
   imports: [CommonModule, FontAwesomeModule],
   exports: [HeaderComponent, LandingPageComponent, FooterComponent],
