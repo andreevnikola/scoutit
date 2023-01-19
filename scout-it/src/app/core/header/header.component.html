@@ -10,6 +10,7 @@
     <button
       class="hamburger laptopish_max:hidden float-right mr-0 ml-[15px]"
       type="button"
+      [@rotatedState]="state"
       (click)="toggleHamburger()"
     >
       <span class="hamburger-box">
@@ -35,13 +36,13 @@
         class="text-3xl font-bold py-2"
         *ngIf="!authService.isLogged"
       >
-        <a href="/">Sign in</a>
+        <a href="/signin">Sign in</a>
       </li>
       <li
         class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
         *ngIf="!authService.isLogged"
       >
-        <a href="/">Join</a>
+        <a href="/auth/join">Join</a>
       </li>
       <li
         class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
