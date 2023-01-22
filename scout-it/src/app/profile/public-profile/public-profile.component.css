@@ -1,3 +1,19 @@
 .error{
     @apply text-left text-red-600 font-bold text-sm -mt-1
 }
+
+.arrow{
+    border: 1px solid #949494;
+    border-width: 0 0 1px 1px;
+    width: 10px;
+    height: 10px;
+    line-height: 0;
+    font-size: 0;
+    -webkit-transform: rotate(135deg);
+    -ms-transform: rotate(135deg);
+    -o-transform: rotate(135deg);
+    transform: rotate(135deg);
+    position: absolute;
+    margin-top: 4px;
+    background-color: white;
+}
