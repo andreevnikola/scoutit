@@ -9,6 +9,7 @@ const loadprofile = require("./profile/load.js").LoadProfile;
 const updateaccdata = require("./profile/updateAccData.js").UpdateAccData;
 const updatelinks = require("./profile/updateLinks.js").updateLinks;
 const likeProfile = require("./profile/likeProfile.js").LikeProfile;
+const updatebonusdata = require('./profile/updateBonusData.js').updateBonusData;
 
 module.exports = {
     register,
@@ -21,5 +22,6 @@ module.exports = {
     loadprofile,
     updateaccdata,
     updatelinks,
-    likeProfile
+    likeProfile,
+    updatebonusdata
 };

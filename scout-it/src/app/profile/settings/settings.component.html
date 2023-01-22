@@ -35,7 +35,7 @@ class="rounded-md left-1/2 relative h-fit -translate-x-1/2 p-5 border-[1px]
     <input (change)="taken && taken.includes('mail') ? taken = null : null" required minlength="6" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #mail="ngModel" [ngModel]="mail_storage" name="mail" type="email" placeholder="E-MAIL:">
     <p class="error" *ngIf="taken && taken.includes('mail')">E-MAIL is <span class="font-bold">taken</span></p>
     <div *ngIf="mail.touched">
-        <p class="error" *ngIf="mail.errors?.['required']">E-MAIL number is <span class="font-bold">required</span></p>
+        <p class="error" *ngIf="mail.errors?.['required']">E-MAIL is <span class="font-bold">required</span></p>
         <p class="error" *ngIf="mail.errors?.['minlength'] || mail.errors?.['pattern']">Please enter <span class="font-bold">valid</span> E-MAIL</p>
     </div>
     <input required minlength="6" #username="ngModel" (change)="taken && taken.includes('username') ? taken = null : null" [ngModel]="username_storage" name="username" type="text" placeholder="Username: ">
