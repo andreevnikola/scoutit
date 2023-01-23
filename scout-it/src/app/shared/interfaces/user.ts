@@ -28,4 +28,7 @@ export interface IUser {
     fullDay: boolean;
   };
   workPlace: { home: boolean; office: boolean };
+  quote: string,
+  detailedDescription: string,
+  websites: { name: string, url: string }[]
 }

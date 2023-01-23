@@ -58,4 +58,12 @@ export class ProfileService {
     })
   }
 
+  updateBonusData(quote: string, description: string, websites: { name: string, url: string }[] | undefined){
+    return this.httpClient.post<any>(`http://localhost:8080/api/profile/updateBonusData/key`, {
+      quote: quote,
+      detailedDescription: description,
+      websites: websites
+    })
+  }
+
 }
