@@ -27,31 +27,33 @@
       id="navbar"
     >
       <li class="text-3xl py-2">
-        <a href="/">Explore</a>
+        <a routerLink="/">Explore</a>
       </li>
       <li class="text-3xl py-2">
-        <a href="/">Search <fa-icon [icon]="search"></fa-icon></a>
+        <a routerLink="/"
+          >Search <fa-icon [icon]="search"></fa-icon
+        ></a>
       </li>
       <li class="text-3xl py-2">
-        <a href="/">Contact us</a>
+        <a routerLink="/">Contact us</a>
       </li>
       <li
         class="text-3xl font-bold py-2"
         *ngIf="!authService.isLogged"
       >
-        <a href="/signin">Sign in</a>
+        <a routerLink="/auth/signin">Sign in</a>
       </li>
       <li
         class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
         *ngIf="!authService.isLogged"
       >
-        <a href="/auth/join">Join</a>
+        <a routerLink="/auth/join">Join</a>
       </li>
       <li
         class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
         *ngIf="authService.isLogged"
       >
-        <a href="/">Negar</a>
+        <a routerLink="/">Negar</a>
       </li>
     </ul>
   </nav>
