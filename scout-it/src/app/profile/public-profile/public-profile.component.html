@@ -89,6 +89,7 @@
         </div>
         <button
           class="w-full rounded border bg-green-600 text-white text-lg p-1 hover:bg-green-700 transition-all"
+          (click)="showModal()"
         >
           Contact Me
         </button>
@@ -589,19 +590,12 @@
     <!-- ==========\/ Bonus acc data \/========== -->
     <div
       class="w-fit bg-white p-7 rounded-md border shadow-sm text-center mb-3 min-w-full"
-      *ngIf="
-        yourAcc ||
-        quote ||
-        detailedDescription ||
-        websites
-      "
+      *ngIf="yourAcc || quote || detailedDescription || websites"
     >
       <div
         [hidden]="
           editing_bonus_data ||
-          (!quote &&
-            !detailedDescription &&
-            !websites)
+          (!quote && !detailedDescription && !websites)
         "
       >
         <div
@@ -609,15 +603,27 @@
           *ngIf="quote"
         >
           <fa-icon class="text-xs mr-1" [icon]="quoteLeft"></fa-icon>
-           <p class="font-bold text-xl font-jaldi">{{quote}}</p> 
-          <fa-icon class="text-xs pt-2.5 ml-1" [icon]="quoteRight"></fa-icon>
+          <p class="font-bold text-xl font-jaldi">{{ quote }}</p>
+          <fa-icon
+            class="text-xs pt-2.5 ml-1"
+            [icon]="quoteRight"
+          ></fa-icon>
         </div>
-        <div class="text-gray-600 w-full max-w-[280px] text-base text-left border rounded-md px-2 py-0.5 mt-2">
-          {{detailedDescription}}
+        <div
+          class="text-gray-600 w-full max-w-[280px] text-base text-left border rounded-md px-2 py-0.5 mt-2"
+        >
+          {{ detailedDescription }}
         </div>
-        <div class="flex mt-4 gap-1 max-w-[280px] flex-wrap justify-between text-gray-600 font-jaldi text-lg" *ngIf="websites">
-          <a [href]="website.url" *ngFor="let website of websites" class="hover:border-green-600 transition-all w-fit border rounded-full px-3 py-0.5 flex-grow">
-            {{website.name}}
+        <div
+          class="flex mt-4 gap-1 max-w-[280px] flex-wrap justify-between text-gray-600 font-jaldi text-lg"
+          *ngIf="websites"
+        >
+          <a
+            [href]="website.url"
+            *ngFor="let website of websites"
+            class="hover:border-green-600 transition-all w-fit border rounded-full px-3 py-0.5 flex-grow"
+          >
+            {{ website.name }}
           </a>
         </div>
         <button
@@ -632,47 +638,114 @@
         #formBonusData="ngForm"
         *ngIf="
           editing_bonus_data ||
-          (!quote &&
-            !detailedDescription &&
-            !websites)
+          (!quote && !detailedDescription && !websites)
         "
-        (ngSubmit)="updateBonusDataHandler(quoteInp.value, detailedDescrInp.value)"
+        (ngSubmit)="
+          updateBonusDataHandler(
+            quoteInp.value,
+            detailedDescrInp.value
+          )
+        "
       >
         <div class="text-gray-700 flex align-middle justify-center">
           <fa-icon class="text-xs mr-1" [icon]="quoteLeft"></fa-icon>
-          <input class="font-bold text-xl font-jaldi w-full px-2" placeholder="Enter a quote" name="quote" [ngModel]="quote" #quoteInp="ngModel" minlength="4" maxlength="26">
-          <fa-icon class="text-xs pt-2.5 ml-1" [icon]="quoteRight"></fa-icon>
+          <input
+            class="font-bold text-xl font-jaldi w-full px-2"
+            placeholder="Enter a quote"
+            name="quote"
+            [ngModel]="quote"
+            #quoteInp="ngModel"
+            minlength="4"
+            maxlength="26"
+          />
+          <fa-icon
+            class="text-xs pt-2.5 ml-1"
+            [icon]="quoteRight"
+          ></fa-icon>
         </div>
         <div *ngIf="quoteInp.touched">
-          <p class="error" *ngIf="quoteInp.errors?.['minlength']">Your quote must be over 3 digits</p>
+          <p class="error" *ngIf="quoteInp.errors?.['minlength']">
+            Your quote must be over 3 digits
+          </p>
         </div>
-        <textarea class="text-gray-600 w-full max-w-[280px] text-base text-left border rounded-md px-2 py-0.5 mt-2 h-28"
-        placeholder="Enter detailed description" name="detailedDescription" [ngModel]="detailedDescription" #detailedDescrInp="ngModel" minlength="25" maxlength="550">
-          {{detailedDescription}}
+        <textarea
+          class="text-gray-600 w-full max-w-[280px] text-base text-left border rounded-md px-2 py-0.5 mt-2 h-28"
+          placeholder="Enter detailed description"
+          name="detailedDescription"
+          [ngModel]="detailedDescription"
+          #detailedDescrInp="ngModel"
+          minlength="25"
+          maxlength="550"
+        >
+          {{ detailedDescription }}
         </textarea>
         <div *ngIf="detailedDescrInp.touched">
-          <p class="error" *ngIf="detailedDescrInp.errors?.['minlength']">Your quote must be over 25 digits</p>
+          <p
+            class="error"
+            *ngIf="detailedDescrInp.errors?.['minlength']"
+          >
+            Your quote must be over 25 digits
+          </p>
         </div>
-        <div class="flex mt-4 gap-1 max-w-[280px] flex-wrap justify-between text-gray-600 font-jaldi text-lg">
-          <a *ngFor="let website of websites; let i = index" (click)="websites!.splice(i, 1)"
-             class="hover:border-green-600 transition-all w-fit border rounded-full px-3 py-0.5 flex-grow hover:line-through cursor-pointer">
-            {{website.name}}
-            <fa-icon class="text-xs float-right ml-1.5 -mr-0.5 mt-1.5" [icon]="cross"></fa-icon>
+        <div
+          class="flex mt-4 gap-1 max-w-[280px] flex-wrap justify-between text-gray-600 font-jaldi text-lg"
+        >
+          <a
+            *ngFor="let website of websites; let i = index"
+            (click)="websites!.splice(i, 1)"
+            class="hover:border-green-600 transition-all w-fit border rounded-full px-3 py-0.5 flex-grow hover:line-through cursor-pointer"
+          >
+            {{ website.name }}
+            <fa-icon
+              class="text-xs float-right ml-1.5 -mr-0.5 mt-1.5"
+              [icon]="cross"
+            ></fa-icon>
           </a>
-          <button type="button" (click)="addLink = !addLink"
+          <button
+            type="button"
+            (click)="addLink = !addLink"
             class="hover:border-green-600 transition-all w-fit border rounded-full px-2.5 h-full text-2xl hover:font-bold cursor-pointer"
           >
-            <span class="relative -top-0.5" [ngClass]="{'-top-0': addLink, 'text-xl': addLink}">
-              {{!addLink ? websites ? '+' : 'Add link +' : '✖'}}
+            <span
+              class="relative -top-0.5"
+              [ngClass]="{ '-top-0': addLink, 'text-xl': addLink }"
+            >
+              {{ !addLink ? (websites ? '+' : 'Add link +') : '✖' }}
             </span>
             <div class="arrow" *ngIf="addLink"></div>
           </button>
-          <form #linkForm="ngForm" *ngIf="addLink" (ngSubmit)="addLinkHandler(linkTitle.value, linkUrl.value)"
-            class="rounded-lg border border-[#949494] p-2 mt-1">
-            <p class="text-2xl">Add <span class="font-bold">link</span></p>
-            <input type="text" placeholder="Enter title for that link" class="font-bold px-2 py-0.5 border rounded-md w-full mb-0.5" ngModel #linkTitle="ngModel" name="linkTitle">
-            <input type="text" placeholder="Enter link url" class="border rounded-md w-full px-2 py-0.5" ngModel #linkUrl="ngModel" name="linkUrl">
-            <button class="mt-2 text-lg rounded border bg-green-400 w-full text-white hover:bg-green-600 transition-all">Add <span class="font-bold">link</span></button>
+          <form
+            #linkForm="ngForm"
+            *ngIf="addLink"
+            (ngSubmit)="
+              addLinkHandler(linkTitle.value, linkUrl.value)
+            "
+            class="rounded-lg border border-[#949494] p-2 mt-1"
+          >
+            <p class="text-2xl">
+              Add <span class="font-bold">link</span>
+            </p>
+            <input
+              type="text"
+              placeholder="Enter title for that link"
+              class="font-bold px-2 py-0.5 border rounded-md w-full mb-0.5"
+              ngModel
+              #linkTitle="ngModel"
+              name="linkTitle"
+            />
+            <input
+              type="text"
+              placeholder="Enter link url"
+              class="border rounded-md w-full px-2 py-0.5"
+              ngModel
+              #linkUrl="ngModel"
+              name="linkUrl"
+            />
+            <button
+              class="mt-2 text-lg rounded border bg-green-400 w-full text-white hover:bg-green-600 transition-all"
+            >
+              Add <span class="font-bold">link</span>
+            </button>
           </form>
         </div>
         <button
@@ -683,11 +756,7 @@
           Update profile
         </button>
         <button
-          *ngIf="
-            !(!quote &&
-              !detailedDescription &&
-              !websites)
-          "
+          *ngIf="!(!quote && !detailedDescription && !websites)"
           type="button"
           (click)="editing_bonus_data = false"
           class="font-bold mt-1 w-full border border-gray-500 rounded text-white bg-red-500 hover:bg-red-600 transition-all p-1"

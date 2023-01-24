@@ -5,13 +5,15 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PublicProfileComponent } from './public-profile/public-profile.component';
+import { ProfileModalComponent } from './public-profile/profile-modal/profile-modal.component';
 
 
 
 @NgModule({
   declarations: [
     SettingsComponent,
-    PublicProfileComponent
+    PublicProfileComponent,
+    ProfileModalComponent
   ],
   imports: [
     CommonModule,
