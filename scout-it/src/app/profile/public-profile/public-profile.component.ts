@@ -79,10 +79,12 @@ export class PublicProfileComponent implements AfterViewInit {
   addLink: boolean = false;
   quote: string | undefined = '';
   detailedDescription: string | undefined = '';
-  websites: { name: string, url: string }[] | undefined = [
-    {name: "facebook", url: "https://facebook.com"}, {name: "youtube", url: "https://youtube.com"},
-    {name: "trustly", url: "https://trustly.herokuapp.com"}, {name: "dexbg", url: "https://dexbg.herokuapp.com"},
-  ]; 
+  websites: { name: string; url: string }[] | undefined = [
+    { name: 'facebook', url: 'https://facebook.com' },
+    { name: 'youtube', url: 'https://youtube.com' },
+    { name: 'trustly', url: 'https://trustly.herokuapp.com' },
+    { name: 'dexbg', url: 'https://dexbg.herokuapp.com' },
+  ];
   loading: boolean = true;
   yourAcc: boolean = false;
   verified: boolean = false;
@@ -210,7 +212,8 @@ export class PublicProfileComponent implements AfterViewInit {
           this.workTypes = data.workTypes || this.workTypes;
           this.workPlace = data.workPlace || this.workPlace;
           this.quote = data.quote || undefined;
-          this.detailedDescription = data.detailedDescription || undefined;
+          this.detailedDescription =
+            data.detailedDescription || undefined;
           this.websites = data.websites || undefined;
           // this.ghProfileData = data.ghProfileData || false;
           this.getGeocoordsByAddress();
@@ -235,22 +238,26 @@ export class PublicProfileComponent implements AfterViewInit {
         },
       });
   }
-  updateBonusDataHandler(quote: string, description: string){
+  updateBonusDataHandler(quote: string, description: string) {
     this.loading = true;
-    this.profileService.updateBonusData(quote, description, this.websites).subscribe({
-      next: (data) => {
-        this.loading = false;
-        this.addLink = false;
-        this.editing_bonus_data = false;
-        this.quote = quote;
-        this.detailedDescription = description;
-      },
-      error: (err) => {
-        this.loading = false;
-        if(err.status === 401){ return; }
-        alert("Something went wrong!");
-      }
-    });
+    this.profileService
+      .updateBonusData(quote, description, this.websites)
+      .subscribe({
+        next: (data) => {
+          this.loading = false;
+          this.addLink = false;
+          this.editing_bonus_data = false;
+          this.quote = quote;
+          this.detailedDescription = description;
+        },
+        error: (err) => {
+          this.loading = false;
+          if (err.status === 401) {
+            return;
+          }
+          alert('Something went wrong!');
+        },
+      });
   }
   updatePublicProfileDataHandler(
     description: string,
@@ -287,11 +294,14 @@ export class PublicProfileComponent implements AfterViewInit {
         },
       });
   }
-  addLinkHandler(title: string, url: string){
-    if(!this.websites){ this.websites = [] }
+  addLinkHandler(title: string, url: string) {
+    if (!this.websites) {
+      this.websites = [];
+    }
     this.websites!.push({
-      name: title, url: url
-    })
+      name: title,
+      url: url,
+    });
     this.addLink = false;
   }
   updateLinksHandler(
@@ -348,4 +358,6 @@ export class PublicProfileComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.initMap();
   }
+
+  showModal() {}
 }
