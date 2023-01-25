@@ -18,8 +18,8 @@ import {
     trigger('rotatedState', [
       state('default', style({ transform: 'rotate(0)' })),
       state('rotated', style({ transform: 'rotate(90deg)' })),
-      transition('rotated => default', animate('400ms ease-out')),
-      transition('default => rotated', animate('400ms ease-in')),
+      transition('rotated => default', animate('150ms ease-out')),
+      transition('default => rotated', animate('150ms ease-in')),
     ]),
   ],
 })
