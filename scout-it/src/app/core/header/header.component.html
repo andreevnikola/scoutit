@@ -18,44 +18,34 @@
       </span>
     </button>
   </div>
-  <nav
-    class="flex justify-center items-center tablet_reversa:color-pedalski-1"
-    id="menu"
+  <ul
+    class="hidden laptopish_max:flex laptopish_max:flex-row tablet_reversa:w-screen laptopish_min:justify-center laptopish_max:gap-4 text-center tablet_reversa:py-4"
+    id="navbar"
   >
-    <ul
-      class="hidden laptopish_max:flex laptopish_max:flex-row tablet_reversa:w-screen laptopish_min:justify-center laptopish_max:gap-4 text-center tablet_reversa:py-4"
-      id="navbar"
+    <li class="text-3xl py-2">
+      <a routerLink="/">Explore</a>
+    </li>
+    <li class="text-3xl py-2">
+      <a routerLink="/">Search <fa-icon [icon]="search"></fa-icon></a>
+    </li>
+    <li class="text-3xl py-2">
+      <a routerLink="/">Contact us</a>
+    </li>
+    <li class="text-3xl font-bold py-2" *ngIf="!authService.isLogged">
+      <a routerLink="/auth/signin">Sign in</a>
+    </li>
+    <li
+      class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
+      *ngIf="!authService.isLogged"
     >
-      <li class="text-3xl py-2">
-        <a routerLink="/">Explore</a>
-      </li>
-      <li class="text-3xl py-2">
-        <a routerLink="/"
-          >Search <fa-icon [icon]="search"></fa-icon
-        ></a>
-      </li>
-      <li class="text-3xl py-2">
-        <a routerLink="/">Contact us</a>
-      </li>
-      <li
-        class="text-3xl font-bold py-2"
-        *ngIf="!authService.isLogged"
-      >
-        <a routerLink="/auth/signin">Sign in</a>
-      </li>
-      <li
-        class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
-        *ngIf="!authService.isLogged"
-      >
-        <a routerLink="/auth/join">Join</a>
-      </li>
-      <li
-        class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
-        *ngIf="authService.isLogged"
-      >
-        <a routerLink="/">Negar</a>
-      </li>
-    </ul>
-  </nav>
+      <a routerLink="/auth/join">Join</a>
+    </li>
+    <li
+      class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
+      *ngIf="authService.isLogged"
+    >
+      <a routerLink="/">Negar</a>
+    </li>
+  </ul>
 </header>
 <div id="space" class="h-[84px]"></div>

@@ -42,6 +42,10 @@ export class HeaderComponent {
       navbar!.style.flexDirection = 'column';
       header!.style.flexDirection = 'column';
     }
+    if (screen.width > 1080) {
+      navbar!.style.display = 'flex';
+      navbar!.style.flexDirection = 'row';
+    }
   }
 
   state: string = 'default';
