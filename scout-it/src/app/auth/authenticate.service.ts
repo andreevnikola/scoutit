@@ -31,14 +31,20 @@ export class AuthenticateService {
     );
   }
 
-
-  signIn(phone_starting:string, phone:string, password:string, type:string){
-
-    return this.httpClient.post<IUser>('http://localhost:8080/api/users/login', {
-      pass: password,
-      phone: phone_starting + phone,
-      type: type
-    })
+  signIn(
+    phone_starting: string,
+    phone: string,
+    password: string,
+    type: string
+  ) {
+    return this.httpClient.post<IUser>(
+      'http://localhost:8080/api/users/login',
+      {
+        pass: password,
+        phone: phone_starting + phone,
+        type: type,
+      }
+    );
   }
 
   verifyMail(key: string, code: string) {
@@ -53,11 +59,9 @@ export class AuthenticateService {
     );
   }
 
+  username: string | null = sessionStorage.getItem('username');
 
-  username: string | null = sessionStorage.getItem("username");
-
-  get isLogged(){
-    return this.username !== null
+  get isLogged() {
+    return this.username !== null;
   }
-
 }
