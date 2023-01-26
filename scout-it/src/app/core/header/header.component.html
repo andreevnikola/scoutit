@@ -1,27 +1,13 @@
-<header
-  class="color-pedalski flex flex-row justify-between content-center items-center py-3 px-5 fixed z-50 w-full"
-  id="header"
->
-  <div
-    id="left"
-    class="flex items-center laptopish_min:w-full laptopish_min:justify-between"
-  >
+<header class="color-pedalski flex flex-row justify-between content-center items-center py-3 px-5 fixed z-50 w-full" id="header">
+  <div id="left" class="flex items-center laptopish_min:w-full laptopish_min:justify-between">
     <p class="font-bold text-5xl float-left">ScoutIT</p>
-    <button
-      class="hamburger laptopish_max:hidden float-right mr-0 ml-[15px]"
-      type="button"
-      [@rotatedState]="state"
-      (click)="toggleHamburger()"
-    >
+    <button class="hamburger laptopish_max:hidden float-right mr-0 ml-[15px]" type="button" [@rotatedState]="state" (click)="toggleHamburger()">
       <span class="hamburger-box">
         <span class="hamburger-inner"></span>
       </span>
     </button>
   </div>
-  <ul
-    class="hidden laptopish_max:flex laptopish_max:flex-row tablet_reversa:w-screen laptopish_min:justify-center laptopish_max:gap-4 text-center tablet_reversa:py-4"
-    id="navbar"
-  >
+  <ul class="hidden laptopish_max:flex laptopish_max:flex-row tablet_reversa:w-screen laptopish_min:justify-center laptopish_max:gap-4 text-center tablet_reversa:py-4" id="navbar">
     <li class="text-3xl py-2">
       <a routerLink="/">Explore</a>
     </li>
@@ -34,17 +20,11 @@
     <li class="text-3xl font-bold py-2" *ngIf="!authService.isLogged">
       <a routerLink="/auth/signin">Sign in</a>
     </li>
-    <li
-      class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
-      *ngIf="!authService.isLogged"
-    >
+    <li class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2" *ngIf="!authService.isLogged">
       <a routerLink="/auth/join">Join</a>
     </li>
-    <li
-      class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2"
-      *ngIf="authService.isLogged"
-    >
-      <a routerLink="/">Negar</a>
+    <li class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2" *ngIf="authService.isLogged">
+      <img src="{{ authService.profilePic }}" alt="" />
     </li>
   </ul>
 </header>
