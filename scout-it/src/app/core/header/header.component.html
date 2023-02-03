@@ -24,7 +24,7 @@
       <a routerLink="/auth/join">Join</a>
     </li>
     <li class="text-3xl border-4 border-black rounded-xl font-bold py-2 md:px-2" *ngIf="authService.isLogged">
-      <img src="{{ authService.profilePic }}" alt="" />
+      <img src="{{ authService.profilePic }}" alt="" class="w-16" />
     </li>
   </ul>
 </header>
